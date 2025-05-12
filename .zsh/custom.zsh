@@ -1,3 +1,7 @@
+if [[ -n "$ZSH_DEBUGRC" ]]; then
+  zmodload zsh/zprof
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 
 # ZSH_THEME=""
@@ -108,3 +112,8 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
+
+if [[ -n "$ZSH_DEBUGRC" ]]; then
+  zprof
+fi
+
