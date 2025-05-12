@@ -1,0 +1,108 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+(fg:current_line)\
+$os\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$golang\
+$nodejs\
+$python\
+$java\
+$rust\
+$cmd_duration\
+$username\
+$line_break\
+$character\
+"""
+
+palette = 'catppuccin_mocha'
+
+[palettes.catppuccin_mocha]
+foreground = '#D9E0EE'
+background = '##1E1E2E'
+current_line = '#2E2E3E'
+primary = '#313244'
+box = '#2E2E3E'
+blue = '#8AADF4'
+cyan = '#76E3F6'
+green = '#A6E3A1'
+orange = '#F9AF74'
+pink = '#F5BDE6'
+purple = '#CBA6F7'
+red = '#F38BA8'
+yellow = '#F9E2AF'
+status = "#e23140"
+
+[os]
+format = '(fg:current_line)[](fg:red)[󰀵](fg:primary bg:red)[](fg:red)'
+disabled = false
+
+[directory]
+format = '[─](fg:current_line)[](fg:pink bg:box)[ $read_only$truncation_symbol$path](fg:foreground bg:box)[](fg:box)'
+home_symbol = "󰋜 ~"
+truncation_symbol = '🗂️'
+truncation_length = 1
+read_only = ''
+read_only_style = ''
+
+[git_branch]
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $branch](fg:foreground bg:box)'
+symbol = ' '
+
+[git_status]
+format = '[$all_status](fg:green bg:box)[](fg:box)'
+conflicted = ' ='
+up_to_date = ''
+untracked = ' ?${count}'
+stashed = ' $'
+modified = ' !${count}'
+staged = ' +'
+renamed = ' »'
+deleted = ' ✘'
+ahead = ' ⇡${count}'
+diverged = ' ⇕⇡${ahead_count}⇣${behind_count}'
+behind = ' ⇣${count}'
+
+[nodejs]
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '󰎙'
+
+
+[rust]
+format = '[─](fg:current_line)[](fg:yellow)[$symbol](fg:primary bg:yellow)[](fg:yellow bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ''
+
+[python]
+format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ (${version} )(\($virtualenv\) )](fg:foreground bg:box)[](fg:box)'
+symbol = ''
+
+[java]
+format = '[─](fg:current_line)[](fg:red)[$symbol](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ''
+
+[golang]
+format = '[─](fg:current_line)[](fg:red)[$symbol](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ''
+
+
+[fill]
+symbol = ' '
+style = 'fg:current_line'
+
+[cmd_duration]
+min_time = 500
+format = '[─](fg:current_line)[](fg:orange)[](fg:primary bg:orange)[](fg:orange bg:box)[ $duration](fg:foreground bg:box)[](fg:box)'
+
+[username]
+format = '[─](fg:current_line)[](fg:yellow)[](fg:primary bg:yellow)[](fg:yellow bg:box)[ $user](fg:foreground bg:box)[](fg:box) '
+show_always = true
+
+[character]
+success_symbol = '[❯](fg:yellow)'
+error_symbol = '[❯](fg:bold red)'
+
+[profiles]
+transient = """$character"""
