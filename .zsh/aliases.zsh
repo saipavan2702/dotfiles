@@ -21,7 +21,7 @@ quick_commit() {
   local commit_message 
   commit_message="$*"
   
-  git commit --no-verify -m "$commit_message"
+  git commit --no-verify -am "$commit_message"
 }
 
 quick_pull() {
