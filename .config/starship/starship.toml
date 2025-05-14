@@ -3,34 +3,32 @@ $directory\
 $git_branch\
 $git_status\
 $fill\
-$jobs\
-$cmd_duration\
 $line_break\
 $character"""
 
 add_newline = true
 
-palette = 'catppuccin_mocha'
+palette = "snazzy"
 
-[palettes.catppuccin_mocha]
-foreground = '#D9E0EE'
-background = '##1E1E2E'
-current_line = '#2E2E3E'
-primary = '#313244'
-box = '#2E2E3E'
-blue = '#8AADF4'
-cyan = '#76E3F6'
-green = '#A6E3A1'
-orange = '#F9AF74'
-pink = '#F5BDE6'
-purple = '#CBA6F7'
-red = '#F38BA8'
-yellow = '#F9E2AF'
-status = "#e23140"
+[palettes.snazzy]
+accent = "#57c7ff"
+background = "#282a36"
+foreground = "#eff0eb"
+black = "#282a36"
+blue = "#57c7ff"
+cyan = "#9aedfe"
+green = "#5af78e"
+magenta = "#ff6ac1"
+red = "#ff5c57"
+white = "#f1f1f0"
+yellow = "#f3f99d"
 
 [directory]
 truncation_length = 1
 truncate_to_repo = false
+style = 'magenta'
+format = '[$path]($style) '
+
 
 [directory.substitutions]
 'Documents' = '󰈙'
@@ -39,24 +37,14 @@ truncate_to_repo = false
 'Pictures' = ' '
 
 [git_branch]
-style = 'fg:green'
+style = 'green'
 symbol = ' '
 format = '[on](white) [$symbol$branch ]($style)'
 
 [git_status]
-style = 'fg:red'
-format = '([$all_status$ahead_behind]($style) )'
+style = 'red'
+format = '[\[$all_status\]]($style)'
 
 [fill]
 symbol = ' '
-
-[jobs]
-symbol = ' '
-style = 'red'
-format = '[$symbol]($style)'
-
-[cmd_duration]
-min_time = 500
-format = '[$duration]($style)'
-
 

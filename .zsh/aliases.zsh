@@ -3,12 +3,6 @@ alias mvnc='mvn clean install -DskipCodeOwnersCheck=true -Dmaven.javadoc.skip -D
 alias mvncit='mvn clean install -DskipTests=true'
 alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
 
-#ls
-alias ls='colorls -A --sort-dirs'
-alias ll='colorls -l'
-alias lst='colorls --tree -a'
-
-
 #git
 alias gcd='git checkout development'
 alias gpod='git pull origin development'
