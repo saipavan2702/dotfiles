@@ -57,17 +57,15 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='nvim'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
 export PATH="/Users/mmacha/Library/Python/3.9/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.9)
 export PATH=$JAVA_HOME/bin:$PATH
 export M3_HOME=/Users/mmacha/Downloads/apache-maven-3.9.3
 export PATH=$PATH:$M3_HOME/bin
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 
 # export http_proxy=http://www-proxy.us.oracle.com:80
 # export https_proxy=http://www-proxy.us.oracle.com:80
@@ -80,6 +78,29 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
+
+  export FZF_CTRL_R_OPTS="
+  --color header:italic
+  --height=80%
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --header 'CTRL-Y: Copy command into clipboard, CTRL-/: Toggle line wrapping, CTRL-R: Toggle sorting by relevance'
+  "
+
+  export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --height=80%
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'
+  --header 'CTRL-/: Toggle preview window position'
+  "
+
+  export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'tree -C {}'
+  --height=80%
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'
+  --header 'CTRL-/: Toggle preview window position'
+  "
 
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zprof
