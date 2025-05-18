@@ -1,53 +1,39 @@
+# ~/.config/starship.toml
+
+# Use a custom format for concise info
 format = """
-$directory\
-$git_branch\
-$git_status\
-$fill\
-$line_break\
-$character"""
+$directory$git_branch$git_status$nix_shell
+[✦](blue) $character
+"""
 
-add_newline = true
-
-palette = "snazzy"
-
-[palettes.snazzy]
-accent = "#57c7ff"
-background = "#282a36"
-foreground = "#eff0eb"
-black = "#282a36"
-blue = "#57c7ff"
-cyan = "#9aedfe"
-green = "#5af78e"
-magenta = "#ff6ac1"
-red = "#ff5c57"
-white = "#f1f1f0"
-yellow = "#f3f99d"
-
+# Style the directory segment
 [directory]
-truncation_length = 1
-truncate_to_repo = false
-style = 'cyan'
-format = '[$path]($style) '
+style = "cyan"
+truncation_length=1
+format = "[$path]($style) "
 
-
-[directory.substitutions]
-'Documents' = '󰈙'
-'Downloads' = ' '
-'Music' = ' '
-'Pictures' = ' '
-
+# Git branch
 [git_branch]
-style = 'green'
-symbol = ' '
-format = '[on](white) [$symbol$branch ]($style)'
+symbol = ""
+style = "green"
+format = "on [$symbol $branch]($style) "
 
+# Git status
 [git_status]
 style = 'red'
 format = '[\[$all_status\]]($style)'
-
-[fill]
-symbol = ' '
+conflicted = "⚔️ "
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+untracked = "?"
+stashed = "📦"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
 
 [character]
-success_symbol = '[❯](bold magenta) '
-error_symbol = '[❯](bold red) '
+success_symbol = "[➜](purple) "
+error_symbol = "[✗](red) "
+
