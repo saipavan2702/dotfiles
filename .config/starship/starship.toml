@@ -20,19 +20,32 @@ format = "on [$symbol $branch]($style) "
 
 # Git status
 [git_status]
-style = 'red'
-format = '[\[$all_status\]]($style)'
-conflicted = "="
-ahead = "⇡"
-behind = "⇣"
-diverged = "⇕"
-untracked = "?"
-stashed = "📦"
-modified = "!"
-staged = "+"
-renamed = "»"
-deleted = "✘"
-up_to_date = "$"
+format = '([\[$all_status$ahead_behind\]]())'
+conflicted = '[(=)](bold red)'
+ahead = '[(⇡)](bold yellow)'
+behind = '[(⇣)](bold blue)'
+diverged = '[(⇕)](bold purple)'
+untracked = '[(?)](bold cyan)'
+stashed = '[(📦)](bold bright-magenta)'
+staged = '[(+)](bold green)'
+renamed = '[(»)](bold bright-blue)'
+deleted = '[(✘)](bold red)'
+up_to_date = '[(✓)](bold green)'
+
+
+#[git_status]
+#style = 'red'
+#format = '[\[$all_status$ahead_behind\]]($style)'
+#up_to_date = '✓'
+#conflicted = "="
+#ahead = "⇡"
+#behind = "⇣"
+#diverged = "⇕"
+#untracked = "?"
+#stashed = "📦"
+#staged = "+"
+#renamed = "»"
+#deleted = "✘"
 
 [character]
 success_symbol = "[➜](purple) "
