@@ -20,16 +20,20 @@ format = "on [$symbol $branch]($style) "
 
 # Git status
 [git_status]
-up_to_date = '✓(bold green)'
-conflicted = '=(bold red)'
-ahead = '⇡(bold yellow)'
-behind = '⇣(bold blue)'
-diverged = '⇕(bold purple)'
-untracked = '?(bold cyan)'
-stashed = '📦(bold bright-magenta)'
-staged = '+(bold green)'
-renamed = '»(bold bright-blue)'
-deleted = '✘(bold red)'
+style = ""  # Prevent default styles from overriding inner styles
+format = '[\[($all_status$ahead_behind)\]](red) '
+
+conflicted = '[⚔️ ](bold red)'
+ahead = '[⇡${count}](green)'
+behind = '[⇣${count}](red)'
+diverged = '[⇕⇡${ahead_count}⇣${behind_count}](yellow)'
+up_to_date = '[✓](green)'
+untracked = '[?${count}](yellow)'
+stashed = '[📦${count}](blue)'
+modified = '[~${count}](bold cyan)'
+staged = '[+${count}](green)'
+renamed = '[»${count}](bold purple)'
+deleted = '[✘${count}](red)'
 
 #[git_status]
 #style = 'red'
