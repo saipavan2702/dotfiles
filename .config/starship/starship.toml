@@ -20,7 +20,8 @@ format = "on [$symbol $branch]($style) "
 
 # Git status
 [git_status]
-format = '([\[$all_status$ahead_behind\]]())'
+format = '[\[$all_status\]](bold white)'
+
 conflicted = '[(=)](bold red)'
 ahead = '[(⇡)](bold yellow)'
 behind = '[(⇣)](bold blue)'
@@ -31,7 +32,6 @@ staged = '[(+)](bold green)'
 renamed = '[(»)](bold bright-blue)'
 deleted = '[(✘)](bold red)'
 up_to_date = '[(✓)](bold green)'
-
 
 #[git_status]
 #style = 'red'
