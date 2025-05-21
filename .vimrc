@@ -97,7 +97,7 @@ Plug 'junegunn/fzf.vim'
 
 call plug#end() 
 
-let g:airline_theme='kolor'
+let g:airline_theme='base16_snazzy'
 let g:airline_powerline_fonts = 1
 let g:airline_right_alt_sep = ''
 let g:airline_right_sep = ''
