@@ -69,10 +69,15 @@ set scrolloff=8
 "set listchars=eol:.,tab:>-,trail:~,extends:>,precedes:<
 
 if &term =~ "xterm" || &term =~ "screen" || &term =~ "tmux"
-  let &t_SI = "\e[5 q"  " Beam in Insert mode
-  let &t_EI = "\e[5 q"  " Block in Normal mode
-  let &t_SR = "\e[3 q"  " Underline in Replace mode
+  let &t_SI = "\e[5 q"  
+  let &t_EI = "\e[5 q"  
+  let &t_SR = "\e[3 q" 
 endif
+
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[5 q"
+augroup END
 
 "Cursor settings:
 
