@@ -68,6 +68,20 @@ set scrolloff=8
 "set list
 "set listchars=eol:.,tab:>-,trail:~,extends:>,precedes:<
 
+if &term =~ "xterm" || &term =~ "screen" || &term =~ "tmux"
+  let &t_SI = "\e[5 q"  " Beam in Insert mode
+  let &t_EI = "\e[5 q"  " Block in Normal mode
+  let &t_SR = "\e[3 q"  " Underline in Replace mode
+endif
+
+"Cursor settings:
+
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM key-bindings
