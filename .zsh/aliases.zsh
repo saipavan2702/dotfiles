@@ -4,8 +4,7 @@ alias mvncit='mvn clean install -DskipTests=true'
 alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
 
 #git
-alias gcd='git checkout development'
-alias gpod='git pull origin development'
+alias gcd='git checkout main'
 alias gb='git branch'
 alias gf='git fetch'
 alias gs='git status'
