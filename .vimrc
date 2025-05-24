@@ -68,10 +68,6 @@ set scrolloff=8
 "set list
 "set listchars=eol:.,tab:>-,trail:~,extends:>,precedes:<
 
-set termguicolors
-if !has('gui_running')
-    set t_Co=256
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM key-bindings
@@ -94,10 +90,20 @@ Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'connorholyday/vim-snazzy'
+Plug 'ayu-theme/ayu-vim'
 
-call plug#end() 
+call plug#end()
 
-let g:airline_theme='base16_snazzy'
+"colorscheme snazzy
+set termguicolors
+if !has('gui_running')
+    set t_Co=256
+endif
+let ayucolor="dark"
+colorscheme ayu
+
+let g:airline_theme='ayu_dark'
 let g:airline_powerline_fonts = 1
 let g:airline_right_alt_sep = ''
 let g:airline_right_sep = ''
@@ -150,16 +156,6 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-"Airline Themes
-"let g:airline_theme='dark'
-"let g:airline_theme='badwolf'
-"let g:airline_theme='ravenpower'
-"let g:airline_theme='simple'
-"let g:airline_theme='term'
-"let g:airline_theme='ubaryd'
-"let g:airline_theme='laederon'
-"let g:airline_theme='molokai'
-"let g:airline_theme='powerlineish'
 
 nnoremap <C-t> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1

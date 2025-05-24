@@ -2,8 +2,8 @@
 
 # Use a custom format for concise info
 format = """
-$directory$git_branch$git_status$nix_shell
-[✦](blue) $character
+$directory$git_branch$git_status
+$character
 """
 
 # Style the directory segment
@@ -35,19 +35,6 @@ staged = '[+${count}](green)'
 renamed = '[»${count}](bold purple)'
 deleted = '[✘${count}](red)'
 
-#[git_status]
-#style = 'red'
-#format = '[\[$all_status$ahead_behind\]]($style)'
-#up_to_date = '✓'
-#conflicted = "="
-#ahead = "⇡"
-#behind = "⇣"
-#diverged = "⇕"
-#untracked = "?"
-#stashed = "📦"
-#staged = "+"
-#renamed = "»"
-#deleted = "✘"
 
 [character]
 success_symbol = "[➜](purple) "
