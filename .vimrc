@@ -109,12 +109,10 @@ Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'connorholyday/vim-snazzy'
 Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
 
-"colorscheme snazzy
 set termguicolors
 if !has('gui_running')
     set t_Co=256
