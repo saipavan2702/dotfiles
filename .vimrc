@@ -68,16 +68,16 @@ set scrolloff=8
 "set list
 "set listchars=eol:.,tab:>-,trail:~,extends:>,precedes:<
 
-if &term =~ "xterm" || &term =~ "screen" || &term =~ "tmux"
-  let &t_SI = "\e[5 q"  
-  let &t_EI = "\e[5 q"  
-  let &t_SR = "\e[3 q" 
-endif
+"if &term =~ xterm" || &term =~ screen" || &term =~ tmux"
+ " let &t_SI = \e[1 q"  
+  "let &t_EI = \e[5 q"  
+  "let &t_SR = \e[3 q" 
+"endif
 
-augroup myCmds
-au!
-autocmd VimEnter * silent !echo -ne "\e[5 q"
-augroup END
+"augroup myCmds
+"au!
+"autocmd VimEnter * silent !echo -ne \e[1 q"
+"augroup END
 
 "Cursor settings:
 
