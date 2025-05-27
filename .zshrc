@@ -1,4 +1,3 @@
-
 # Functions
 [ -f "$HOME/.zsh/custom.zsh" ] && source "$HOME/.zsh/custom.zsh"
 
