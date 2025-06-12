@@ -77,6 +77,8 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
+eval $(thefuck --alias)
+eval $(thefuck --alias fk)
 
 export FZF_CTRL_R_OPTS="
 --style=full
