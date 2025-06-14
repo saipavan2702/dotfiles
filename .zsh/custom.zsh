@@ -1,3 +1,5 @@
+# My ZSH config
+
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zmodload zsh/zprof
 fi
@@ -13,6 +15,13 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 
 # ENABLE_CORRECTION="true"
 
+autoload -Uz compinit
+if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
+    compinit
+else
+    compinit -C
+fi
+
 plugins=(
   git
   web-search
@@ -20,6 +29,9 @@ plugins=(
   zsh-syntax-highlighting
 )
 source $ZSH/oh-my-zsh.sh
+
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # export LANG=en_US.UTF-8
 
@@ -44,11 +56,6 @@ export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 # export no_proxy='localhost,127.0.0.1,.oracle.com,.oraclecorp.com'
 
 
-autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
-  compinit
-done
-compinit -C
 
 #-------- Global Alias -------#
 #
@@ -72,8 +79,11 @@ bindkey -M isearch " " magic-space    # normal space during searches
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
+
 eval "$(zoxide init --cmd cd zsh)"
+
 source <(fzf --zsh)
+
 eval $(thefuck --alias fk)
 
 export FZF_CTRL_R_OPTS="
