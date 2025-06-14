@@ -4,53 +4,25 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 
-# ZSH_THEME=""
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+HYPHEN_INSENSITIVE="true"
+DISABLE_AUTO_UPDATE="true"
+DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_COMPFIX="true"
 
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+zstyle ':omz:update' mode disabled  # disable automatic updates
 
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
 
 plugins=(
   git
+  web-search
   zsh-autosuggestions
   zsh-syntax-highlighting
-  web-search
 )
 source $ZSH/oh-my-zsh.sh
 
-# export MANPATH="/usr/local/man:$MANPATH"
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
@@ -71,13 +43,37 @@ export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 # export https_proxy=http://www-proxy.us.oracle.com:80
 # export no_proxy='localhost,127.0.0.1,.oracle.com,.oraclecorp.com'
 
-autoload -Uz compinit && compinit
+
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
+
+#-------- Global Alias -------#
+#
+globalias() {
+  if [[ $LBUFFER =~ '[a-zA-Z0-9]+$' ]]; then
+    zle _expand_alias
+    zle expand-word
+  fi
+  zle self-insert
+}
+
+zle -N globalias
+bindkey " " globalias                 # space key to expand globalalias
+# bindkey "^ " magic-space            # control-space to bypass completion
+bindkey "^[[Z" magic-space            # shift-tab to bypass completion
+bindkey -M isearch " " magic-space    # normal space during searches
+. ~/.zsh/aliases.zsh
+
+#-----------------------------#
+
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
-eval $(thefuck --alias)
 eval $(thefuck --alias fk)
 
 export FZF_CTRL_R_OPTS="
@@ -104,7 +100,6 @@ export FZF_ALT_C_OPTS="
 --bind 'ctrl-/:change-preview-window(down|hidden|)'
 --header 'CTRL-/: Toggle preview window position'
 "
-
 
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zprof

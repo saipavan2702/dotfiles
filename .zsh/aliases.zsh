@@ -2,6 +2,7 @@
 alias mvnc='mvn clean install -DskipCodeOwnersCheck=true -Dmaven.javadoc.skip -Dspotbugs.skip -Dpmd.skip -Dcheckstyle.skip -DODOenv=true -DskipITs=true -DskipUTs=true -DskipTests -Dmaven.javadoc.skip=true -P TS1'
 alias mvncit='mvn clean install -DskipTests=true'
 alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
+alias ztprof='time ZSH_DEBUGRC=1 zsh -i -c exit'
 
 #git
 alias gcd='git checkout main'
@@ -37,3 +38,5 @@ alias lt3="eza -lTg --level=3 --icons=always"
 alias lta="eza -lTag --icons=always"
 alias lta2="eza -lTag --level=2 --icons=always"
 alias lta3="eza -lTag --level=3 --icons=always"
+
+alias -g G='| grep'
