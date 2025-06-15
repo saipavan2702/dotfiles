@@ -28,15 +28,26 @@ alias gqc='quick_commit'
 alias gpob='quick_pull'
 
 #eza
-alias l="eza --icons=always"
-alias ls="eza --icons=always"
-alias ll="eza -lg --icons=always"
-alias la="eza -lag --icons=always"
-alias lt="eza -lTg --icons=always"
-alias lt2="eza -lTg --level=2 --icons=always"
-alias lt3="eza -lTg --level=3 --icons=always"
-alias lta="eza -lTag --icons=always"
-alias lta2="eza -lTag --level=2 --icons=always"
-alias lta3="eza -lTag --level=3 --icons=always"
+
+export EXA_ICON_SPACING=1  # Ensures proper icon alignment
+
+_eza() {
+    eza --icons=always --color=always --group-directories-first "$@"
+}
+
+alias ls="_eza"                 # Basic list
+alias ll='_eza -l'              # Long list (no time sort)
+alias la='_eza -la'             # Long list + hidden
+
+alias llt='_eza -l --sort=newest'      # Long list, newest first
+alias lat='_eza -la --sort=newest'     # Long list + hidden, newest first
+
+alias lt="_eza -lTg"            # Tree view (default depth)
+alias lt2="_eza -lTg --level=2" # Tree view (depth 2)
+alias lt3="_eza -lTg --level=3" # Tree view (depth 3)
+alias lta="_eza -lTag"          # Tree view + hidden
+alias lta2="_eza -lTag --level=2"
+alias lta3="_eza -lTag --level=3"
+
 
 alias -g G='| grep'
