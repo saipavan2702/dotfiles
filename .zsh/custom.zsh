@@ -86,29 +86,54 @@ source <(fzf --zsh)
 
 eval $(thefuck --alias fk)
 
-export FZF_CTRL_R_OPTS="
---style=full
---color header:italic
+export FZF_DEFAULT_OPTS="
 --height=80%
---bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
---header 'CTRL-Y: Copy command into clipboard, CTRL-/: Toggle line wrapping, CTRL-R: Toggle sorting by relevance'
+--layout=reverse
+--inline-info
+--color=16
+--style=full
+--prompt='❯ '
+--marker='✓'
+--border=rounded 
 "
 
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow 
+--exclude .git 
+--exclude node_modules 
+--exclude .DS_Store 
+--exclude '*.pyc'
+"
+
+export FZF_ALT_C_COMMAND="fd --type d --hidden --follow
+--exclude .git 
+--exclude node_modules 
+--exclude .DS_Store
+"
+
+
+export FZF_CTRL_R_OPTS="
+--color header:italic
+--bind 'ctrl-/:toggle-sort'
+--bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+--header 'CTRL-Y: Copy command into clipboard, CTRL-/: Toggle sorting by relevance'
+"
+
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="
---style=full
---walker-skip .git,node_modules,target
---preview 'bat -n --color=always {}'
---height=80%
---bind 'ctrl-/:change-preview-window(down|hidden|)'
---header 'CTRL-/: Toggle preview window position'
+--preview 'bat  --style=numbers --color=always {}'
+--preview-window 'right:60%:wrap'
+--bind 'ctrl-v:execute(code {})+abort'
+--bind 'ctrl-o:execute(open {})+abort'
+--bind 'ctrl-/:change-preview-window(down,50%|hidden|)'
+--header $'CTRL-V: open in VSCode  CTRL-O: open in Finder  CTRL-/: toggle preview\n───'
 "
 
 export FZF_ALT_C_OPTS="
---walker-skip .git,node_modules,target
---preview 'tree -C {}'
---height=80%
---bind 'ctrl-/:change-preview-window(down|hidden|)'
---header 'CTRL-/: Toggle preview window position'
+--preview 'tree -C -L 2 {} | head -200'
+--preview-window 'right:60%:wrap'
+--bind 'ctrl-v:execute(code {})+abort'
+--bind 'ctrl-/:change-preview-window(down,50%|hidden|)'
+--header $'CTRL-V: open in VSCode  CTRL-/: toggle preview\n───'
 "
 
 if [[ -n "$ZSH_DEBUGRC" ]]; then

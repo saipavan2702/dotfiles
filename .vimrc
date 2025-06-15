@@ -110,6 +110,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'ayu-theme/ayu-vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 call plug#end()
 
@@ -117,10 +118,13 @@ set termguicolors
 if !has('gui_running')
     set t_Co=256
 endif
-let ayucolor="dark"
-colorscheme ayu
+"let ayucolor="dark"
+"colorscheme ayu
 
-let g:airline_theme='ayu_dark'
+colorscheme catppuccin_mocha
+let g:airline_theme = 'catppuccin_mocha'
+
+"let g:airline_theme='ayu_dark'
 let g:airline_powerline_fonts = 1
 let g:airline_right_alt_sep = ''
 let g:airline_right_sep = ''
