@@ -3,6 +3,7 @@ alias mvnc='mvn clean install -DskipCodeOwnersCheck=true -Dmaven.javadoc.skip -D
 alias mvncit='mvn clean install -DskipTests=true'
 alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
 alias ztprof='time ZSH_DEBUGRC=1 zsh -i -c exit'
+alias ff='fastfetch'
 
 #git
 alias gcd='git checkout main'
@@ -28,7 +29,6 @@ alias gqc='quick_commit'
 alias gpob='quick_pull'
 
 #eza
-
 export EXA_ICON_SPACING=1  # Ensures proper icon alignment
 
 _eza() {
