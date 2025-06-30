@@ -1,42 +1,227 @@
-# ~/.config/starship.toml
+# # ~/.config/starship.toml
+# 
+# # Use a custom format for concise info
+# format = """
+# $directory$git_branch$git_status
+# $character
+# """
+# 
+# # Style the directory segment
+# [directory]
+# style = "cyan"
+# truncation_length=1
+# format = "[$path]($style) "
+# 
+# # Git branch
+# [git_branch]
+# symbol = ""
+# style = "green"
+# format = "on [$symbol $branch]($style) "
+# 
+# # Git status
+# [git_status]
+# style = ""  # Prevent default styles from overriding inner styles
+# format = '[\[($all_status$ahead_behind)\]](red) '
+# 
+# conflicted = '[⚔️ ](bold red)'
+# ahead = '[⇡${count}](green)'
+# behind = '[⇣${count}](red)'
+# diverged = '[⇕⇡${ahead_count}⇣${behind_count}](yellow)'
+# up_to_date = '[✓](green)'
+# untracked = '[?${count}](yellow)'
+# stashed = '[📦${count}](blue)'
+# modified = '[~${count}](bold cyan)'
+# staged = '[+${count}](green)'
+# renamed = '[»${count}](bold purple)'
+# deleted = '[✘${count}](red)'
+# 
+# 
+# [character]
+# success_symbol = "[❯](purple) "
+# error_symbol = "[✗](red) "
 
-# Use a custom format for concise info
+"$schema" = 'https://starship.rs/config-schema.json'
+
 format = """
-$directory$git_branch$git_status
-$character
-"""
+[](peach)\
+$os\
+$username\
+[](bg:yellow fg:peach)\
+$directory\
+[](fg:yellow bg:green)\
+$git_branch\
+$git_status\
+[](fg:green bg:sky)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:sky bg:surface2)\
+$docker_context\
+$conda\
+[](fg:surface2 bg:surface0)\
+$time\
+[ ](fg:surface0)\
+$line_break$character"""
 
-# Style the directory segment
+
+palette = 'catppuccin_mocha'
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+
+[os]
+disabled = false
+style = "bg:peach fg:crust"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+show_always = true
+format = '[ $user ]($style)'
+style_user = "bg:peach fg:crust"
+style_root = "bg:red fg:crust"
+
 [directory]
-style = "cyan"
-truncation_length=1
-format = "[$path]($style) "
+style = "fg:crust bg:yellow"
+format = "[ $path ]($style)"
+truncation_length = 1
 
-# Git branch
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
 [git_branch]
 symbol = ""
-style = "green"
-format = "on [$symbol $branch]($style) "
+style = "bg:green"
+format = '[[ $symbol $branch ](fg:crust bg:green)]($style)'
 
-# Git status
 [git_status]
-style = ""  # Prevent default styles from overriding inner styles
-format = '[\[($all_status$ahead_behind)\]](red) '
+style = "bg:green"
+format = '[[($all_status$ahead_behind )](fg:crust bg:green)]($style)'
 
-conflicted = '[⚔️ ](bold red)'
-ahead = '[⇡${count}](green)'
-behind = '[⇣${count}](red)'
-diverged = '[⇕⇡${ahead_count}⇣${behind_count}](yellow)'
-up_to_date = '[✓](green)'
-untracked = '[?${count}](yellow)'
-stashed = '[📦${count}](blue)'
-modified = '[~${count}](bold cyan)'
-staged = '[+${count}](green)'
-renamed = '[»${count}](bold purple)'
-deleted = '[✘${count}](red)'
+[c]
+symbol = " "
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
 
+[rust]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[php]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[java]
+symbol = " "
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[python]
+symbol = ""
+style = "bg:sky"
+format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:surface2"
+format = '[[ $symbol( $context) ](fg:text bg:surface2)]($style)'
+
+[conda]
+style = "bg:surface2"
+format = '[[ $symbol( $environment) ](fg:text bg:surface2)]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:surface0"
+format = '[[  $time ](fg:text bg:surface0)]($style)'
+
+[line_break]
+disabled = false
 
 [character]
-success_symbol = "[❯](purple) "
-error_symbol = "[✗](red) "
+disabled = false
+success_symbol = '[](bold fg:green)'
+error_symbol = '[](bold fg:red)'
+vimcmd_symbol = '[](bold fg:teal)'
+vimcmd_replace_one_symbol = '[](bold fg:maroon)'
+vimcmd_replace_symbol = '[](bold fg:maroon)'
+vimcmd_visual_symbol = '[](bold fg:yellow)'
 
