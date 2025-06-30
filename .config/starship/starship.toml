@@ -37,6 +37,6 @@ deleted = '[✘${count}](red)'
 
 
 [character]
-success_symbol = "[➜](purple) "
+success_symbol = "[❯](purple) "
 error_symbol = "[✗](red) "
 
