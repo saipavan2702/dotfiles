@@ -150,8 +150,19 @@ style = "bg:green"
 format = '[[ $symbol $branch ](fg:crust bg:green)]($style)'
 
 [git_status]
-style = "bg:green"
-format = '[[($all_status$ahead_behind )](fg:crust bg:green)]($style)'
+style = "fg:crust bg:green"
+format = '[$conflicted$stashed$staged$modified$renamed$deleted$untracked$ahead_behind](fg:crust bg:green)'
+conflicted = '⚔️ '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇕⇡${ahead_count}⇣${behind_count} '
+up_to_date = '✓ '
+untracked = '?${count} '
+stashed = '📦${count} '
+modified = '~${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
 
 [c]
 symbol = " "
