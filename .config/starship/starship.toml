@@ -1,44 +1,4 @@
-# # ~/.config/starship.toml
-# 
-# # Use a custom format for concise info
-# format = """
-# $directory$git_branch$git_status
-# $character
-# """
-# 
-# # Style the directory segment
-# [directory]
-# style = "cyan"
-# truncation_length=1
-# format = "[$path]($style) "
-# 
-# # Git branch
-# [git_branch]
-# symbol = ""
-# style = "green"
-# format = "on [$symbol $branch]($style) "
-# 
-# # Git status
-# [git_status]
-# style = ""  # Prevent default styles from overriding inner styles
-# format = '[\[($all_status$ahead_behind)\]](red) '
-# 
-# conflicted = '[⚔️ ](bold red)'
-# ahead = '[⇡${count}](green)'
-# behind = '[⇣${count}](red)'
-# diverged = '[⇕⇡${ahead_count}⇣${behind_count}](yellow)'
-# up_to_date = '[✓](green)'
-# untracked = '[?${count}](yellow)'
-# stashed = '[📦${count}](blue)'
-# modified = '[~${count}](bold cyan)'
-# staged = '[+${count}](green)'
-# renamed = '[»${count}](bold purple)'
-# deleted = '[✘${count}](red)'
-# 
-# 
-# [character]
 # success_symbol = "[❯](purple) "
-# error_symbol = "[✗](red) "
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
