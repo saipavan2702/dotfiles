@@ -1,224 +1,220 @@
-"$schema" = 'https://starship.rs/config-schema.json'
-
-# Main prompt format - order of modules displayed
-format = """
-[](rosewater)\
-$os\
+format = """\
+[](fg:#2C2B3C)\
 $username\
-[](bg:yellow fg:rosewater)\
+[](fg:#2C2B3C bg:#313041)\
 $directory\
-[](fg:yellow bg:green)\
+[](fg:#313041 bg:#353446)\
 $git_branch\
 $git_status\
-[](fg:green bg:blue)\
-$java\
-$python\
-$rust\
-$golang\
-$nodejs\
-$php\
-$c\
-$kotlin\
-$haskell\
-[](fg:blue bg:surface2)\
-$docker_context\
-$conda\
-$env_var\
-[](fg:surface2 bg:surface0)\
+[](fg:#353446 bg:#3E3D4F)\
+$all\
+$cmd_duration\
+$jobs\
+$battery\
 $time\
-[ ](fg:surface0)\
-$line_break$character
-"""
+$character"""
+# [](fg:#3E3D4F bg:#333a56)\
 
-# Catppuccin Mocha palette (as you provided, it's excellent!)
-palette = 'catppuccin_mocha'
+# Disable the blank line at the start of the prompt
+add_newline = true
 
-[palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
+[line_break]
+disabled = true
 
-# OS module - more concise symbol, slightly different color for distinction
-[os]
-disabled = false
-style = "bg:rosewater fg:crust"
-
-[os.symbols] # Corrected: This is a standard table declaration
-Windows = "󰍲"
-Ubuntu = "󰕈"
-SUSE = ""
-Raspbian = "󰐿"
-Mint = "󰣭"
-Macos = "󰀵"
-Manjaro = ""
-Linux = "🐧" # Changed to a more generic penguin for Linux
-Gentoo = "󰣨"
-Fedora = "󰣛"
-Alpine = ""
-Amazon = ""
-Android = ""
-Arch = "󰣇"
-Artix = "󰣇"
-CentOS = ""
-Debian = "󰣚"
-Redhat = "󱄛"
-RedHatEnterprise = "󱄛"
-
-
-# Username module - keeping it clean
+# You can also replace your username with a neat symbol like  to save some space
 [username]
 show_always = true
-format = '[ $user ]($style)'
-style_user = "bg:rosewater fg:crust"
-style_root = "bg:red fg:crust"
+style_user = "fg:#CFB3E5 bg:#2C2B3C"
+style_root = "fg:#CFB3E5 bg:#2C2B3C"
+format = '[ ]($style)' # $user
 
-# Directory module - keeping it similar, subtle changes
 [directory]
-style = "fg:crust bg:yellow"
+style = "fg:#E5B9C6 bg:#313041"
 format = "[ $path ]($style)"
-truncation_length = 2 # Show a bit more of the path
-truncate_to_repo = true # Often useful to truncate to the repo root
+truncation_length = 1
 
-[directory.substitutions] # CORRECTED: This now correctly declares a standard table
-"Documents" = "󰈙 "
+# Here is how you can shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
+[directory.substitutions]
+"~" = " ~"
+"Documents" = " "
 "Downloads" = " "
-"Music" = "󰝚 "
-"Pictures" = " "
-"Developer" = "󰲋 "
-# Add more common substitutions if you like
-"Projects" = "󰸇 "
-"Videos" = "MediaStoreVideo "
+"Music" = "🎜 "
+"Pictures" = " "
+"Videos" = " "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = "  "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important  " = "  "
 
-
-# Git Branch module - very similar, good as is
 [git_branch]
 symbol = ""
-style = "bg:green"
-format = '[[ $symbol $branch ](fg:crust bg:green)]($style)'
+style = "fg:#a6e3a1 bg:#353446"
+format = '[ $symbol $branch(:$remote_branch) ]($style)'
 
-# Git Status module - concise and informative
 [git_status]
-style = "fg:crust bg:green"
-format = '[$conflicted$stashed$staged$modified$renamed$deleted$untracked$ahead_behind](fg:crust bg:green)'
-conflicted = '⚔️' # Removed space for compactness
-ahead = '⇡${count}' # Removed space
-behind = '⇣${count}' # Removed space
-diverged = '⇕' # Simple symbol for diverged, counts might make it too long
-up_to_date = '' # No symbol if up to date, keeps it clean
-untracked = '?${count}'
-stashed = '📦${count}'
-modified = '~${count}'
-staged = '+${count}'
-renamed = '»${count}'
-deleted = '✘${count}'
+style = "fg:#a6e3a1 bg:#353446"
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+deleted = "x"
+format = '[$all_status$ahead_behind ]($style)'
 
-# Language Modules - Grouped under a single color segment (blue) for a cleaner look
-# Ordered by general commonality or preference
-[java]
-symbol = " "
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
 
-[python]
-symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+[aws]
+symbol = " "
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
-[rust]
-symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+[conda]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[dart]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[c]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[docker_context]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol $context]($style) $path '
+
+[elixir]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[elm]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
 [golang]
-symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+symbol = "ﳑ"
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[haskell]
+symbol = "λ"
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[java]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[julia]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[lua]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[nim]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[nix_shell]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
 [nodejs]
-symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
+
+[perl]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
 [php]
 symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
-[c]
-symbol = " "
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+[python]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
-[kotlin]
-symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+[ruby]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
-[haskell]
-symbol = ""
-style = "bg:blue"
-format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+[rust]
+symbol = "🦀"
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
-# Other context modules - Grouped under surface2
-[docker_context]
-symbol = ""
-style = "bg:surface2"
-format = '[[ $symbol( $context) ](fg:text bg:surface2)]($style)'
+[swift]
+symbol = "ﯣ"
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = '[ $symbol ($version )]($style)'
 
-[conda]
-symbol = "" # A more generic circle symbol for conda
-style = "bg:surface2"
-format = '[[ $symbol( $environment) ](fg:text bg:surface2)]($style)'
+[package]
+symbol = ""
+style = "fg:#cba6f7 bg:#3E3D4F"
+format = "[ $symbol $version]($style)"
+disabled = true
 
-# Added an example for environment variables - useful for distinguishing dev environments
-[env_var.STARSHIP_CONTEXT]
-symbol = "󰌌" # A gear or cog symbol
-format = '[[ $symbol $env_value ](fg:text bg:surface2)]($style)'
-variable = "STARSHIP_CONTEXT" # Replace with an actual env var you use
 
-# Time module - slightly more prominent symbol
+[cmd_duration]
+min_time = 1
+style = "fg:#f9e2af bg:#333a56"
+format = "[ $duration]($style)"
+disabled = true
+
+[jobs]
+symbol = "華"
+style = "fg:#f9e2af bg:#333a56"
+format = "[ $symbol]($style)"
+
+[battery]
+full_symbol = " "
+charging_symbol = " "
+discharging_symbol = " "
+unknown_symbol = " "
+empty_symbol = " "
+format = "[ $symbol$percentage ]($style bg:#333a56)"
+disabled = true
+
+[[battery.display]]
+threshold = 15
+style = "bold fg:#CFB3E5"
+
+[[battery.display]]
+threshold = 50
+style = "fg:#f9e2af"
+
+[[battery.display]]
+threshold = 101
+style = "bold #a6e3a1"
+
+# Prompt: optional param 1
 [time]
-disabled = false
-time_format = "%H:%M" # Changed to 24-hour format
-style = "bg:surface0"
-format = '[[  $time ](fg:text bg:surface0)]($style)' # Changed clock symbol
+disabled = true
+time_format = "%R"
+style = "bg:#3b4363"
+format = '[](fg:#333a56 $style)[  $time ](fg:#94e2d5 $style)'
 
-# Line break
-[line_break]
-disabled = false
-
-# Character - unchanged, your existing setup is good
+# Last param in the first line/row
+# fg:#3b4363 if time enabled
 [character]
-disabled = false
-success_symbol = '[](bold fg:green)'
-error_symbol = '[](bold fg:red)'
-vimcmd_symbol = '[](bold fg:teal)'
-vimcmd_replace_one_symbol = '[](bold fg:maroon)'
-vimcmd_replace_symbol = '[](bold fg:maroon)'
-vimcmd_visual_symbol = '[](bold fg:yellow)'
-
-# success_symbol = "[❯](purple) "
-
+success_symbol = "[ ](fg:#3E3D4F)"
+error_symbol = "[ ](fg:#3E3D4F)"
