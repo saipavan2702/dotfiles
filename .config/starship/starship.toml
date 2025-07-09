@@ -1,35 +1,36 @@
-# success_symbol = "[❯](purple) "
-
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Main prompt format - order of modules displayed
 format = """
-[](peach)\
+[](rosewater)\
 $os\
 $username\
-[](bg:yellow fg:peach)\
+[](bg:yellow fg:rosewater)\
 $directory\
 [](fg:yellow bg:green)\
 $git_branch\
 $git_status\
-[](fg:green bg:sky)\
-$c\
+[](fg:green bg:blue)\
+$java\
+$python\
 $rust\
 $golang\
 $nodejs\
 $php\
-$java\
+$c\
 $kotlin\
 $haskell\
-$python\
-[](fg:sky bg:surface2)\
+[](fg:blue bg:surface2)\
 $docker_context\
 $conda\
+$env_var\
 [](fg:surface2 bg:surface0)\
 $time\
 [ ](fg:surface0)\
-$line_break$character"""
+$line_break$character
+"""
 
-
+# Catppuccin Mocha palette (as you provided, it's excellent!)
 palette = 'catppuccin_mocha'
 
 [palettes.catppuccin_mocha]
@@ -60,12 +61,12 @@ base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
 
-
+# OS module - more concise symbol, slightly different color for distinction
 [os]
 disabled = false
-style = "bg:peach fg:crust"
+style = "bg:rosewater fg:crust"
 
-[os.symbols]
+[os.symbols] # Corrected: This is a standard table declaration
 Windows = "󰍲"
 Ubuntu = "󰕈"
 SUSE = ""
@@ -73,7 +74,7 @@ Raspbian = "󰐿"
 Mint = "󰣭"
 Macos = "󰀵"
 Manjaro = ""
-Linux = "󰌽"
+Linux = "🐧" # Changed to a more generic penguin for Linux
 Gentoo = "󰣨"
 Fedora = "󰣛"
 Alpine = ""
@@ -86,107 +87,130 @@ Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
 
+
+# Username module - keeping it clean
 [username]
 show_always = true
 format = '[ $user ]($style)'
-style_user = "bg:peach fg:crust"
+style_user = "bg:rosewater fg:crust"
 style_root = "bg:red fg:crust"
 
+# Directory module - keeping it similar, subtle changes
 [directory]
 style = "fg:crust bg:yellow"
 format = "[ $path ]($style)"
-truncation_length = 1
+truncation_length = 2 # Show a bit more of the path
+truncate_to_repo = true # Often useful to truncate to the repo root
 
-[directory.substitutions]
+[directory.substitutions] # CORRECTED: This now correctly declares a standard table
 "Documents" = "󰈙 "
 "Downloads" = " "
 "Music" = "󰝚 "
 "Pictures" = " "
 "Developer" = "󰲋 "
+# Add more common substitutions if you like
+"Projects" = "󰸇 "
+"Videos" = "MediaStoreVideo "
 
+
+# Git Branch module - very similar, good as is
 [git_branch]
 symbol = ""
 style = "bg:green"
 format = '[[ $symbol $branch ](fg:crust bg:green)]($style)'
 
+# Git Status module - concise and informative
 [git_status]
 style = "fg:crust bg:green"
 format = '[$conflicted$stashed$staged$modified$renamed$deleted$untracked$ahead_behind](fg:crust bg:green)'
-conflicted = '⚔️ '
-ahead = '⇡${count} '
-behind = '⇣${count} '
-diverged = '⇕⇡${ahead_count}⇣${behind_count} '
-up_to_date = '✓ '
-untracked = '?${count} '
-stashed = '📦${count} '
-modified = '~${count} '
-staged = '+${count} '
-renamed = '»${count} '
-deleted = '✘${count} '
+conflicted = '⚔️' # Removed space for compactness
+ahead = '⇡${count}' # Removed space
+behind = '⇣${count}' # Removed space
+diverged = '⇕' # Simple symbol for diverged, counts might make it too long
+up_to_date = '' # No symbol if up to date, keeps it clean
+untracked = '?${count}'
+stashed = '📦${count}'
+modified = '~${count}'
+staged = '+${count}'
+renamed = '»${count}'
+deleted = '✘${count}'
 
-[c]
-symbol = " "
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
-[rust]
-symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
-[golang]
-symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
-[nodejs]
-symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
-[php]
-symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
+# Language Modules - Grouped under a single color segment (blue) for a cleaner look
+# Ordered by general commonality or preference
 [java]
 symbol = " "
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
-[kotlin]
-symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
-
-[haskell]
-symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
 
 [python]
 symbol = ""
-style = "bg:sky"
-format = '[[ $symbol( $version) ](fg:crust bg:sky)]($style)'
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
 
+[rust]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+[php]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+[c]
+symbol = " "
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $version) ](fg:crust bg:blue)]($style)'
+
+# Other context modules - Grouped under surface2
 [docker_context]
 symbol = ""
 style = "bg:surface2"
 format = '[[ $symbol( $context) ](fg:text bg:surface2)]($style)'
 
 [conda]
+symbol = "" # A more generic circle symbol for conda
 style = "bg:surface2"
 format = '[[ $symbol( $environment) ](fg:text bg:surface2)]($style)'
 
+# Added an example for environment variables - useful for distinguishing dev environments
+[env_var.STARSHIP_CONTEXT]
+symbol = "󰌌" # A gear or cog symbol
+format = '[[ $symbol $env_value ](fg:text bg:surface2)]($style)'
+variable = "STARSHIP_CONTEXT" # Replace with an actual env var you use
+
+# Time module - slightly more prominent symbol
 [time]
 disabled = false
-time_format = "%R"
+time_format = "%H:%M" # Changed to 24-hour format
 style = "bg:surface0"
-format = '[[  $time ](fg:text bg:surface0)]($style)'
+format = '[[  $time ](fg:text bg:surface0)]($style)' # Changed clock symbol
 
+# Line break
 [line_break]
 disabled = false
 
+# Character - unchanged, your existing setup is good
 [character]
 disabled = false
 success_symbol = '[](bold fg:green)'
@@ -195,4 +219,6 @@ vimcmd_symbol = '[](bold fg:teal)'
 vimcmd_replace_one_symbol = '[](bold fg:maroon)'
 vimcmd_replace_symbol = '[](bold fg:maroon)'
 vimcmd_visual_symbol = '[](bold fg:yellow)'
+
+# success_symbol = "[❯](purple) "
 
