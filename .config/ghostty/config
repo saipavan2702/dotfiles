@@ -39,7 +39,7 @@ window-colorspace = "display-p3"
 # behavior
 auto-update = check
 auto-update-channel = stable
-# quit-after-last-window-closed = true
+#quit-after-last-window-closed = true
 shell-integration-features = true
 
 # macos
