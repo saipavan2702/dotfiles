@@ -80,6 +80,13 @@ bindkey -M isearch " " magic-space    # normal space during searches
 #-----------------------------#
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+export STARSHIP_COCKPIT_MEMORY_USAGE_ENABLED=true
+export STARSHIP_COCKPIT_BATTERY_ENABLED=true
+export STARSHIP_COCKPIT_BATTERY_THRESHOLD=100
+
+# Enable the keyboard layout module
+export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_ENABLED=true
+# export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_US=ENG
 eval "$(starship init zsh)"
 
 eval "$(zoxide init --cmd cd zsh)"
