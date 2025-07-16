@@ -10,13 +10,13 @@ HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_COMPFIX="true"
+ENABLE_CORRECTION="true"
 setopt AUTO_CD               # Allow cd by typing folder name
 setopt HIST_IGNORE_DUPS      # No duplicate history entries
 setopt SHARE_HISTORY         # Share history across terminals
 
 zstyle ':omz:update' mode disabled  # disable automatic updates
 
-# ENABLE_CORRECTION="true"
 
 autoload -Uz compinit
 if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
@@ -83,16 +83,12 @@ export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 export STARSHIP_COCKPIT_MEMORY_USAGE_ENABLED=true
 export STARSHIP_COCKPIT_BATTERY_ENABLED=true
 export STARSHIP_COCKPIT_BATTERY_THRESHOLD=100
-
-# Enable the keyboard layout module
 export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_ENABLED=true
 # export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_US=ENG
+
 eval "$(starship init zsh)"
-
 eval "$(zoxide init --cmd cd zsh)"
-
 source <(fzf --zsh)
-
 eval $(thefuck --alias fk)
 
 export FZF_DEFAULT_OPTS="
