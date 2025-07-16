@@ -1,127 +1,114 @@
-format = """
-[](fg:current_line)\
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """\
+(fg:current_line)\
 $os\
 $directory\
 $git_branch\
 $git_status\
 $fill\
+$golang\
 $nodejs\
-$bun\
-$deno\
-$aws\
-$shell\
+$python\
+$java\
+$rust\
 $cmd_duration\
-$time\
 $username\
 $line_break\
 $character\
 """
 
-palette = 'dracula'
-add_newline = true
+palette = 'catppuccin_mocha'
 
-[palettes.dracula]
-foreground = '#F8F8F2'
-background = '#282A36'
-current_line = '#44475A'
-primary = '#1E1F29'
-box = '#44475A'
-blue = '#6272A4'
-cyan = '#8BE9FD'
-green = '#50FA7B'
-orange = '#FFB86C'
-pink = '#FF79C6'
-purple = '#BD93F9'
-red = '#FF5555'
-yellow = '#F1FA8C'
+[palettes.catppuccin_mocha]
+foreground = '#D9E0EE'
+background = '#1E1E2E'
+current_line = '#2E2E3E'
+primary = '#313244'
+box = '#2E2E3E'
+blue = '#8AADF4'
+cyan = '#76E3F6'
+green = '#A6E3A1'
+orange = '#F9AF74'
+pink = '#F5BDE6'
+purple = '#CBA6F7'
+red = '#F38BA8'
+yellow = '#F9E2AF'
+status = "#e23140"
 
 [os]
-format = '(fg:current_line)[](fg:red)[$symbol ](fg:primary bg:red)[](fg:red)'
+# Added a small space after the icon to help with alignment.
+format = '(fg:current_line)[](fg:red)[󰀵 ](fg:primary bg:red)[](fg:red)'
 disabled = false
 
-[os.symbols]
-Alpine = ''
-Amazon = ''
-Android = ''
-Arch = ''
-CentOS = ''
-Debian = ''
-EndeavourOS = ''
-Fedora = ''
-FreeBSD = ''
-Garuda = ''
-Gentoo = ''
-Linux = ''
-Macos = ''
-Manjaro = ''
-Mariner = ''
-Mint = ''
-NetBSD = ''
-NixOS = ''
-OpenBSD = ''
-OpenCloudOS = ''
-openEuler = ''
-openSUSE = ''
-OracleLinux = '⊂⊃'
-Pop = ''
-Raspbian = ''
-Redhat = ''
-RedHatEnterprise = ''
-Solus = ''
-SUSE = ''
-Ubuntu = ''
-Unknown = ''
-Windows = ''
-
 [directory]
-format = '[─](fg:current_line)[](fg:pink)[󰷏 ](fg:primary bg:pink)[](fg:pink bg:box)[ $read_only$truncation_symbol$path](fg:foreground bg:box)[](fg:box)'
+format = '[─](fg:current_line)[](fg:pink bg:box)[ $read_only$truncation_symbol$path](fg:foreground bg:box)[](fg:box)'
+home_symbol = "󰋜 ~"
 truncation_length = 1
+read_only = ''
 read_only_style = ''
 
 [git_branch]
-format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $branch](fg:foreground bg:box)'
-symbol = ' '
+# Added a small space after the icon.
+format = '[─](fg:current_line)[](fg:green)[$symbol ](fg:primary bg:green)[](fg:green bg:box)[ $branch](fg:foreground bg:box)'
+symbol = ''
 
 [git_status]
-format = '[( $all_status)](fg:foreground bg:box)[](fg:box)'
+format = '[$all_status](fg:green bg:box)[](fg:box)'
+conflicted = ' '
+untracked = ' ?${count}'
+stashed = ' '
+modified = ' ${count}'
+staged = ' +${count}'
+renamed = ' »{count}'
+deleted = ' ${count}'
+ahead = ' ⇡${count}'
+behind = ' ⇣${count}'
+diverged = ' ⇕⇡${ahead_count}⇣${behind_count}'
 
 [nodejs]
-format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
-detect_files = ["package.json", ".node-version", "!bunfig.toml", "!bun.lockb"]
+# Added a small space after the icon.
+format = '[─](fg:current_line)[](fg:green)[$symbol ](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = '󰎙'
 
-[bun]
-format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
-symbol = '🥟'
+[rust]
+# Added a small space after the icon.
+format = '[─](fg:current_line)[](fg:yellow)[$symbol ](fg:primary bg:yellow)[](fg:yellow bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ''
 
-[deno]
-format = '[─](fg:current_line)[](fg:green)[$symbol](fg:primary bg:green)[](fg:green bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
-symbol = '🦕'
+[python]
+# Added a small space after the icon.
+format = '[─](fg:current_line)[](fg:green)[$symbol ](fg:primary bg:green)[](fg:green bg:box)[ (${version} )(\($virtualenv\) )](fg:foreground bg:box)[](fg:box)'
+symbol = ''
 
-[aws]
-format = '[─](fg:current_line)[](fg:purple)[$symbol](fg:primary bg:purple)[](fg:purple bg:box)[ $profile](fg:foreground bg:box)[](fg:box)'
-symbol = '☁️'
+[java]
+# Added a small space after the icon.
+format = '[─](fg:current_line)[](fg:red)[$symbol ](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ''
+
+[golang]
+# Added a small space after the icon.
+format = '[─](fg:current_line)[](fg:red)[$symbol ](fg:primary bg:red)[](fg:red bg:box)[ $version](fg:foreground bg:box)[](fg:box)'
+symbol = ''
 
 [fill]
 symbol = ' '
 style = 'fg:current_line'
 
 [cmd_duration]
+# Added a small space after the icon.
 min_time = 500
-format = '[─](fg:current_line)[](fg:orange)[ ](fg:primary bg:orange)[](fg:orange bg:box)[ $duration ](fg:foreground bg:box)[](fg:box)'
-
-[shell]
-format = '[](fg:current_line)[](fg:blue)[ ](fg:primary bg:blue)[](fg:blue bg:box)[ $indicator](fg:foreground bg:box)[](fg:box)'
-disabled = false
-
-[time]
-format = '[─](fg:current_line)[](fg:purple)[󰦖 ](fg:primary bg:purple)[](fg:purple bg:box)[ $time](fg:foreground bg:box)[](fg:box)'
-time_format = '%H:%M'
-disabled = false
+format = '[─](fg:current_line)[](fg:orange)[ ](fg:primary bg:orange)[](fg:orange bg:box)[ $duration](fg:foreground bg:box)[](fg:box)'
 
 [username]
+# Added a small space after the icon.
 format = '[─](fg:current_line)[](fg:yellow)[ ](fg:primary bg:yellow)[](fg:yellow bg:box)[ $user](fg:foreground bg:box)[](fg:box) '
 show_always = true
 
 [character]
-format = """
-[](fg:current_line) """
+# Updated to use  as requested
+success_symbol = '[](fg:purple)'
+error_symbol = '[](fg:bold red)'
+
+[profiles]
+transient = """$character"""

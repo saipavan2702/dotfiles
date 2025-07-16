@@ -10,7 +10,6 @@ HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_COMPFIX="true"
-ENABLE_CORRECTION="true"
 setopt AUTO_CD               # Allow cd by typing folder name
 setopt HIST_IGNORE_DUPS      # No duplicate history entries
 setopt SHARE_HISTORY         # Share history across terminals
