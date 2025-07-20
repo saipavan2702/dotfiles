@@ -61,7 +61,6 @@ format = 'on [$hostname](bold yellow) '
 disabled = false
 ssh_symbol = " "
 
-# Shows current directory
 [directory]
 truncation_length = 1
 home_symbol = '󰋜 ~'
