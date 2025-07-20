@@ -1,0 +1,170 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+command_timeout = 2000
+
+format = """\
+(fg:current_line)\
+$os\
+$directory\
+$git_branch\
+$jobs\
+$fill\
+$username\
+$shell\
+$time\
+$cmd_duration\
+$status\
+$line_break\
+$character\
+"""
+
+palette = 'catppuccin_mocha'
+
+[palettes.catppuccin_mocha]
+foreground = '#D9E0EE'
+background = '#1E1E2E'
+current_line = '#2E2E3E'
+primary = '#313244'
+box = '#2E2E3E'
+blue = '#8AADF4'
+cyan = '#76E3F6'
+green = '#A6E3A1'
+orange = '#F9AF74'
+pink = '#F5BDE6'
+purple = '#CBA6F7'
+red = '#F38BA8'
+yellow = '#F9E2AF'
+status = "#e23140"
+
+[os]
+format = '(fg:current_line)[](fg:red)[$symbol ](fg:primary bg:red)[](fg:red)'
+disabled = false
+
+[os.symbols]
+Alpine = ''
+Amazon = ''
+Android = ''
+Arch = ''
+CentOS = ''
+Debian = ''
+EndeavourOS = ''
+Fedora = ''
+FreeBSD = ''
+Garuda = ''
+Gentoo = ''
+Linux = ''
+Macos = ''
+Mint = ''
+NixOS = ''
+OracleLinux = '⊂⊃'
+Pop = ''
+Raspbian = ''
+Redhat = ''
+Solus = ''
+SUSE = ''
+Ubuntu = ''
+Unknown = ''
+
+[username]
+format = '(fg:current_line)[](fg:yellow)[ ](fg:primary bg:yellow)[ $user](fg:foreground bg:box)[](fg:box)'
+show_always = true
+style_user = "fg:foreground"
+
+[directory]
+format = '[ ](fg:current_line)[](fg:pink)[󰉋 ](fg:primary bg:pink)[ $read_only$path](fg:foreground bg:box)[](fg:box)'
+home_symbol = "󰋜 ~"
+truncation_length = 1
+read_only = ''
+
+[git_branch]
+format = '[ ](fg:current_line)[](fg:green)[$symbol ](fg:primary bg:green)[ $branch](fg:foreground bg:box)[](fg:box)'
+symbol = ''
+only_attached = true
+ignore_branches = []
+always_show_remote = false
+disabled = false
+
+[shell]
+format = '[ ](fg:current_line)[](fg:blue)[ ](fg:primary bg:blue)[ $indicator](fg:foreground bg:box)[](fg:box)'
+bash_indicator = "bash"
+fish_indicator = "fish"
+zsh_indicator = "zsh"
+powershell_indicator = "powershell"
+pwsh_indicator = "pwsh"
+ion_indicator = "ion"
+elvish_indicator = "elvish"
+tcsh_indicator = "tcsh"
+xonsh_indicator = "xonsh"
+cmd_indicator = "cmd"
+nu_indicator = "nu"
+unknown_indicator = ""
+disabled = false
+
+[container]
+style = "fg:blue bg:box"
+format = '[ ](fg:current_line)[](fg:blue)[ containers](fg:primary bg:blue)[ $name](fg:foreground bg:box)[](fg:box)'
+disabled = false
+
+[kubernetes]
+symbol = "󱃾"
+style = "fg:purple bg:box"
+format = '[ ](fg:current_line)[](fg:purple)[$symbol ](fg:primary bg:purple)[ ($cluster)](fg:foreground bg:box)[](fg:box)'
+disabled = false
+
+[docker_context]
+symbol = ""
+style = "fg:blue bg:box"
+format = '[ ](fg:current_line)[](fg:blue)[$symbol ](fg:primary bg:blue)[ $context](fg:foreground bg:box)[](fg:box)'
+disabled = false
+
+[jobs]
+symbol = "󰒋"
+style = "fg:orange bg:box"
+format = '[ ](fg:current_line)[](fg:orange)[$symbol ](fg:primary bg:orange)[ $number](fg:foreground bg:box)[](fg:box)'
+symbol_threshold = 1
+number_threshold = 1
+disabled = false
+
+[fill]
+symbol = ' '
+style = 'fg:current_line'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "fg:cyan bg:box"
+format = '[ ](fg:current_line)[](fg:cyan)[󰔛 ](fg:primary bg:cyan)[ $time](fg:foreground bg:box)[](fg:box)'
+
+[cmd_duration]
+min_time = 500
+format = '[ ](fg:current_line)[](fg:orange)[ ](fg:primary bg:orange)[ $duration](fg:foreground bg:box)[](fg:box)'
+show_milliseconds = false
+
+[status]
+disabled = false
+format = '[ ](fg:current_line)[](fg:red)[$symbol ](fg:primary bg:red)[ ($common_meaning)( $signal_name)](fg:foreground bg:box)[](fg:box)'
+map_symbol = true
+pipestatus = true
+symbol = '󰅙'
+success_symbol = ''
+not_executable_symbol = '󰂭'
+not_found_symbol = '󰍉'
+sigint_symbol = '󰐊'
+signal_symbol = '󱐋'
+style = 'bold fg:status'
+recognize_signal_code = true
+
+[line_break]
+disabled = false
+
+[character]
+success_symbol = '[](fg:purple)'
+error_symbol = '[](fg:red)'
+vimcmd_symbol = '[](fg:green)'
+vimcmd_replace_one_symbol = '[](fg:pink)'
+vimcmd_replace_symbol = '[](fg:pink)'
+vimcmd_visual_symbol = '[](fg:yellow)'
+
+[profiles]
+transient = """$character"""
