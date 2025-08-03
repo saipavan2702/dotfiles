@@ -3,7 +3,7 @@ title = mmacha
 keybind = global:alt+/=toggle_quick_terminal
 
 # fonts
-theme = catppuccin-mocha
+theme = Aura 
 font-size = 13
 font-style = Bold
 bold-is-bright = true
@@ -25,10 +25,10 @@ mouse-hide-while-typing = true
 # window
 initial-window = true
 resize-overlay = never
-background-opacity = 0.75
+background-opacity = 0.5
 window-save-state = always
 window-step-resize = false
-background-blur-radius = 25
+background-blur-radius = 20
 window-padding-balance = true
 confirm-close-surface = false
 window-padding-x = 0,0
