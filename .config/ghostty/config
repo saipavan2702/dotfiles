@@ -3,8 +3,8 @@ title = mmacha
 keybind = global:alt+/=toggle_quick_terminal
 
 # fonts
-theme = catppuccin-mocha 
-font-size = 14
+theme = Catppuccin Mocha 
+font-size = 13
 font-style = Bold
 bold-is-bright = true
 font-family = JetBrainsMono Nerd Font 
