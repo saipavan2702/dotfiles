@@ -42,6 +42,7 @@ auto-update = check
 auto-update-channel = stable
 #https://ghostty.org/docs/config/reference#shell-integration-features
 shell-integration-features = ssh-env
+bell-features = no-attention
 
 # macos
 macos-option-as-alt = true
