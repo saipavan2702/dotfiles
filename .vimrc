@@ -109,7 +109,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 
 call plug#end()
 
@@ -118,8 +118,8 @@ if !has('gui_running')
     set t_Co=256
 endif
 
-colorscheme catppuccin_mocha
-let g:airline_theme = 'catppuccin_mocha'
+colorscheme moonfly
+let g:airline_theme = 'moonfly'
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')

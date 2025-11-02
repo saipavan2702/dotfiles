@@ -4,7 +4,7 @@ keybind = global:alt+/=toggle_quick_terminal
 
 # fonts
 theme = Moonfly 
-font-size = 15
+font-size = 14
 font-style = Bold
 bold-is-bright = true
 font-family = JetBrainsMono Nerd Font 
@@ -40,8 +40,8 @@ window-colorspace = "display-p3"
 # behavior
 auto-update = check
 auto-update-channel = stable
-#quit-after-last-window-closed = true
-shell-integration-features = true
+#https://ghostty.org/docs/config/reference#shell-integration-features
+shell-integration-features = ssh-env
 
 # macos
 macos-option-as-alt = true
