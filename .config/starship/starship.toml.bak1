@@ -133,9 +133,9 @@ disabled = false
 style = "fg:color_git"
 format = '([$ahead_behind]($style) )([$all_status]($style) )'
 stashed = "*${count}"
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇡${ahead_count}⇣${behind_count}"
+ahead = "⇡ ${count}"
+behind = "⇣ ${count}"
+diverged = "⇡ ${ahead_count}⇣${behind_count}"
 conflicted = "=${count}"
 deleted = "×${count}"
 renamed = "»${count}"
