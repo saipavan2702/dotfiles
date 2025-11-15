@@ -3,7 +3,7 @@ title = mmacha
 keybind = global:alt+/=toggle_quick_terminal
 
 # fonts
-theme = Cursor Dark 
+theme = TokyoNight Night 
 font-size = 14
 font-style = Bold
 bold-is-bright = true

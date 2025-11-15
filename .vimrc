@@ -103,13 +103,12 @@ cmap Tabe tabe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
+Plug 'itchyny/lightline.vim'
+Plug 'ghifarit53/tokyonight-vim'
 
 call plug#end()
 
@@ -118,26 +117,12 @@ if !has('gui_running')
     set t_Co=256
 endif
 
-colorscheme moonfly
-let g:airline_theme = 'moonfly'
-let g:airline_powerline_fonts = 1
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
 
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" Separators (Powerline style)
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-
-" Unicode symbols
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.whitespace = 'Ξ'
+colorscheme tokyonight
+let g:lightline = { 'colorscheme': 'tokyonight' }
+set laststatus=2
 
 nnoremap <C-t> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
@@ -154,7 +139,3 @@ nnoremap <C-F> :Files<cr>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>s :BLines<cr>
 
-"PlugInstall
-"PlugUpdate
-"PlugStatus
-"PlugUpgrade
