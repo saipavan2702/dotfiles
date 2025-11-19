@@ -55,7 +55,7 @@ export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 
 # export http_proxy=http://www-proxy.us.oracle.com:80
 # export https_proxy=http://www-proxy.us.oracle.com:80
-# export no_proxy='localhost,127.0.0.1,.oracle.com,.oraclecorp.com'
+export no_proxy='localhost,127.0.0.1,.oracle.com,.oraclecorp.com'
 
 
 #-------- Global Alias -------#

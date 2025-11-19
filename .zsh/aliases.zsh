@@ -4,6 +4,7 @@ alias mvncit='mvn clean install -DskipTests=true'
 alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
 alias ztprof='time ZSH_DEBUGRC=1 zsh -i -c exit'
 alias ff='fastfetch'
+alias cds='cd ~/Documents/ESCS/escs-sm'
 
 #git
 alias gcd='git checkout main'
@@ -22,6 +23,7 @@ quick_commit() {
 quick_pull() {
   local branch_name
   branch_name=$(git branch --show-current)
+  git fetch origin
   git pull origin $branch_name
 }
 
