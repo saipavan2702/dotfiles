@@ -4,7 +4,7 @@ alias mvncit='mvn clean install -DskipTests=true'
 alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
 alias ztprof='time ZSH_DEBUGRC=1 zsh -i -c exit'
 alias ff='fastfetch'
-alias cds='cd ~/Documents/ESCS/escs-sm'
+alias cds='cd ~/Downloads/work-util/escs-sm'
 
 #git
 alias gcd='git checkout main'
