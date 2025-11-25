@@ -16,6 +16,9 @@ setopt SHARE_HISTORY         # Share history across terminals
 
 zstyle ':omz:update' mode disabled  # disable automatic updates
 
+source "${HOME}/.zinit/bin/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 autoload -Uz compinit
 if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
@@ -24,24 +27,13 @@ else
     compinit -C
 fi
 
-plugins=(
-  git
-  web-search
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
+plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # export LANG=en_US.UTF-8
-
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
 
 export PATH="/Users/mmacha/Library/Python/3.9/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.9)
@@ -58,8 +50,14 @@ export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 export no_proxy='localhost,127.0.0.1,.oracle.com,.oraclecorp.com'
 
 
+#---------Zinit PLugins -------#
+zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+
+
 #-------- Global Alias -------#
-#
+
 globalias() {
   if [[ $LBUFFER =~ '[a-zA-Z0-9]+$' ]]; then
     zle _expand_alias
@@ -89,16 +87,16 @@ eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
 eval $(thefuck --alias fk)
 
-export FZF_DEFAULT_OPTS="
---height=80%
---layout=reverse
---inline-info
---color=16
---style=full
---prompt='❯ '
---marker='✓'
---border=rounded 
-"
+#export FZF_DEFAULT_OPTS="
+#--height=80%
+#--layout=reverse
+#--inline-info
+#--color=16
+#--style=full
+#--prompt='❯ '
+#--marker='✓'
+#--border=rounded 
+#"
 
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow 
 --exclude .git 
@@ -138,6 +136,39 @@ export FZF_ALT_C_OPTS="
 --bind 'ctrl-/:change-preview-window(down,50%|hidden|)'
 --header $'CTRL-V: open in VSCode  CTRL-/: toggle preview\n───'
 "
+
+export NVM_LAZY_LOAD=true
+
+
+export FZF_DEFAULT_OPTS="
+--height 40%
+--layout=reverse
+--border
+--color=fg:#c0caf5,bg:#1a1b26,hl:#7aa2f7
+--color=fg+:#c0caf5,bg+:#1f2335,hl+:#7dcfff
+--color=info:#7dcfff,prompt:#7aa2f7,pointer:#f7768e
+--color=marker:#9eceba,spinner:#9ece6a,header:#bb9af7
+"
+
+#=== Tokyo Night Darker (Gritty) ZSH Syntax Highlighting ===
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+ZSH_HIGHLIGHT_STYLES[command]='fg=#7aa2f7'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=#bb9af7'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=#9ece6a'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=#7dcfff'
+ZSH_HIGHLIGHT_STYLES[function]='fg=#2ac3de'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#565f89'
+ZSH_HIGHLIGHT_STYLES[argument]='fg=#c0caf5'
+#ZSH_HIGHLIGHT_STYLES[default]='fg=#1a1b26'
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=#f7768e'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#ff9e64'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#e0af68'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#e0af68'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#7aa2F7'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#9aa5ce'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#9aa5ce'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red, bold'
+
 
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zprof

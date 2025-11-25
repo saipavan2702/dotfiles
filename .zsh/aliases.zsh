@@ -51,9 +51,8 @@ alias lta="_eza -lTag"          # Tree view + hidden
 alias lta2="_eza -lTag --level=2"
 alias lta3="_eza -lTag --level=3"
 
-
 alias -g G='| grep'
-
+alias zi="zoxide query --interactive"
 
 #pomodoro
 alias work="timer 60m && terminal-notifier -message 'Pomodoro'\

@@ -5,3 +5,4 @@
 # Aliases
 [ -f "$HOME/.zsh/aliases.zsh" ] && source "$HOME/.zsh/aliases.zsh"
 
+
