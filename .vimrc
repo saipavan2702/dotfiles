@@ -134,8 +134,8 @@ if executable('rg')
 endif
 
 let mapleader = ","
-nnoremap \ :Rg<CR>
 nnoremap <C-F> :Files<cr>
 nnoremap <Leader>b :Buffers<cr>
+nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>s :BLines<cr>
 
