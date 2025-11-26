@@ -31,25 +31,27 @@ alias gqc='quick_commit'
 alias gpob='quick_pull'
 
 #eza
-export EXA_ICON_SPACING=1  # Ensures proper icon alignment
+export EZA_ICON_SPACING=1  # Ensures proper icon alignment
 
-_eza() {
-    eza --icons=always --color=always --group-directories-first "$@"
-}
+alias ls="eza --icons=always --color=always --group-directories-first"
 
-alias ls="_eza"                 # Basic list
-alias ll='_eza -l'              # Long list (no time sort)
-alias la='_eza -la'             # Long list + hidden
+# Long list
+alias ll='eza -l --icons=always --color=always --group-directories-first'
 
-alias llt='_eza -l --sort=newest'      # Long list, newest first
-alias lat='_eza -la --sort=newest'     # Long list + hidden, newest first
+# Long + hidden
+alias la='eza -la --icons=always --color=always --group-directories-first'
 
-alias lt="_eza -lTg"            # Tree view (default depth)
-alias lt2="_eza -lTg --level=2" # Tree view (depth 2)
-alias lt3="_eza -lTg --level=3" # Tree view (depth 3)
-alias lta="_eza -lTag"          # Tree view + hidden
-alias lta2="_eza -lTag --level=2"
-alias lta3="_eza -lTag --level=3"
+# Newest first
+alias llt='eza -l --sort=newest --icons=always --color=always --group-directories-first'
+alias lat='eza -la --sort=newest --icons=always --color=always --group-directories-first'
+
+# Tree views
+alias lt="eza -lTg --icons=always --color=always --group-directories-first"
+alias lt2="eza -lTg --level=2 --icons=always --color=always --group-directories-first"
+alias lt3="eza -lTg --level=3 --icons=always --color=always --group-directories-first"
+alias lta="eza -lTag --icons=always --color=always --group-directories-first"
+alias lta2="eza -lTag --level=2 --icons=always --color=always --group-directories-first"
+alias lta3="eza -lTag --level=3 --icons=always --color=always --group-directories-first"
 
 alias -g G='| grep'
 alias zi="zoxide query --interactive"

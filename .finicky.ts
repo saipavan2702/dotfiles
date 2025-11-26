@@ -2,15 +2,12 @@ export default {
   defaultBrowser: "Google Chrome",
   handlers: [
     {
-      match: "youtube.com",
-      browser: "Brave",
-    },
-    {
       match: [
-        "google.com/*", 
-        "*.google.com*", 
+        "*.youtube.com/*",
+        "youtube.com/*",
+        "youtu.be/*",
       ],
-      browser: "Google Chrome",
+      browser: "Brave Browser",
     },
   ],
 };

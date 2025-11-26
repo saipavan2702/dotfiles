@@ -32,6 +32,7 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
 ZSH_AUTOSUGGEST_USE_ASYNC=1
+. ~/.zsh/aliases.zsh
 
 # export LANG=en_US.UTF-8
 
@@ -45,8 +46,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 
-# export http_proxy=http://www-proxy.us.oracle.com:80
-# export https_proxy=http://www-proxy.us.oracle.com:80
+export http_proxy=http://www-proxy.us.oracle.com:80
+export https_proxy=http://www-proxy.us.oracle.com:80
 export no_proxy='localhost,127.0.0.1,.oracle.com,.oraclecorp.com'
 
 
@@ -56,23 +57,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 
 
-#-------- Global Alias -------#
-
-globalias() {
-  if [[ $LBUFFER =~ '[a-zA-Z0-9]+$' ]]; then
-    zle _expand_alias
-    zle expand-word
-  fi
-  zle self-insert
-}
-
-zle -N globalias
-bindkey " " globalias                 # space key to expand globalalias
-# bindkey "^ " magic-space            # control-space to bypass completion
-bindkey "^[[Z" magic-space            # shift-tab to bypass completion
-bindkey -M isearch " " magic-space    # normal space during searches
-. ~/.zsh/aliases.zsh
-
 #-----------------------------#
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
@@ -80,7 +64,6 @@ export STARSHIP_COCKPIT_MEMORY_USAGE_ENABLED=true
 export STARSHIP_COCKPIT_BATTERY_ENABLED=true
 export STARSHIP_COCKPIT_BATTERY_THRESHOLD=100
 export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_ENABLED=true
-# export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_US=ENG
 
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
@@ -151,23 +134,23 @@ export FZF_DEFAULT_OPTS="
 "
 
 #=== Tokyo Night Darker (Gritty) ZSH Syntax Highlighting ===
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
-ZSH_HIGHLIGHT_STYLES[command]='fg=#7aa2f7'
-ZSH_HIGHLIGHT_STYLES[precommand]='fg=#bb9af7'
-ZSH_HIGHLIGHT_STYLES[alias]='fg=#9ece6a'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=#7dcfff'
-ZSH_HIGHLIGHT_STYLES[function]='fg=#2ac3de'
-ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#565f89'
-ZSH_HIGHLIGHT_STYLES[argument]='fg=#c0caf5'
-#ZSH_HIGHLIGHT_STYLES[default]='fg=#1a1b26'
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=#f7768e'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#ff9e64'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#e0af68'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#e0af68'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#7aa2F7'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#9aa5ce'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#9aa5ce'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red, bold'
+#ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+#ZSH_HIGHLIGHT_STYLES[command]='fg=#7aa2f7'
+#ZSH_HIGHLIGHT_STYLES[precommand]='fg=#bb9af7'
+#ZSH_HIGHLIGHT_STYLES[alias]='fg=#9ece6a'
+#ZSH_HIGHLIGHT_STYLES[builtin]='fg=#7dcfff'
+#ZSH_HIGHLIGHT_STYLES[function]='fg=#2ac3de'
+#ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=#565f89'
+#ZSH_HIGHLIGHT_STYLES[argument]='fg=#c0caf5'
+##ZSH_HIGHLIGHT_STYLES[default]='fg=#1a1b26'
+#ZSH_HIGHLIGHT_STYLES[globbing]='fg=#f7768e'
+#ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=#ff9e64'
+#ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=#e0af68'
+#ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=#e0af68'
+#ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=#7aa2F7'
+#ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=#9aa5ce'
+#ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#9aa5ce'
+#ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red, bold'
 
 
 if [[ -n "$ZSH_DEBUGRC" ]]; then
