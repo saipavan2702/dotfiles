@@ -2,7 +2,7 @@
 
 add_newline = false
 
-command_timeout = 2000
+command_timeout = 100000
 
 format = """
 $os\
