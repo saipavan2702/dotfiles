@@ -10,7 +10,7 @@ config-version = 2
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -45,7 +45,7 @@ automatically-unhide-macos-hidden-apps = false
 # even when they are invisible.
 # This config version is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = ["1", "2", "W", "F", "C"]
+persistent-workspaces = ["1", "2", "W", "F", "C", "T"]
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -66,12 +66,12 @@ on-mode-changed = []
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 6
-    inner.vertical =   6
-    outer.left =       6
-    outer.bottom =     6 
-    outer.top =        6
-    outer.right =      6
+    inner.horizontal = 7
+    inner.vertical =   7 
+    outer.left =       7
+    outer.bottom =     7 
+    outer.top =        7
+    outer.right =      7
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -133,6 +133,7 @@ on-mode-changed = []
     alt-c = 'workspace C'
     alt-f = 'workspace F'
     alt-w = 'workspace W'
+    alt-t = 'workspace T'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'
@@ -141,6 +142,7 @@ on-mode-changed = []
     alt-shift-c = 'move-node-to-workspace C'
     alt-shift-f = 'move-node-to-workspace F'
     alt-shift-w = 'move-node-to-workspace W'
+    alt-shift-t = 'move-node-to-workspace T'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -182,13 +184,13 @@ run = "layout floating"
 
 [[on-window-detected]]
 if.app-id="com.mitchellh.ghostty"
-run= ["layout tiling",]
+run= ["layout floating"]
 
 [[on-window-detected]]
 if.app-id="us.zoom.xos"
-run= ["layout floating",]
+run= ["layout floating"]
 
 [[on-window-detected]]
 if.app-id="com.realvnc.vncviewer"
-run= ["layout floating",]
+run= ["layout floating"]
 
