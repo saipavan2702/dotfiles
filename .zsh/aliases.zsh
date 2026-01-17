@@ -66,3 +66,10 @@ alias rest="timer 10m && terminal-notifier -message 'Pomodoro'\
         -title 'Break is over! Get back to work 😬'\
         -appIcon '~/Pictures/pumpkin.png'\
         -sound Crystal"
+
+
+#proxies
+alias proxy-on='export http_proxy=http://www-proxy.us.oracle.com:80 https_proxy=http://www-proxy.us.oracle.com:80 no_proxy="localhost,127.0.0.1,.oracle.com,.oraclecorp.com" && echo "✓ Proxy enabled"'
+
+alias proxy-off='unset http_proxy https_proxy no_proxy && echo "✓ Proxy disabled"'
+alias proxy-status='if [ -n "$http_proxy" ]; then echo "Proxy: ON ($http_proxy)"; else echo "Proxy: OFF"; fi'
