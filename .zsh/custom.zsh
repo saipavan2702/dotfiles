@@ -122,6 +122,7 @@ export FZF_DEFAULT_OPTS="
 --height 40%
 --layout=reverse
 --border
+--inline-info
 --color=fg:#c0caf5,bg:#1a1b26,hl:#7aa2f7
 --color=fg+:#c0caf5,bg+:#1f2335,hl+:#7dcfff
 --color=info:#7dcfff,prompt:#7aa2f7,pointer:#f7768e
