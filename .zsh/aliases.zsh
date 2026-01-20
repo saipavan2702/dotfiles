@@ -16,7 +16,7 @@ alias gd='git diff'
 quick_commit() {
   local commit_message 
   commit_message="$*"
-  
+  git add . 
   git commit --no-verify -am "$commit_message"
 }
 
