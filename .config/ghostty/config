@@ -1,54 +1,84 @@
 title = mmacha
 
-keybind = global:alt+/=toggle_quick_terminal
+# ============ THEME & COLORS ============
 
+# Glass morphism effect - transparency + blur
+background-opacity = 0.85
+background-blur = 25
+
+# Custom Tokyo Night-inspired colors
+background = #1a1b26
+foreground = #c0caf5
+
+# Enhance the glass effect with subtle colors
+cursor-color = #bb9af7
+cursor-style = block
+cursor-style-blink = true
+cursor-opacity = 0.9
+
+# Selection colors for better contrast
+selection-background = #33467c
+selection-foreground = #c0caf5
+
+# ============ TYPOGRAPHY ============
 # fonts
 theme = TokyoNight Night
-font-size = 15
+font-size = 14
 font-style = bold
 bold-is-bright = true
-font-family = JetBrains Mono 
+font-family = "JetBrains Mono Nerd Font"
+font-family = "JetBrains Mono"
+font-family = "Fira Code"
+font-family = "SF Mono"
 font-codepoint-map = U+E000-U+E00A,U+E0A0-U+E0A3,U+E0CA,U+E0CC-U+E0D7,U+E200-U+E2A9,U+E300-U+E3E3,U+E5FA-U+E6B7,U+E700-U+E8EF,U+EA60-U+EC1E,U+ED00-U+F2FF,U+EE00-U+EE0B,U+F300-U+F381,U+F400-U+F533,U+F0001-U+F1AF0=Symbols Nerd Font Propo
+font-feature = +calt,+liga,+dlig
+font-thicken = true
 
 # cursor 
 cursor-style-blink = true
 
 
 # clipboard
-copy-on-select = clipboard
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = true
 clipboard-trim-trailing-spaces = true
 
 # mouse
-mouse-scroll-multiplier = 2
+mouse-scroll-multiplier = 3
+scrollback-limit = 100000
 mouse-hide-while-typing = true
+cursor-click-to-move = true
 
 # window
 initial-window = true
-resize-overlay = never
-background-opacity = 0.8
+resize-overlay = after-first
+resize-overlay-position = center
 window-save-state = always
 window-step-resize = false
-background-blur-radius = 90
 window-padding-balance = true
-confirm-close-surface = false
+window-padding-color = extend
 window-padding-x = 0,0
 window-padding-y = 0,0 
 window-decoration = true
 window-colorspace = "display-p3"
+window-theme = dark
+confirm-close-surface = false
 
 
 # behavior
 auto-update = check
 auto-update-channel = stable
-#https://ghostty.org/docs/config/reference#shell-integration-features
-shell-integration-features = ssh-env
+#shell-integration-features = ssh-env
+shell-integration = detect
+shell-integration-features = cursor,sudo,title,ssh-env
 bell-features = no-attention
 
 # macos
 macos-option-as-alt = true
-macos-titlebar-style = transparent
+macos-titlebar-style = "transparent"
 macos-titlebar-proxy-icon=hidden
-
+macos-window-shadow = true
 
 # keybindings
 keybind = cmd+s>r=reload_config
@@ -73,3 +103,13 @@ keybind = cmd+s>l=goto_split:right
 keybind = cmd+s>z=toggle_split_zoom
 keybind = cmd+s>e=equalize_splits
 
+keybind = global:alt+/=toggle_quick_terminal
+
+# ============ ADVANCED AESTHETICS ============
+# Smooth cursor and animations
+alpha-blending = linear-corrected
+minimum-contrast = 1.5
+
+# Split window styling for productivity
+unfocused-split-opacity = 0.7
+split-divider-color = #414868

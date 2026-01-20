@@ -1,0 +1,41 @@
+// ToDo Tree
+
+"todo-tree.general.tags": [
+  "TODO",
+  "FIXME",
+  "README",
+  "REF",
+  "WARN"
+],
+
+"todo-tree.tree.autoRefresh": true,
+"todo-tree.highlights.customHighlight":{
+    "TODO" : {
+    "icon": "check",
+    "type": "line",
+    "gutterIcon": true
+    },
+
+    "README": {
+    "foreground" : "#ffffff",
+    "background" : "#648843",
+    "iconColour": "#122B3A",
+    "icon": "eye"
+    },
+
+    "FIXME": {
+    "icon": "bug",
+    "foreground": "#ff0000",
+    "type": "line"
+    },
+    
+    "WARN": {
+        "icon": "alert",
+        "foreground": "#ffaa00",
+        "type": "line"
+    }
+},
+
+"todo-tree.highlights.useColourScheme": true
+
+}
