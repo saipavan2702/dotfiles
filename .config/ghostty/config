@@ -19,6 +19,9 @@ cursor-opacity = 0.9
 # Selection colors for better contrast
 selection-background = #33467c
 selection-foreground = #c0caf5
+custom-shader = /Users/mmacha/.config/ghostty/shaders/bloom025.glsl
+custom-shader = /Users/mmacha/.config/ghostty/shaders/cursor_blaze_no_trail.glsl
+custom-shader = /Users/mmacha/.config/ghostty/shaders/cursor_smear.glsl
 
 # ============ TYPOGRAPHY ============
 # fonts
@@ -32,10 +35,6 @@ font-family = "Fira Code"
 font-family = "SF Mono"
 font-codepoint-map = U+E000-U+E00A,U+E0A0-U+E0A3,U+E0CA,U+E0CC-U+E0D7,U+E200-U+E2A9,U+E300-U+E3E3,U+E5FA-U+E6B7,U+E700-U+E8EF,U+EA60-U+EC1E,U+ED00-U+F2FF,U+EE00-U+EE0B,U+F300-U+F381,U+F400-U+F533,U+F0001-U+F1AF0=Symbols Nerd Font Propo
 font-feature = +calt,+liga,+dlig
-
-# cursor 
-cursor-style-blink = true
-
 
 # clipboard
 clipboard-read = allow

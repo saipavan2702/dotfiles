@@ -133,7 +133,7 @@ if executable('rg')
   let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --exclude .git'
 endif
 
-let mapleader = ","
+let mapleader = " "
 nnoremap <C-F> :Files<cr>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>r :Rg<CR>
