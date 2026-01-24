@@ -19,8 +19,67 @@ cursor-opacity = 0.9
 # Selection colors for better contrast
 selection-background = #33467c
 selection-foreground = #c0caf5
+
+# custom-shader = shaders/animated-gradient-shader.glsl
+# custom-shader = shaders/auto-tracking-spotlight.glsl
+# custom-shader = shaders/bettercrt.glsl
+# custom-shader = shaders/blaze_sparks.glsl
+# custom-shader = shaders/bloom.glsl
+# custom-shader = shaders/cineShader-Lava.glsl
+# custom-shader = shaders/crt.glsl
+# custom-shader = shaders/cubes.glsl
+# custom-shader = shaders/cursor_blaze.glsl
 # custom-shader = shaders/cursor_blaze_no_trail.glsl
+# custom-shader = shaders/cursor_blaze_tapered.glsl
+# custom-shader = shaders/cursor_border_1.glsl
+# custom-shader = shaders/cursor_frozen.glsl
 custom-shader = shaders/cursor_smear.glsl
+# custom-shader = shaders/cursor_smear_fade.glsl
+# custom-shader = shaders/cursor_smear_fade_original.glsl
+# custom-shader = shaders/cursor_smear_gradient.glsl
+# custom-shader = shaders/cursor_smear_gradient_original.glsl
+# custom-shader = shaders/cursor_smear_original.glsl
+# custom-shader = shaders/cursor_smear_rainbow.glsl
+# custom-shader = shaders/cursor_smear_rainbow_original.glsl
+# custom-shader = shaders/cursor_synesthaxia(tweened).glsl
+# custom-shader = shaders/debug_cursor_animated.glsl
+# custom-shader = shaders/debug_cursor_static.glsl
+# custom-shader = shaders/dither.glsl
+# custom-shader = shaders/drunkard.glsl
+# custom-shader = shaders/fireworks-rockets.glsl
+# custom-shader = shaders/fireworks.glsl
+# custom-shader = shaders/galaxy.glsl
+# custom-shader = shaders/gears-and-belts.glsl
+# custom-shader = shaders/ghostty_wrapper.glsl
+# custom-shader = shaders/glitchy.glsl
+# custom-shader = shaders/glow-rgbsplit-twitchy.glsl
+# custom-shader = shaders/gradient-background.glsl
+# custom-shader = shaders/in-game-crt-cursor.glsl
+# custom-shader = shaders/in-game-crt.glsl
+# custom-shader = shaders/inside-the-matrix.glsl
+# custom-shader = shaders/just-snow.glsl
+# custom-shader = shaders/last_letter_zoom.glsl
+# custom-shader = shaders/manga_slash.glsl
+# custom-shader = shaders/matrix-hallway.glsl
+# custom-shader = shaders/mnoise.glsl
+# custom-shader = shaders/negative.glsl
+# custom-shader = shaders/party_sparks.glsl
+# custom-shader = shaders/retro-terminal.glsl
+# custom-shader = shaders/shake.glsl
+# custom-shader = shaders/sin-interference.glsl
+# custom-shader = shaders/smoke-and-ghost.glsl
+# custom-shader = shaders/sparks-from-fire.glsl
+# custom-shader = shaders/sparks.glsl
+# custom-shader = shaders/spotlight.glsl
+# custom-shader = shaders/starfield-colors.glsl
+# custom-shader = shaders/starfield.glsl
+# custom-shader = shaders/test.glsl
+# custom-shader = shaders/tft.glsl
+# custom-shader = shaders/underwater.glsl
+# custom-shader = shaders/water.glsl
+# custom-shader = shaders/WIP.glsl
+# custom-shader = shaders/zoom_and_aberration.glsl
+
 
 # ============ TYPOGRAPHY ============
 # fonts
