@@ -16,14 +16,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 
--- Always hard wrap at 80 characters in every file
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-    callback = function()
-        vim.opt_local.textwidth = 80
-        vim.opt_local.formatoptions:append("t") -- wrap text
-        vim.opt_local.smartindent = false
-    end,
-})
+-- Keep code buffers unwrapped by default; enable text wrapping per filetype if needed
 
 -- backup and undo
 vim.opt.swapfile = false
@@ -53,6 +46,6 @@ vim.opt.splitbelow = true
 vim.opt.guicursor = ""
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = ""
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.mouse = "a"
