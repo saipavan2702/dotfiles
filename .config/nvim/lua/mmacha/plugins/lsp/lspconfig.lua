@@ -40,13 +40,19 @@ return {
                 vim.keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
 
                 opts.desc = "Show line diagnostics"
-                vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+                vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, opts)
 
                 opts.desc = "Show documentation for what is under cursor"
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
                 opts.desc = "Restart LSP"
                 vim.keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+
+                opts.desc = "Go to previous diagnostic"
+                vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+
+                opts.desc = "Go to next diagnostic"
+                vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
                 vim.keymap.set("i", "<C-h>", function()
                     vim.lsp.buf.signature_help()
