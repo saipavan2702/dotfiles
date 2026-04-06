@@ -6,7 +6,7 @@ return {
         -- priority = 1000,
         config = function()
             require("rose-pine").setup({
-                variant = "main", -- auto, main, moon, or dawn
+                variant = "main",      -- auto, main, moon, or dawn
                 dark_variant = "main", -- main, moon, or dawn
                 dim_inactive_windows = false,
                 -- disable_background = true,
@@ -20,16 +20,16 @@ return {
                 },
                 highlight_groups = {
                     ColorColumn = { bg = "#1C1C21" },
-                    Normal = { bg = "none" },       -- Main background remains transparent
-                    Pmenu = { bg = "", fg = "#e0def4" }, -- Completion menu background
+                    Normal = { bg = "none" },                      -- Main background remains transparent
+                    Pmenu = { bg = "", fg = "#e0def4" },           -- Completion menu background
                     PmenuSel = { bg = "#4a465d", fg = "#f8f5f2" }, -- Highlighted completion item
-                    PmenuSbar = { bg = "#191724" }, -- Scrollbar background
-                    PmenuThumb = { bg = "#9ccfd8" }, -- Scrollbar thumb
+                    PmenuSbar = { bg = "#191724" },                -- Scrollbar background
+                    PmenuThumb = { bg = "#9ccfd8" },               -- Scrollbar thumb
                 },
                 enable = {
                     terminal = false,
                     legacy_highlights = false, -- Improve compatibility for previous versions of Neovim
-                    migrations = true, -- Handle deprecated options automatically
+                    migrations = true,         -- Handle deprecated options automatically
                 },
             })
 
@@ -61,7 +61,7 @@ return {
                 invert_tabline = false,
                 invert_intend_guides = false,
                 inverse = true, -- invert background for search, diffs, statuslines and errors
-                contrast = "", -- can be "hard", "soft" or empty string
+                contrast = "",  -- can be "hard", "soft" or empty string
                 palette_overrides = {},
                 overrides = {
                     Pmenu = { bg = "" }, -- Completion menu background
@@ -76,17 +76,17 @@ return {
         "rebelot/kanagawa.nvim",
         config = function()
             require("kanagawa").setup({
-                compile = false, -- enable compiling the colorscheme
+                compile = false,  -- enable compiling the colorscheme
                 undercurl = true, -- enable undercurls
                 commentStyle = { italic = true },
                 functionStyle = {},
                 keywordStyle = { italic = false },
                 statementStyle = { bold = true },
                 typeStyle = {},
-                transparent = true, -- do not set background color
-                dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+                transparent = true,    -- do not set background color
+                dimInactive = false,   -- dim inactive window `:h hl-NormalNC`
                 terminalColors = true, -- define vim.g.terminal_color_{0,17}
-                colors = { -- add/modify theme and palette colors
+                colors = {             -- add/modify theme and palette colors
                     palette = {},
                     theme = {
                         wave = {},
@@ -126,8 +126,8 @@ return {
                         TelescopePreviewBorder = { fg = theme.ui.special },
                     }
                 end,
-                theme = "wave", -- Load "wave" theme when 'background' option is not set
-                background = { -- map the value of 'background' option to a theme
+                theme = "wave",    -- Load "wave" theme when 'background' option is not set
+                background = {     -- map the value of 'background' option to a theme
                     dark = "wave", -- try "dragon" !
                 },
             })
@@ -149,14 +149,14 @@ return {
                     functions = {},
                     variables = {},
                     -- Background styles. Can be "dark", "transparent" or "normal"
-                    sidebars = "dark", -- style for sidebars, see below
-                    floats = "dark",  -- style for floating windows
+                    sidebars = "dark",            -- style for sidebars, see below
+                    floats = "dark",              -- style for floating windows
                 },
-                sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-                day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+                sidebars = { "qf", "help" },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+                day_brightness = 0.3,             -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
                 hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-                dim_inactive = false, -- dims inactive windows
-                lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+                dim_inactive = false,             -- dims inactive windows
+                lualine_bold = false,             -- When `true`, section headers in the lualine theme will be bold
                 on_highlights = function(hl, c)
                     local prompt = "#2d3149"
                     hl.TelescopeNormal = {
@@ -255,7 +255,7 @@ return {
     -- NOTE : koda
     {
         "oskarnurm/koda.nvim",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             -- require("koda").setup({ transparent = true })
@@ -269,7 +269,7 @@ return {
         priority = 1000,
         opts = {},
     },
-    --NOTE: tokyodark
+    -- NOTE: tokyodark
     {
         "tiagovla/tokyodark.nvim",
         opts = {
@@ -280,5 +280,14 @@ return {
             vim.cmd [[colorscheme tokyodark]]
         end,
     },
-
+    -- NOTE: lumedark
+    {
+        "danfry1/lume",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("lume").setup()
+            vim.cmd("colorscheme lume")
+        end,
+    },
 }
