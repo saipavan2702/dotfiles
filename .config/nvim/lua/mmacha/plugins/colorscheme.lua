@@ -3,6 +3,7 @@ return {
     {
         "rose-pine/neovim",
         name = "rose-pine",
+        lazy = true,
         -- priority = 1000,
         config = function()
             require("rose-pine").setup({
@@ -41,6 +42,7 @@ return {
     -- NOTE: gruvbox
     {
         "ellisonleao/gruvbox.nvim",
+        lazy = true,
         -- priority = 1000 ,
         config = function()
             require("gruvbox").setup({
@@ -74,6 +76,7 @@ return {
     -- NOTE: Kanagwa
     {
         "rebelot/kanagawa.nvim",
+        lazy = true,
         config = function()
             require("kanagawa").setup({
                 compile = false,  -- enable compiling the colorscheme
@@ -136,7 +139,7 @@ return {
     -- NOTE: neosolarized
     {
         "craftzdog/solarized-osaka.nvim",
-        lazy = false,
+        lazy = true,
         config = function()
             require("solarized-osaka").setup({
                 transparent = true,
@@ -194,7 +197,8 @@ return {
     {
         "folke/tokyonight.nvim",
         name = "folkeTokyonight",
-        -- priority = 1000,
+        lazy = false,
+        priority = 1000,
         config = function()
             local transparent = true
             local bg = "#011628"
@@ -255,66 +259,105 @@ return {
     -- NOTE : koda
     {
         "oskarnurm/koda.nvim",
-        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-        priority = 1000, -- make sure to load this before all the other start plugins
+        lazy = true,
         config = function()
             -- require("koda").setup({ transparent = true })
-            vim.cmd("colorscheme koda")
         end,
     },
     -- NOTE : teide
     {
         "serhez/teide.nvim",
-        lazy = false,
-        priority = 1000,
+        lazy = true,
         opts = {},
     },
     -- NOTE: tokyodark
     {
         "tiagovla/tokyodark.nvim",
+        lazy = true,
         opts = {
             -- custom options here
         },
         config = function(_, opts)
             require("tokyodark").setup(opts) -- calling setup is optional
-            vim.cmd [[colorscheme tokyodark]]
         end,
     },
     -- NOTE: lumedark
     {
         "danfry1/lume",
-        lazy = false,
-        priority = 1000,
+        lazy = true,
         config = function()
             require("lume").setup()
-            vim.cmd("colorscheme lume")
         end,
     },
     -- NOTE: vague
     {
         "vague-theme/vague.nvim",
-        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-        priority = 1000, -- make sure to load this before all the other plugins
+        lazy = true,
         config = function()
             -- NOTE: you do not need to call setup if you don't want to.
             require("vague").setup({
                 -- optional configuration here
             })
-            vim.cmd("colorscheme vague")
         end
     },
     -- NOTE: verper
-    { 'datsfilipe/vesper.nvim' },
+    { "datsfilipe/vesper.nvim", lazy = true },
     -- NOTE: ember
     {
         "ember-theme/nvim",
         name = "ember",
-        priority = 1000,
+        lazy = true,
         config = function()
             require("ember").setup({
                 variant = "ember", -- "ember" | "ember-soft" | "ember-light"
             })
-            vim.cmd("colorscheme ember")
         end
+    },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        lazy = true,
+        opts = {
+            flavour = "mocha",
+            transparent_background = true,
+            integrations = {
+                cmp = true,
+                gitsigns = true,
+                markdown = true,
+                mason = true,
+                mini = true,
+                native_lsp = { enabled = true },
+                noice = true,
+                snacks = true,
+                telescope = true,
+                treesitter = true,
+                which_key = true,
+            },
+        },
+    },
+    {
+        "EdenEast/nightfox.nvim",
+        lazy = true,
+        opts = {
+            options = {
+                transparent = true,
+            },
+        },
+    },
+    {
+        "bluz71/vim-moonfly-colors",
+        lazy = true,
+        init = function()
+            vim.g.moonflyTransparent = true
+        end,
+    },
+    { "kdheepak/monochrome.nvim", lazy = true },
+    {
+        "Mofiqul/vscode.nvim",
+        lazy = true,
+        opts = {
+            transparent = true,
+            italic_comments = false,
+        },
     },
 }

@@ -35,6 +35,23 @@ return {
                     "dist",
                     "build",
                 },
+                sources = {
+                    files = {
+                        hidden = true,
+                        ignored = false,
+                        exclude = { ".git", "node_modules", "dist", "build" },
+                    },
+                    grep = {
+                        hidden = true,
+                        ignored = false,
+                        exclude = { ".git", "node_modules", "dist", "build" },
+                    },
+                    explorer = {
+                        hidden = true,
+                        ignored = false,
+                        exclude = { ".git", "node_modules", "dist", "build" },
+                    },
+                },
                 formatters = {
                     file = {
                         filename_first = true,
@@ -129,18 +146,14 @@ return {
             -- },
             dashboard = {
                 enabled = true,
-                sections = {
-                    { section = "header" },
-                    { section = "keys", gap = 1, padding = 1 },
-                    { section = "startup" },
-                    {
-                        section = "terminal",
-                        cmd = "ascii-image-converter ~/.config/fastfetch/images/hypr.png -C -c",
-                        random = 15,
-                        pane = 2,
-                        indent = 15,
-                        height = 20,
-                    },
+                preset = {
+                    header = [[
+██╗  ██╗██╗██╗     ██╗     ███████╗██████╗ ███╗   ███╗ █████╗  ██████╗██╗  ██╗ █████╗
+██║ ██╔╝██║██║     ██║     ██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██║  ██║██╔══██╗
+█████╔╝ ██║██║     ██║     █████╗  ██████╔╝██╔████╔██║███████║██║     ███████║███████║
+██╔═██╗ ██║██║     ██║     ██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██║     ██╔══██║██╔══██║
+██║  ██╗██║███████╗███████╗███████╗██║  ██║██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║  ██║
+╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝]],
                 },
             },
         },

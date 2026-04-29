@@ -3,6 +3,12 @@ local opts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+local function open_path(action)
+    return function()
+        require("mmacha.core.path_open").open(action)
+    end
+end
+
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
@@ -69,6 +75,17 @@ vim.keymap.set("n", "<leader>tn", "<cmd>tabn<CR>")     --go to next
 vim.keymap.set("n", "<leader>tp", "<cmd>tabp<CR>")     --go to pre
 vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>") --open current tab in new tab
 
+-- open file paths/log references under cursor
+vim.keymap.set("n", "gf", open_path("edit"), { desc = "Open file under cursor" })
+vim.keymap.set("n", "<leader>oo", open_path("edit"), { desc = "Open file under cursor" })
+vim.keymap.set("n", "<leader>ot", open_path("tab"), { desc = "Open file under cursor in tab" })
+vim.keymap.set("n", "<leader>os", open_path("split"), { desc = "Open file under cursor in split" })
+vim.keymap.set("n", "<leader>ov", open_path("vsplit"), { desc = "Open file under cursor in vertical split" })
+vim.keymap.set("n", "<leader>op", open_path("preview"), { desc = "Preview file under cursor" })
+vim.keymap.set("n", "<leader>oP", function()
+    require("mmacha.core.path_open").pick_buffer_refs()
+end, { desc = "Pick file references in buffer" })
+
 --split management
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
 -- split window vertically
@@ -94,4 +111,3 @@ vim.keymap.set("n", "<leader>lx", function()
         underline = isLspDiagnosticsVisible
     })
 end, { desc = "Toggle LSP diagnostics" })
-
