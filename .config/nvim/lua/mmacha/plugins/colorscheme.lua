@@ -313,6 +313,7 @@ return {
             })
         end
     },
+    -- NOTE: catppuccin
     {
         "catppuccin/nvim",
         name = "catppuccin",
@@ -335,8 +336,10 @@ return {
             },
         },
     },
+    -- NOTE: nightfox
     {
         "EdenEast/nightfox.nvim",
+        name = "nightfox",
         lazy = true,
         opts = {
             options = {
@@ -344,20 +347,31 @@ return {
             },
         },
     },
+    -- NOTE: moonfly
     {
         "bluz71/vim-moonfly-colors",
+        name = "moonfly",
         lazy = true,
         init = function()
             vim.g.moonflyTransparent = true
         end,
     },
-    { "kdheepak/monochrome.nvim", lazy = true },
+    -- NOTE: monochrome
+    { "kdheepak/monochrome.nvim", name = "monochrome", lazy = true },
+    -- NOTE: vscode
     {
         "Mofiqul/vscode.nvim",
+        name = "vscode",
         lazy = true,
         opts = {
             transparent = true,
             italic_comments = false,
         },
+    },
+    -- NOTE: matugen
+    {
+        "daedlock/matugen.nvim",
+        name = "matugen",
+        lazy = true,
     },
 }

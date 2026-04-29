@@ -82,9 +82,10 @@ vim.keymap.set("n", "<leader>ot", open_path("tab"), { desc = "Open file under cu
 vim.keymap.set("n", "<leader>os", open_path("split"), { desc = "Open file under cursor in split" })
 vim.keymap.set("n", "<leader>ov", open_path("vsplit"), { desc = "Open file under cursor in vertical split" })
 vim.keymap.set("n", "<leader>op", open_path("preview"), { desc = "Preview file under cursor" })
+vim.keymap.set("n", "<leader>of", open_path("preview"), { desc = "Float file under cursor" })
 vim.keymap.set("n", "<leader>oP", function()
     require("mmacha.core.path_open").pick_buffer_refs()
-end, { desc = "Pick file references in buffer" })
+end, { desc = "Pick file refs in floating picker" })
 
 --split management
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })

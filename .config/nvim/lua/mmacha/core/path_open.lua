@@ -95,45 +95,131 @@ local function context_dirs()
     return result
 end
 
-function M.resolve(raw)
+local function stat_target(candidate, line)
+    local stat = vim.uv.fs_stat(candidate)
+    if stat then
+        return { path = candidate, line = line, pos = { line or 1, 0 }, type = stat.type }
+    end
+end
+
+local function candidate_roots()
+    local result, seen = {}, {}
+    for _, root in ipairs(roots()) do
+        add(result, seen, root)
+    end
+    for _, root in ipairs(context_dirs()) do
+        add(result, seen, root)
+    end
+    return result
+end
+
+local function add_target(list, seen, target)
+    if not target then
+        return
+    end
+
+    local key = target.path .. ":" .. (target.line or "")
+    if seen[key] then
+        return
+    end
+
+    seen[key] = true
+    table.insert(list, target)
+end
+
+function M.resolve_all(raw)
     local path, line = strip(raw)
     if not path then
-        return nil
+        return {}
     end
 
-    local candidates = {}
+    local targets, seen_targets = {}, {}
     if path:sub(1, 1) == "/" then
-        candidates = { path }
+        add_target(targets, seen_targets, stat_target(path, line))
     else
-        for _, root in ipairs(roots()) do
-            table.insert(candidates, vim.fs.joinpath(root, path))
+        for _, root in ipairs(candidate_roots()) do
+            add_target(targets, seen_targets, stat_target(vim.fs.joinpath(root, path), line))
         end
-        if not path:find("/") then
-            for _, dir in ipairs(context_dirs()) do
-                table.insert(candidates, vim.fs.joinpath(dir, path))
+    end
+
+    if #targets > 0 or path:find("/") then
+        return targets
+    end
+
+    local searched = {}
+    for _, root in ipairs(candidate_roots()) do
+        if root and root ~= "" and not searched[root] then
+            searched[root] = true
+            for _, found in ipairs(vim.fs.find(path, { path = root, type = "file", limit = 20 })) do
+                add_target(targets, seen_targets, stat_target(found, line))
             end
         end
     end
 
-    for _, candidate in ipairs(candidates) do
-        local stat = vim.uv.fs_stat(candidate)
-        if stat then
-            return { path = candidate, line = line, type = stat.type }
+    return targets
+end
+
+function M.resolve(raw)
+    return M.resolve_all(raw)[1]
+end
+
+local function display_path(path)
+    return vim.fn.fnamemodify(path, ":~:.")
+end
+
+local function to_picker_item(target, label)
+    return {
+        text = (label and label .. " " or "") .. display_path(target.path),
+        label = label,
+        file = target.path,
+        pos = target.pos or { target.line or 1, 0 },
+        target = target,
+    }
+end
+
+local function fallback_select(items, action)
+    vim.ui.select(items, {
+        prompt = "Open file reference",
+        format_item = function(item)
+            local suffix = item.target.line and ":" .. item.target.line or ""
+            return display_path(item.target.path) .. suffix
+        end,
+    }, function(item)
+        if item then
+            M.open(action or "edit", item.target)
         end
+    end)
+end
+
+function M.pick_targets(targets, action, title)
+    if #targets == 0 then
+        vim.notify("No readable file references found", vim.log.levels.INFO)
+        return
     end
 
-    if not path:find("/") then
-        local seen = {}
-        for _, root in ipairs({ current_dir(), vim.uv.cwd() }) do
-            if root and root ~= "" and not seen[root] then
-                seen[root] = true
-                local found = vim.fs.find(path, { path = root, type = "file", limit = 1 })[1]
-                if found then
-                    return { path = found, line = line, type = "file" }
-                end
-            end
-        end
+    local items = {}
+    for _, target in ipairs(targets) do
+        table.insert(items, to_picker_item(target))
     end
+
+    local ok, snacks = pcall(require, "snacks")
+    if not ok or not snacks.picker then
+        return fallback_select(items, action)
+    end
+
+    snacks.picker({
+        title = title or "File References",
+        items = items,
+        format = "file",
+        preview = "file",
+        layout = "telescope",
+        confirm = function(picker, item)
+            picker:close()
+            if item then
+                M.open(action or "edit", item.target)
+            end
+        end,
+    })
 end
 
 local function under_cursor()
@@ -210,7 +296,12 @@ function M.preview(target)
 end
 
 function M.open(action, raw)
-    local target = type(raw) == "table" and raw or M.resolve(raw or under_cursor())
+    local targets = type(raw) == "table" and { raw } or M.resolve_all(raw or under_cursor())
+    if #targets > 1 and action ~= "preview" then
+        return M.pick_targets(targets, action, "Open matching file")
+    end
+
+    local target = targets[1]
     if not target then
         vim.notify("No readable file path found under cursor", vim.log.levels.WARN)
         return
@@ -229,21 +320,13 @@ function M.pick_buffer_refs()
     local seen, choices = {}, {}
 
     local function add(raw)
-        local target = M.resolve(raw)
-        if not target then
-            return
+        for _, target in ipairs(M.resolve_all(raw)) do
+            local key = target.path .. ":" .. (target.line or "")
+            if not seen[key] then
+                seen[key] = true
+                table.insert(choices, target)
+            end
         end
-
-        local key = target.path .. ":" .. (target.line or "")
-        if seen[key] then
-            return
-        end
-
-        seen[key] = true
-        table.insert(choices, {
-            target = target,
-            label = vim.fn.fnamemodify(target.path, ":~:.") .. (target.line and ":" .. target.line or ""),
-        })
     end
 
     for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, -1, false)) do
@@ -260,16 +343,7 @@ function M.pick_buffer_refs()
         return
     end
 
-    vim.ui.select(choices, {
-        prompt = "Open file reference",
-        format_item = function(item)
-            return item.label
-        end,
-    }, function(item)
-        if item then
-            M.open("edit", item.target)
-        end
-    end)
+    M.pick_targets(choices, "edit", "Buffer file references")
 end
 
 return M
