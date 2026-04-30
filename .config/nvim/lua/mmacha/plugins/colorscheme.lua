@@ -4,7 +4,6 @@ return {
         "rose-pine/neovim",
         name = "rose-pine",
         lazy = true,
-        -- priority = 1000,
         config = function()
             require("rose-pine").setup({
                 variant = "main",      -- auto, main, moon, or dawn
@@ -300,8 +299,21 @@ return {
             })
         end
     },
-    -- NOTE: verper
-    { "datsfilipe/vesper.nvim", lazy = true },
+    -- NOTE: vesper
+    {
+        "datsfilipe/vesper.nvim",
+        lazy = true,
+        opts = {
+            transparent = true,
+            italics = {
+                comments = false,
+                keywords = false,
+                functions = false,
+                strings = false,
+                variables = false,
+            },
+        },
+    },
     -- NOTE: ember
     {
         "ember-theme/nvim",
@@ -373,5 +385,10 @@ return {
         "daedlock/matugen.nvim",
         name = "matugen",
         lazy = true,
+        config = function()
+            require("matugen").setup({
+                colors_path = "~/.config/matugen/colors.json",
+            })
+        end,
     },
 }

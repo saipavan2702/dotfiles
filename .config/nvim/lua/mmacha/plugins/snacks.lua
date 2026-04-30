@@ -1,3 +1,9 @@
+local function file_picker(opts)
+    return function()
+        require("snacks").picker.files(opts or {})
+    end
+end
+
 return {
     -- HACK: docs @ https://github.com/folke/snacks.nvim/blob/main/docs
     {
@@ -164,9 +170,23 @@ return {
             { "<leader>rN", function() require("snacks").rename.rename_file() end, desc = "Fast Rename Current File" },
             { "<leader>dB", function() require("snacks").bufdelete() end, desc = "Delete or Close Buffer  (Confirm)" },
 
+            -- Floating file picker
+            { "<leader>oo", file_picker(), desc = "Open File Picker" },
+            { "<leader>of", file_picker(), desc = "Find Files" },
+            { "<leader>oF", function() require("snacks").picker.files({ cwd = vim.fn.expand("%:p:h") }) end, desc = "Find Files in Current Dir" },
+            { "<leader>oc", function() require("snacks").picker.files({ cwd = vim.fn.stdpath("config") .. "/lua" }) end, desc = "Find Config File" },
+
             -- Snacks Picker
-            -- { "<leader>pf", function() require("snacks").picker.files() end, desc = "Find Files (Snacks Picker)" },
+            { "<leader>pf", function() require("snacks").picker.files() end, desc = "Find Files" },
+            { "<leader>pF", function() require("snacks").picker.files({ cwd = vim.fn.expand("%:p:h") }) end, desc = "Find Files in Current Dir" },
             { "<leader>pc", function() require("snacks").picker.files({ cwd = vim.fn.stdpath("config") .. "/lua" }) end, desc = "Find Config File" },
+            { "<leader>pb", function() require("snacks").picker.buffers() end, desc = "Find Buffers" },
+            { "<leader>pr", function() require("snacks").picker.recent() end, desc = "Find Recent Files" },
+            { "<leader>pg", function() require("snacks").picker.git_files() end, desc = "Find Git Files" },
+            { "<leader>pR", function() require("snacks").picker.resume() end, desc = "Resume Picker" },
+            { "<leader>pd", function() require("snacks").picker.diagnostics() end, desc = "Find Diagnostics" },
+            { "<leader>pl", function() require("snacks").picker.lines() end, desc = "Find Lines in Buffer" },
+            { "<leader>pC", function() require("snacks").picker.commands() end, desc = "Find Commands" },
             { "<leader>ps", function() require("snacks").picker.grep() end, desc = "Grep word" },
             { "<leader>pws", function() require("snacks").picker.grep_word() end, desc = "Search Visual selection or Word", mode = { "n", "x" } },
             { "<leader>pk", function() require("snacks").picker.keymaps({ layout = "ivy" }) end, desc = "Search Keymaps (Snacks Picker)" },
