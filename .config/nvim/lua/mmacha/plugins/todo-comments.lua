@@ -2,7 +2,7 @@ return {
 	-- Quickly Jump through the todo tags
 	"folke/todo-comments.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	dependencies = { "nvim-lua/plenary.nvim"},
+	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
 		local todo_comments = require("todo-comments")
 
@@ -14,7 +14,7 @@ return {
 					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
 					-- signs = false, -- configure signs for some keywords individually
 				},
-				TODO = { icon = " ", color = "info" , alt = {"Personal"} },
+				TODO = { icon = " ", color = "info", alt = { "Personal" } },
 				HACK = { icon = " ", color = "warning", alt = { "DON SKIP" } },
 				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
 				PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
@@ -22,32 +22,32 @@ return {
 				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 				FORGETNOT = { icon = " ", color = "hint" },
 			},
-            -- Patterns for hl markdown support
-            highlight = {
-                multiline = true,
-                multiline_pattern = "^.",
-                multiline_context = 10,
-                before = "",
-                keyword = "wide",
-                after = "fg",
-                pattern = {
-                    [[.*<(KEYWORDS)\s*:]], -- default pattern
-                    [[<!--\s*(KEYWORDS)\s*:.*-->]], -- HTML comments with colon
-                    [[<!--\s*(KEYWORDS)\s*.*-->]], -- HTML comments without colon
-                },
-                comments_only = false, -- highlighting outside of comments
-            },
-            search = {
-                command = "rg",
-                args = {
-                    "--color=never",
-                    "--no-heading",
-                    "--with-filename",
-                    "--line-number",
-                    "--column",
-                },
-                pattern = [[\b(KEYWORDS)\b]],
-            },
+			-- Patterns for hl markdown support
+			highlight = {
+				multiline = true,
+				multiline_pattern = "^.",
+				multiline_context = 10,
+				before = "",
+				keyword = "wide",
+				after = "fg",
+				pattern = {
+					[[.*<(KEYWORDS)\s*:]], -- default pattern
+					[[<!--\s*(KEYWORDS)\s*:.*-->]], -- HTML comments with colon
+					[[<!--\s*(KEYWORDS)\s*.*-->]], -- HTML comments without colon
+				},
+				comments_only = false, -- highlighting outside of comments
+			},
+			search = {
+				command = "rg",
+				args = {
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+				},
+				pattern = [[\b(KEYWORDS)\b]],
+			},
 		})
 
 		-- keymaps
@@ -58,5 +58,10 @@ return {
 		vim.keymap.set("n", "[t", function()
 			todo_comments.jump_prev()
 		end, { desc = "Previous todo comment" })
+
+		vim.keymap.set("n", "<leader>pt", "<cmd>TodoTelescope<CR>", { desc = "Find todo comments" })
+		vim.keymap.set("n", "<leader>pT", "<cmd>TodoTelescope keywords=TODO,FIXME,FORGETNOT<CR>", {
+			desc = "Find main todo comments",
+		})
 	end,
 }
