@@ -47,7 +47,46 @@ vim.opt.hlsearch = true
 -- UI
 vim.opt.background = "dark"
 vim.opt.laststatus = 3
+vim.opt.showtabline = 1
 vim.opt.pumheight = 12
+
+local function tabpage_title(tab)
+    local ok, title = pcall(vim.api.nvim_tabpage_get_var, tab, "tab_title")
+    if ok and type(title) == "string" and title ~= "" then
+        return title
+    end
+
+    local win = vim.api.nvim_tabpage_get_win(tab)
+    local buf = vim.api.nvim_win_get_buf(win)
+    local name = vim.api.nvim_buf_get_name(buf)
+
+    if name == "" then
+        return "[No Name]"
+    end
+
+    local tail = vim.fn.fnamemodify(name, ":t")
+    if tail ~= "" then
+        return tail
+    end
+
+    return vim.fn.fnamemodify(name, ":h:t")
+end
+
+function _G.mmacha_tabline()
+    local items = {}
+
+    for index, tab in ipairs(vim.api.nvim_list_tabpages()) do
+        local is_current = tab == vim.api.nvim_get_current_tabpage()
+        items[#items + 1] = "%" .. index .. "T"
+        items[#items + 1] = is_current and "%#TabLineSel#" or "%#TabLine#"
+        items[#items + 1] = " " .. index .. ":" .. tabpage_title(tab) .. " "
+    end
+
+    items[#items + 1] = "%#TabLineFill#%T"
+    return table.concat(items)
+end
+
+vim.opt.tabline = "%!v:lua.mmacha_tabline()"
 
 -- folding (for nvim-ufo)
 vim.o.foldenable = true

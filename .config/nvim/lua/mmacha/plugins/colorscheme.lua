@@ -288,6 +288,12 @@ return {
             require("lume").setup()
         end,
     },
+    -- NOTE: kanso
+    {
+        "webhooked/kanso.nvim",
+        name = "kanso",
+        lazy = true,
+    },
     -- NOTE: vague
     {
         "vague-theme/vague.nvim",
@@ -298,6 +304,18 @@ return {
                 -- optional configuration here
             })
         end
+    },
+    -- NOTE: no-clown-fiesta
+    {
+        "aktersnurra/no-clown-fiesta.nvim",
+        name = "no-clown-fiesta",
+        lazy = true,
+    },
+    -- NOTE: fleet
+    {
+        "felipeagc/fleet-theme-nvim",
+        name = "fleet",
+        lazy = true,
     },
     -- NOTE: vesper
     {

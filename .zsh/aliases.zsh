@@ -17,6 +17,15 @@ alias gf='git fetch'
 alias gs='git status'
 alias gd='git diff'
 
+git() {
+  if [[ "$1" == "lg" ]]; then
+    shift
+    command git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit "$@"
+  else
+    command git "$@"
+  fi
+}
+
 quick_commit() {
   local commit_message 
   commit_message="$*"

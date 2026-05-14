@@ -63,6 +63,16 @@ export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_ENABLED=true
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 source <(fzf --zsh)
+
+# fzf-git key bindings for Git files, branches, commits, stashes, and refs.
+if [[ -o interactive ]]; then
+  stty -ixon 2>/dev/null
+fi
+KEYTIMEOUT=300
+if [[ -r "$HOME/.zsh/fzf-git.sh" ]]; then
+  source "$HOME/.zsh/fzf-git.sh"
+fi
+
 eval $(thefuck --alias fk)
 
 #export FZF_DEFAULT_OPTS="
@@ -152,4 +162,3 @@ export FZF_DEFAULT_OPTS="
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zprof
 fi
-
