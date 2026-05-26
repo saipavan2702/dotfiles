@@ -145,11 +145,11 @@ macos-window-shadow = true
 
 # keybindings
 keybind = cmd+s>r=reload_config
-keybind = cmd+s>x=close_surface
+#keybind = cmd+s>x=close_surface
 keybind = cmd+s>n=new_window
 
 # tabs 
-keybind = cmd+s>c=new_tab
+#keybind = cmd+s>c=new_tab
 keybind = cmd+s>shift+l=next_tab
 keybind = cmd+s>shift+h=previous_tab
 keybind = cmd+s>comma=move_tab:-1
