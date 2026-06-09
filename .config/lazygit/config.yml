@@ -1,0 +1,38 @@
+gui:
+  nerdFontsVersion: "3"
+  showIcons: true
+  showFileIcons: true
+  theme:
+    activeBorderColor:
+      - "#ff9e64"
+      - bold
+    inactiveBorderColor:
+      - "#27a1b9"
+    searchingActiveBorderColor:
+      - "#ff9e64"
+      - bold
+    optionsTextColor:
+      - "#7aa2f7"
+    selectedLineBgColor:
+      - "#275378"
+    inactiveViewSelectedLineBgColor:
+      - "#1f2335"
+    cherryPickedCommitFgColor:
+      - "#7aa2f7"
+    cherryPickedCommitBgColor:
+      - "#bb9af7"
+    markedBaseCommitFgColor:
+      - "#7aa2f7"
+    markedBaseCommitBgColor:
+      - "#e0af68"
+    unstagedChangesColor:
+      - "#db4b4b"
+    defaultFgColor:
+      - "#cbe0f0"
+
+customCommands:
+  - key: "<c-p>"
+    context: files
+    description: Preview selected file in spf
+    command: "spf {{.SelectedFile.Name | quote}}"
+    output: terminal
