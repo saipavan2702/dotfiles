@@ -29,7 +29,6 @@ $shell\
 $container\
 $jobs\
 $memory_usage\
-$battery\
 ${custom.keyboard_layout}\
 $time\
 $cmd_duration\
@@ -254,25 +253,6 @@ symbol = "󰓅"
 style = "fg:color_other"
 format = '( [$symbol( ${ram})]($style) )'
 disabled = false
-
-[battery]
-charging_symbol = "󰂄"
-full_symbol = "󰁹"
-discharging_symbol = "󰁹"
-format = '( [$symbol( $percentage)]($style) )'
-disabled = false
-
-[[battery.display]]
-threshold = 10
-style = "bold fg:color_danger"
-
-[[battery.display]]
-threshold = 20
-style = "fg:color_caution"
-
-[[battery.display]]
-threshold = 100
-style = "fg:color_other"
 
 [time]
 disabled = false
