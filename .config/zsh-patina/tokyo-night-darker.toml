@@ -1,0 +1,55 @@
+# Tokyo Night Darker palette translated from the old zsh-syntax-highlighting
+# styles in .zsh/custom.zsh.
+
+"comment" = "#565f89"
+
+# command/precommand/alias/builtin/function
+"dynamic.callable.command.shell" = "#7aa2f7"
+"variable.function.shell" = "#7aa2f7"
+"precommand" = "#bb9af7"
+"dynamic.callable.alias.shell" = "#9ece6a"
+"support.function.alias.shell" = "#9ece6a"
+"dynamic.callable.builtin.shell" = "#7dcfff"
+"keyword.builtin" = "#7dcfff"
+"dynamic.callable.function.shell" = "#2ac3de"
+"entity.name.function.shell" = "#2ac3de"
+
+# separators and arguments
+"keyword.operator.logical" = "#565f89"
+"punctuation.separator" = "#565f89"
+"punctuation.terminator" = "#565f89"
+"meta.function-call.arguments.shell" = "#c0caf5"
+"variable.other" = "#c0caf5"
+
+# options and shell variables
+"variable.parameter.option.shell" = "#e0af68"
+"variable.parameter.switch.shell" = "#e0af68"
+"keyword.operator.assignment.option.shell" = "#e0af68"
+"variable.parameter" = "#e0af68"
+"punctuation.definition.variable" = "#e0af68"
+
+# quoted and command-substitution arguments
+"string.quoted.single.shell" = "#9aa5ce"
+"string.quoted.double.shell" = "#9aa5ce"
+"string.quoted.double.locale.shell" = "#9aa5ce"
+"string.quoted.single.ansi-c.shell" = "#9aa5ce"
+"constant.character.escape.backtick.shell" = "#7aa2f7"
+"meta.group.expansion.command.backticks.shell" = "#7aa2f7"
+
+# globbing and history expansion
+"meta.group.expansion.brace.shell" = "#f7768e"
+"meta.group.expansion.tilde" = "#f7768e"
+"keyword.operator.regexp.quantifier.shell" = "#f7768e"
+"meta.regexp.shell" = "#f7768e"
+"meta.group.expansion.history.shell" = "#ff9e64"
+
+# paths keep completion-friendly contrast.
+"dynamic.path.file.complete.shell" = { foreground = "#c0caf5", underline = true }
+"dynamic.path.directory.complete.shell" = { foreground = "#7aa2f7", underline = true }
+"dynamic.path.file.partial.shell" = "#c0caf5"
+"dynamic.path.directory.partial.shell" = "#7aa2f7"
+
+"constant.numeric" = "#ff9e64"
+"constant.character.escape" = "#7aa2f7"
+"dynamic.callable.missing.shell" = { foreground = "red", bold = true }
+"invalid" = { foreground = "red", bold = true }

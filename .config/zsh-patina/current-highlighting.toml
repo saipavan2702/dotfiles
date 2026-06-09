@@ -1,0 +1,108 @@
+# zsh-syntax-highlighting default-style compatibility for zsh-patina.
+# Source:
+# /Users/mmacha/.zinit/plugins/zsh-users---zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh
+
+# unknown-token='fg=red,bold'
+"dynamic.callable.missing.shell" = { foreground = "red", bold = true }
+"invalid" = { foreground = "red", bold = true }
+
+# arg0='fg=green'
+# zsh-syntax-highlighting falls alias/builtin/function/command back to arg0.
+"variable.function.shell" = "green"
+"dynamic.callable" = "green"
+"dynamic.callable.alias.shell" = "green"
+"dynamic.callable.builtin.shell" = "green"
+"dynamic.callable.command.shell" = "green"
+"dynamic.callable.function.shell" = "green"
+"entity.name.function.shell" = "green"
+"entity.name.function.alias.shell" = "green"
+"entity.name.function.coproc.shell" = "green"
+"keyword.builtin" = "green"
+"support.function.alias.shell" = "green"
+"support.function.test.begin.shell" = "green"
+"support.function.test.end.shell" = "green"
+
+# precommand='fg=green,underline'
+"precommand" = { foreground = "green", underline = true }
+"precommand.builtin.builtin.shell" = { foreground = "green", underline = true }
+"precommand.builtin.command.shell" = { foreground = "green", underline = true }
+"precommand.builtin.dash.shell" = { foreground = "green", underline = true }
+"precommand.builtin.exec.shell" = { foreground = "green", underline = true }
+"precommand.builtin.noglob.shell" = { foreground = "green", underline = true }
+
+# reserved-word='fg=yellow'
+"keyword.control" = "yellow"
+"keyword.control.flow.time.shell" = "yellow"
+"keyword.other.coproc.shell" = "yellow"
+"storage.type.function.shell" = "yellow"
+
+# commandseparator='none'
+"keyword.operator.logical" = {}
+"keyword.operator.logical.and.shell" = {}
+"keyword.operator.logical.or.shell" = {}
+"keyword.operator.logical.pipe.shell" = {}
+"keyword.operator.logical.continue.shell" = {}
+"keyword.operator.logical.job.shell" = {}
+"punctuation.separator.shell" = {}
+"punctuation.separator.continuation.line.shell" = {}
+"punctuation.terminator" = {}
+
+# path='underline'; path separators unset.
+"dynamic.path.file.complete.shell" = { underline = true }
+"dynamic.path.directory.complete.shell" = { underline = true }
+"dynamic.path.file.partial.shell" = { underline = true }
+"dynamic.path.directory.partial.shell" = { underline = true }
+
+# globbing='fg=blue', history-expansion='fg=blue'
+"meta.group.expansion.brace.shell" = "blue"
+"meta.group.expansion.tilde" = "blue"
+"keyword.operator.regexp.quantifier.shell" = "blue"
+"meta.regexp.shell" = "blue"
+"meta.group.expansion.history.shell" = "blue"
+
+# command/process/back-quoted substitution delimiters='fg=magenta'
+"constant.character.escape.backtick.shell" = "magenta"
+"keyword.operator.substitution.shell" = "magenta"
+"meta.group.expansion.command.backticks.shell" = {}
+"meta.group.expansion.command.parens.shell" = {}
+
+# single/double/dollar quoted argument='fg=yellow'
+"string" = "yellow"
+"string.quoted.single.shell" = "yellow"
+"string.quoted.double.shell" = "yellow"
+"string.quoted.double.locale.shell" = "yellow"
+"string.quoted.single.ansi-c.shell" = "yellow"
+"string.unquoted.heredoc.shell" = "yellow"
+
+# rc-quote and escapes inside quoted strings='fg=cyan'
+"constant.character.escape.shell" = "cyan"
+"punctuation.definition.variable.shell" = "cyan"
+"variable.other.readwrite.shell" = "cyan"
+"meta.group.expansion.parameter.shell" = "cyan"
+
+# single-hyphen-option/double-hyphen-option/back-quoted-argument/assign='none'
+"variable.parameter" = {}
+"variable.parameter.option.shell" = {}
+"variable.parameter.switch.shell" = {}
+"keyword.operator.assignment.option.shell" = {}
+"keyword.operator.end-of-options.shell" = {}
+"punctuation.definition.parameter.shell" = {}
+"keyword.operator.assignment.shell" = {}
+"variable.other.readwrite.assignment.shell" = {}
+
+# redirection='fg=yellow'
+"keyword.operator.assignment.redirection.shell" = "yellow"
+"keyword.operator.assignment.redirection.process.shell" = "yellow"
+"keyword.operator.herestring.shell" = "yellow"
+
+# comment='fg=black,bold'
+"comment" = { foreground = "black", bold = true }
+"comment.line.number-sign.shell" = { foreground = "black", bold = true }
+"punctuation.definition.comment.begin.shell" = { foreground = "black", bold = true }
+
+# numeric-fd/named-fd/default='none'
+"constant.numeric.integer.decimal.file-descriptor.shell" = {}
+"punctuation.terminator.file-descriptor.shell" = {}
+"variable.other" = {}
+"meta.function-call.arguments.shell" = {}
+"string.unquoted.shell" = {}
