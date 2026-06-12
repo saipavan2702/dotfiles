@@ -15,7 +15,7 @@
   },
   "ui_font_weight": 400.0,
   "project_panel": {
-    "dock": "left"
+    "dock": "right"
   },
   "outline_panel": {
     "dock": "left"
@@ -29,7 +29,7 @@
     "model_parameters": []
   },
   "git_panel": {
-    "dock": "left"
+    "dock": "right"
   },
   "buffer_font_weight": 450.0,
   "ui_font_family": ".SystemUIFont",
