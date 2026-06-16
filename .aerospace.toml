@@ -226,3 +226,6 @@ run=["move-node-to-workspace B"]
 if.app-id="com.hnc.Discord"
 run=["move-node-to-workspace D"]
 
+[[on-window-detected]]
+if.app-id="dev.chang.FinderTwo"
+run=["layout floating"]
