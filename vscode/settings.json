@@ -1,0 +1,13 @@
+{
+    "workbench.sideBar.location": "right",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.accessibilitySupport": "on",
+    "editor.lineNumbers": "relative",
+    "diffEditor.maxComputationTime": 0,
+    "workbench.colorTheme": "Monokai Vibrant",
+    "security.workspace.trust.untrustedFiles": "open",
+    "chatgpt.followUpQueueMode": "steer",
+    "comments.openView": "never",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.editorLargeFileConfirmation": 100
+}

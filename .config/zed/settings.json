@@ -8,10 +8,18 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "vim_mode": true,
+  "relative_line_numbers": "enabled",
+  "soft_wrap": "editor_width",
+  "scroll_beyond_last_line": "vertical_scroll_margin",
   "icon_theme": {
     "mode": "system",
     "light": "Zed (Default)",
     "dark": "Warm Charmed Icons"
+  },
+  "title_bar": {
+    "show_branch_status_icon": true,
+    "show_branch_name": true,
+    "show_sign_in": false
   },
   "ui_font_weight": 400.0,
   "project_panel": {
@@ -34,10 +42,38 @@
   "buffer_font_weight": 450.0,
   "ui_font_family": ".SystemUIFont",
   "buffer_font_family": "SF Mono",
+  "buffer_font_fallbacks": ["JetBrainsMono Nerd Font"],
   "terminal": {
     "copy_on_select": true,
     "cursor_shape": "bar",
-    "font_family": "JetBrainsMono Nerd Font"
+    "font_family": "JetBrainsMono Nerd Font",
+    "dock": "bottom",
+    "default_height": 360,
+    // "env": {
+    //   "EDITOR": "zed --wait"
+    // },
+    "detect_venv": {
+      "on": {
+        "directories": [".venv", "venv"],
+        "activate_script": "default"
+      }
+    }
+  },
+  "gutter": {
+    "min_line_number_digits": 3
+  },
+  "git": {
+    "path_style": "file_path_first",
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "delay_ms": 700
+    }
+  },
+  "edit_predictions": {
+    "disabled_globs": [
+      "**/zed/settings.json",
+      "**/zed/keymap.json"
+    ]
   },
   "ui_font_size": 15.0,
   "buffer_font_size": 14.0,
@@ -51,5 +87,5 @@
   },
   "format_on_save": "on",
   "restore_on_startup": "last_session",
-  "show_completions_on_input": true,
+  "show_completions_on_input": true
 }
