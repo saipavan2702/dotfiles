@@ -12,7 +12,7 @@
   "soft_wrap": "editor_width",
   "scroll_beyond_last_line": "vertical_scroll_margin",
   "icon_theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Zed (Default)",
     "dark": "Warm Charmed Icons"
   },
@@ -80,7 +80,7 @@
   "theme": {
     "mode": "dark",
     "light": "Catppuccin Latte",
-    "dark": "Vesper Blur"
+    "dark": "Lumin Blur"
   },
   "experimental.theme_overrides": {
     "background.appearance": "transparent"

@@ -4,6 +4,8 @@ Clone the repo in home directory, and run the below command
 ```bash
 stow .
 ```
+> Mac tips
+> `defaults write com.apple.screencaptureui "thumbnailExpiration" -float 20 && killall SystemUIServer`
 
 ### Reference links
 - [ghostty-config-ref-1](https://github.com/ghostty-org/ghostty/discussions/3527)
