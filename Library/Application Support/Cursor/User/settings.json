@@ -8,12 +8,11 @@
     "editor.fontSize": 13,
     "editor.accessibilitySupport": "on",
     "code-runner.executorMap": {
-
         "javascript": "node",
         "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
         "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
         "zig": "zig run",
-        "cpp": "cd $dir && g++ -std=c++17 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "cpp": "cd $dir && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\"",
         "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
         "php": "php",
         "python": "python3 -u",
@@ -67,5 +66,12 @@
         "pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
         "gleam": "gleam run -m $fileNameWithoutExt"
     },
-    "window.autoDetectColorScheme": false
+    "window.autoDetectColorScheme": false,
+    "vim.disableExtension": true,
+    "cpos.saveLocation": "fixed",
+    "cpos.fixedDir": "/Users/mmacha/cp-sublime",
+    "cpos.defaultLanguage": "cpp",
+    "cpos.runTimeoutMs": 5000,
+    "window.restoreWindows": "none",
+    "workbench.startupEditor": "none"
 }

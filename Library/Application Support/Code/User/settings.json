@@ -1,0 +1,30 @@
+{
+    "workbench.sideBar.location": "right",
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.accessibilitySupport": "on",
+    "editor.lineNumbers": "relative",
+    "custom-ui-style.external.imports": [
+        "file:///home/mmacha/.vscode-server/data/User/globalStorage/why-trv.neovim-statusline/statusline.css",
+        "file:///home/mmacha/.vscode-server/extensions/why-trv.neovim-statusline-0.2.1/assets/statusline.min.js"
+    ],
+    "diffEditor.maxComputationTime": 0,
+    "security.workspace.trust.untrustedFiles": "open",
+    "chatgpt.followUpQueueMode": "steer",
+    "comments.openView": "never",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "workbench.editorLargeFileConfirmation": 100,
+    "chat.titleBar.signIn.enabled": false,
+    "workbench.browser.showInTitleBar": false,
+    "animations.Install-Method": "Apc Customize UI++",
+    "editor.fontFamily": "JetBrains Mono, SF Mono, Menlo, Monaco, 'Courier New', monospace",
+    "workbench.colorTheme": "Monokai Vibrant",
+    "chat.titleBar.openInAgentsWindow.enabled": false,
+    "workbench.layoutControl.enabled": false,
+    "cpos.saveLocation": "fixed",
+    "cpos.fixedDir": "/Users/mmacha/cp-sublime",
+    "cpos.defaultLanguage": "cpp",
+    "cpos.runTimeoutMs": 5000,
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\""
+    }
+}

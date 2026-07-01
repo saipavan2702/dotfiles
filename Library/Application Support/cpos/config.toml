@@ -1,0 +1,74 @@
+# CPOS stores CSES session cookies in this file on macOS.
+# Keep cses_session blank in git; set it locally from CPOS if you use CSES sync.
+default_language = "cpp"
+theme = "purple"
+workspace_dir = "/Users/mmacha/cp-sublime"
+editor = "cursor --wait {file}"
+cses_session = ""
+
+[handles]
+codeforces = "sai_69"
+cses = ""
+
+[compile_commands.haskell]
+compile = "ghc -O2 -o {output} {source} -outputdir {dir}"
+run = "./{output}"
+extension = "hs"
+
+[compile_commands.rust]
+compile = "rustc -O -o {output} {source}"
+run = "./{output}"
+extension = "rs"
+
+[compile_commands.pascal]
+compile = "fpc -O2 -o{output} {source}"
+run = "./{output}"
+extension = "pas"
+
+[compile_commands.cpp]
+compile = "/Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL -o {output} {source}"
+run = "./{output}"
+extension = "cpp"
+
+[compile_commands.pypy]
+run = "pypy3 {source}"
+extension = "py"
+
+[compile_commands.c]
+compile = "gcc -std=c11 -O2 -o {output} {source} -lm"
+run = "./{output}"
+extension = "c"
+
+[compile_commands.javascript]
+run = "node {source}"
+extension = "js"
+
+[compile_commands.kotlin]
+compile = "kotlinc {source} -include-runtime -d {output}.jar"
+run = "java -jar {output}.jar"
+extension = "kt"
+
+[compile_commands.python]
+run = "python3 {source}"
+extension = "py"
+
+[compile_commands.go]
+run = "go run {source}"
+extension = "go"
+
+[compile_commands.java]
+compile = "javac -d {dir} {source}"
+run = "java -cp {dir} {classname}"
+extension = "java"
+
+[compile_commands.ruby]
+run = "ruby {source}"
+extension = "rb"
+
+[compile_commands.csharp]
+compile = "mcs -out:{output}.exe {source}"
+run = "mono {output}.exe"
+extension = "cs"
+
+[template_files]
+cpp = "/Users/mmacha/dotfiles/Library/Application Support/cpos/templates/luv.cpp"

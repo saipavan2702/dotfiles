@@ -1,0 +1,2 @@
+--ignore=\\.stowrc
+--ignore=cpos/config\\.toml

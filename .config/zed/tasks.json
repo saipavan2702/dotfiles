@@ -1,0 +1,14 @@
+[
+  {
+    "label": "cpp: build and run current file",
+    "command": "mkdir -p /tmp/zed-cpp && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$ZED_FILE\" -o \"/tmp/zed-cpp/$ZED_FILENAME.out\" && \"/tmp/zed-cpp/$ZED_FILENAME.out\"",
+    "cwd": "$ZED_DIRNAME",
+    "reveal": "always"
+  },
+  {
+    "label": "cpp: run current file with input.txt",
+    "command": "mkdir -p /tmp/zed-cpp && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$ZED_FILE\" -o \"/tmp/zed-cpp/$ZED_FILENAME.out\" && \"/tmp/zed-cpp/$ZED_FILENAME.out\" < \"$ZED_DIRNAME/input.txt\" | tee \"$ZED_DIRNAME/output.txt\"",
+    "cwd": "$ZED_DIRNAME",
+    "reveal": "always"
+  }
+]

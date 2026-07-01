@@ -1,0 +1,128 @@
+/*
+ " I AM VENGEANCE , I AM THE KNIGHT , I AM THE BATMAN ! "
+____ __ __ __ __ __ ___                             ___ __ __ __ __ __ ____
+ `-._:  .:'   `:::  .:\           |\__/|           /::  .:'   `:::  .:.-'
+     \      :          \          |:   |          /         :       /
+      \     ::    .     `-_______/ ::   \_______-'   .      ::   . /
+       |  :   :: ::'  :   :: ::'  :   :: ::'      :: ::'  :   :: :|
+       |     ;::         ;::         ;::         ;::         ;::  |
+       |  .:'   `:::  .:'   `:::  .:'   `:::  .:'   `:::  .:'   `:|
+       /     :           :           :           :           :    \
+      /______::_____     ::    .     ::    .     ::   _____._::____\
+                    `----._:: ::'  :   :: ::'  _.----'
+                           `--.       ;::  .--'
+                               `-. .:'  .-'
+                                  \    /
+                                   \  /
+                                    \/
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define f first
+#define s second
+#define el endl
+#define in(a,i, n) for (ll i = 0; i < n; i++) cin>>a[i]
+#define fo(i,st,en,step) for (ll i = st; i < en; i+=step)
+#define sz(x) int((x).size())
+#define bg(x) begin(x)
+#define all(x) bg(x), end(x)
+
+using ll = long long;
+using vi = vector<int>;
+using vb = vector<bool>;
+using vl = vector<ll>;
+
+const int MOD=1000000007;
+const int dx[4] = {1, 0, -1, 0},
+          dy[4] = {0, 1, 0, -1};
+
+/*--------------------GCD------------------*/
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+/*--------------------LCM------------------*/
+ll lcm(ll a, ll b) {
+    return (a / gcd(a, b)) * b;
+}
+
+const int MAXN = 1e6;
+vector<int> prime(MAXN + 1, 1);
+vector<int> prime_nos;
+
+/*--------------------Sieve------------------*/
+void sieve() {
+    prime[0] = 0;
+    prime[1] = 0;
+    for (int i = 2; i * i <= MAXN; i++) {
+        for (int j = i * i; j <= MAXN; j += i) {
+            if (prime[j] == 1) {
+                prime[j] = 0;
+            }
+        }
+    }
+    for (int i = 2; i <= MAXN; i++) {
+        if (prime[i] == 1) prime_nos.push_back(i);
+    }
+}
+
+/*--------------------No.of digits------------------*/
+int cntdigit(int n) {
+    if(n==0)
+    return 1;
+
+    return floor(log10(n)+1);
+}
+
+/*------------------isprime--------------*/
+int isprime(int n) {
+    bool h=0;
+    for (int i=2;i*i<=n;i++) {
+        if (n%i==0) {
+            h=1;
+        }
+    }
+    return h==0;
+}
+
+/*-----------------------ispalindrome---------------------------*/
+bool ispalindrome(string s) {
+    int n=s.size();
+    for(int i=0;i<n/2;i++){
+        if(s[i]!=s[n-i-1])
+        return 0;
+    }
+    return 1;
+}
+
+/*------------------------print "Yes/No"-------------------*/
+void print(bool h){
+    if(h)
+    cout<<"Yes"<<endl;
+    else
+    cout<<"No"<<endl;
+}
+
+/*------------------------Solve-----------------------------*/
+int main(){
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+
+  int T;
+  cin>>T;
+  while(T--){
+    int n;
+    cin>>n;
+
+    bool h=0;
+
+  }
+  return 0;
+}
+
+/*
+Problem:
+*/

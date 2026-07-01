@@ -85,6 +85,25 @@
   "experimental.theme_overrides": {
     "background.appearance": "transparent"
   },
+  "lsp": {
+    "clangd": {
+      "binary": {
+        "arguments": [
+          "--background-index",
+          "--completion-style=detailed",
+          "--header-insertion=iwyu",
+          "--fallback-style=llvm",
+          "--query-driver=/opt/homebrew/bin/g++-*,/usr/local/bin/g++-*"
+        ]
+      },
+      "initialization_options": {
+        "fallbackFlags": [
+          "-std=gnu++20",
+          "-I/Users/mmacha/dotfiles/.config/nvim/clangd/include"
+        ]
+      }
+    }
+  },
   "format_on_save": "on",
   "restore_on_startup": "last_session",
   "show_completions_on_input": true
