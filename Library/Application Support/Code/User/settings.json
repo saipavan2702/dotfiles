@@ -26,5 +26,8 @@
     "cpos.runTimeoutMs": 5000,
     "code-runner.executorMap": {
         "cpp": "cd $dir && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$fileName\" -o \"$fileNameWithoutExt\" && \"$dir$fileNameWithoutExt\""
-    }
+    },
+    "terminal.integrated.fontSize": 11,
+    "gitlens.ai.model": "vscode",
+    "gitlens.ai.vscode.model": "copilotcli:"
 }

@@ -1,0 +1,19 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-r": [
+        "task::Spawn",
+        {
+          "task_name": "cpp: build and run current file"
+        }
+      ],
+      "cmd-alt-r": [
+        "task::Spawn",
+        {
+          "task_name": "cpp: run current file with input.txt"
+        }
+      ]
+    }
+  }
+]

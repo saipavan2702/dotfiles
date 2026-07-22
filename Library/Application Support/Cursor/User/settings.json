@@ -73,5 +73,6 @@
     "cpos.defaultLanguage": "cpp",
     "cpos.runTimeoutMs": 5000,
     "window.restoreWindows": "none",
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "Atom One Dark"
 }
