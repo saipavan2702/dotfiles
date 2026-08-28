@@ -1,5 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	event = "VeryLazy",
 	branch = "master", -- using master to fix issues with deprecated to definition warnings
 	-- '0.1.x' for stable ver.
 	dependencies = {

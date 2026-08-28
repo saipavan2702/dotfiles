@@ -73,91 +73,6 @@ local function dashboard_status()
 	}
 end
 
-local function patch_snacks_picker_finder()
-	local Finder = require("snacks.picker.core.finder")
-	if Finder._mmacha_safe_run then
-		return
-	end
-
-	local Async = require("snacks.picker.util.async")
-	local yield_find_ms = 1
-
-	function Finder:run(active_picker)
-		local default_score = require("snacks.picker.core.matcher").DEFAULT_SCORE
-		self.task:abort()
-		self.items = {}
-
-		local ctx = self:ctx(active_picker)
-		local finder = self._find(active_picker.opts, ctx)
-		local limit = (active_picker.opts.live and active_picker.opts.limit_live or active_picker.opts.limit)
-			or math.huge
-		local yield
-
-		local function picker_alive(task)
-			return task == self.task
-				and not active_picker.closed
-				and active_picker.matcher
-				and active_picker.matcher.task
-		end
-
-		local function add(item)
-			item.idx, item.score = #self.items + 1, default_score
-			self.items[item.idx] = item
-		end
-
-		if active_picker.opts.transform then
-			local transform = Snacks.picker.config.transform(active_picker.opts)
-			function add(item)
-				local transformed = transform(item, ctx)
-				item = type(transformed) == "table" and transformed or item
-				if transformed ~= false then
-					item.idx, item.score = #self.items + 1, default_score
-					self.items[item.idx] = item
-				end
-			end
-		end
-
-		if type(finder) == "table" then
-			for _, item in ipairs(finder) do
-				add(item)
-			end
-			return
-		end
-
-		local running = true
-		local task
-
-		collectgarbage("stop")
-		task = Async.new(function()
-			ctx.async = Async.running()
-			finder(function(item)
-				if not running or not picker_alive(task) then
-					return
-				end
-				if #self.items >= limit then
-					return task:abort()
-				end
-				add(item)
-				active_picker.matcher.task:resume()
-				yield = yield or Async.yielder(yield_find_ms)
-				yield()
-			end)
-		end)
-
-		self.task = task
-		task:on("done", function()
-			collectgarbage("restart")
-			if not task:aborted() and picker_alive(task) then
-				active_picker.matcher.task:resume()
-				active_picker:update()
-			end
-			running = false
-		end)
-	end
-
-	Finder._mmacha_safe_run = true
-end
-
 return {
 	-- HACK: docs @ https://github.com/folke/snacks.nvim/blob/main/docs
 	{
@@ -313,7 +228,6 @@ return {
 			},
 		},
 		config = function(_, opts)
-			patch_snacks_picker_finder()
 			require("snacks").setup(opts)
 
 			vim.api.nvim_create_user_command("FindFiles", function()

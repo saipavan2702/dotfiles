@@ -229,3 +229,8 @@ run=["move-node-to-workspace D"]
 [[on-window-detected]]
 if.app-id="dev.chang.FinderTwo"
 run=["layout floating"]
+
+[[on-window-detected]]
+if.app-id="iordv.Droppy"
+run=["layout floating"]
+
