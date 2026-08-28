@@ -1,80 +1,102 @@
-# My ZSH config
+# Personal zsh config
 
+# -- Diagnostics ---------------------------------------------------------------
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zmodload zsh/zprof
 fi
 
+# -- Environment and caches ----------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
+zsh_cache_home="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+export ZSH_COMPDUMP="$zsh_cache_home/.zcompdump-${HOST%%.*}-${ZSH_VERSION}"
+[[ -d "$zsh_cache_home" ]] || command mkdir -p "$zsh_cache_home" 2>/dev/null
+unset zsh_cache_home
+
+# Keep inherited plugin paths from forcing fresh compdump work in child shells.
+fpath=(${fpath:#$ZSH/*})
+fpath=(${fpath:#$HOME/.zinit/*})
+fpath=(${fpath:#$HOME/.cache/zinit/*})
+# Keep the Homebrew completion directory in one deterministic position so
+# Oh My Zsh can reuse its compdump between login and non-login shells.
+fpath=(${fpath:#/opt/homebrew/share/zsh/site-functions})
+[[ -d /opt/homebrew/share/zsh/site-functions ]] && fpath+=(/opt/homebrew/share/zsh/site-functions)
+typeset -U fpath path
+typeset +x FPATH fpath
+
+# -- Oh My Zsh -----------------------------------------------------------------
 HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_COMPFIX="true"
-setopt AUTO_CD               # Allow cd by typing folder name
-setopt HIST_IGNORE_DUPS      # No duplicate history entries
-setopt SHARE_HISTORY         # Share history across terminals
+ZSH_DISABLE_COMPFIX="true"
 
-zstyle ':omz:update' mode disabled  # disable automatic updates
+setopt AUTO_CD
+setopt HIST_IGNORE_DUPS
+setopt SHARE_HISTORY
 
-source "${HOME}/.zinit/bin/zinit.git/zinit.zsh"
+zstyle ':omz:update' mode disabled
+
+source "$HOME/.zinit/bin/zinit.git/zinit.zsh"
 autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
 
-autoload -Uz compinit
-if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
-    compinit
-else
-    compinit -C
-fi
+zsh_cache_dir_was_set=${+ZSH_CACHE_DIR}
+zsh_cache_dir_save="${ZSH_CACHE_DIR-}"
+export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/oh-my-zsh"
 
 plugins=(git)
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
+if (( zsh_cache_dir_was_set )); then
+  export ZSH_CACHE_DIR="$zsh_cache_dir_save"
+else
+  unset ZSH_CACHE_DIR
+fi
+unset zsh_cache_dir_was_set zsh_cache_dir_save
+
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# fzf-tab reads completion colors; keep this static to avoid startup commands.
+export LSCOLORS="${LSCOLORS:-Gxfxcxdxbxegedabagacad}"
+export LS_COLORS="${LS_COLORS:-di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43}"
+[[ -n "$LS_COLORS" ]] && zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# -- Plugin settings -----------------------------------------------------------
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_AUTOSUGGEST_STRATEGY=(history)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-. ~/.zsh/aliases.zsh
 
+export NVM_LAZY_LOAD=true
+
+# -- Toolchains ----------------------------------------------------------------
 # export LANG=en_US.UTF-8
 
-export PATH="/Users/mmacha/Library/Python/3.9/bin:$PATH"
-export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.9)
-export PATH=$JAVA_HOME/bin:$PATH
-export M3_HOME=/Users/mmacha/Downloads/apache-maven-3.9.3
-export PATH=$PATH:$M3_HOME/bin
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
+[[ -d "$JAVA_HOME" ]] || export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.9)
+
+export M3_HOME="/Users/mmacha/Downloads/apache-maven-3.9.3"
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
-export PATH="/opt/homebrew/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
 
-#---------Zinit PLugins -------#
-zinit light Aloxaf/fzf-tab
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
+path=(
+  /opt/homebrew/lib/ruby/gems/3.4.0/bin
+  /opt/homebrew/opt/ruby/bin
+  /opt/homebrew/bin
+  "$JAVA_HOME/bin"
+  "$HOME/Library/Python/3.9/bin"
+  "$HOME/.local/bin"
+  $path
+  "$M3_HOME/bin"
+)
+typeset -U path PATH
 
+# -- Aliases and shell helpers -------------------------------------------------
+# Load before zsh-patina so aliases/functions are highlighted as known callables.
+[[ -r "$HOME/.zsh/aliases.zsh" ]] && source "$HOME/.zsh/aliases.zsh"
 
-#-----------------------------#
-
-export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
-export STARSHIP_COCKPIT_MEMORY_USAGE_ENABLED=true
-export STARSHIP_COCKPIT_BATTERY_ENABLED=true
-export STARSHIP_COCKPIT_BATTERY_THRESHOLD=100
-export STARSHIP_COCKPIT_KEYBOARD_LAYOUT_ENABLED=true
-
-eval "$(starship init zsh)"
-eval "$(zoxide init --cmd cd zsh)"
-source <(fzf --zsh)
-
-# fzf-git key bindings for Git files, branches, commits, stashes, and refs.
-if [[ -o interactive ]]; then
-  stty -ixon 2>/dev/null
-fi
-KEYTIMEOUT=300
-if [[ -r "$HOME/.zsh/fzf-git.sh" ]]; then
-  source "$HOME/.zsh/fzf-git.sh"
-fi
-
-eval $(thefuck --alias fk)
-
+# -- fzf -----------------------------------------------------------------------
+# Legacy fzf style kept for reference.
 #export FZF_DEFAULT_OPTS="
 #--height=80%
 #--layout=reverse
@@ -83,22 +105,11 @@ eval $(thefuck --alias fk)
 #--style=full
 #--prompt='❯ '
 #--marker='✓'
-#--border=rounded 
+#--border=rounded
 #"
 
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow 
---exclude .git 
---exclude node_modules 
---exclude .DS_Store 
---exclude '*.pyc'
-"
-
-export FZF_ALT_C_COMMAND="fd --type d --hidden --follow
---exclude .git 
---exclude node_modules 
---exclude .DS_Store
-"
-
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --exclude node_modules --exclude .DS_Store --exclude "*.pyc"'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git --exclude node_modules --exclude .DS_Store'
 
 export FZF_CTRL_R_OPTS="
 --color header:italic
@@ -109,24 +120,21 @@ export FZF_CTRL_R_OPTS="
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="
---preview 'bat  --style=numbers --color=always {}'
+--preview 'bat --style=numbers --color=always --pager=never -- {}'
 --preview-window 'right:60%:wrap'
 --bind 'ctrl-v:execute(code {})+abort'
 --bind 'ctrl-o:execute(open {})+abort'
 --bind 'ctrl-/:change-preview-window(down,50%|hidden|)'
---header $'CTRL-V: open in VSCode  CTRL-O: open in Finder  CTRL-/: toggle preview\n───'
+--header 'CTRL-V: open in VSCode | CTRL-O: open in Finder | CTRL-/: toggle preview'
 "
 
 export FZF_ALT_C_OPTS="
---preview 'tree -C -L 2 {} | head -200'
+--preview 'eza -la --icons=always --color=always --group-directories-first -- {} 2>/dev/null || tree -C -L 2 {} | head -200'
 --preview-window 'right:60%:wrap'
 --bind 'ctrl-v:execute(code {})+abort'
 --bind 'ctrl-/:change-preview-window(down,50%|hidden|)'
---header $'CTRL-V: open in VSCode  CTRL-/: toggle preview\n───'
+--header 'CTRL-V: open in VSCode | CTRL-/: toggle preview'
 "
-
-export NVM_LAZY_LOAD=true
-
 
 export FZF_DEFAULT_OPTS="
 --height 40%
@@ -139,7 +147,8 @@ export FZF_DEFAULT_OPTS="
 --color=marker:#9eceba,spinner:#9ece6a,header:#bb9af7
 "
 
-#=== Tokyo Night Darker (Gritty) ZSH Syntax Highlighting ===
+# -- Legacy zsh-syntax-highlighting palette -----------------------------------
+# Kept as the source palette for the zsh-patina Tokyo/legacy theme files.
 #ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 #ZSH_HIGHLIGHT_STYLES[command]='fg=#7aa2f7'
 #ZSH_HIGHLIGHT_STYLES[precommand]='fg=#bb9af7'
@@ -158,7 +167,85 @@ export FZF_DEFAULT_OPTS="
 #ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=#9aa5ce'
 #ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red, bold'
 
+# -- Zinit plugins -------------------------------------------------------------
+zinit light Aloxaf/fzf-tab
 
+zinit ice wait lucid atload'_zsh_autosuggest_start'
+zinit light zsh-users/zsh-autosuggestions
+
+# Patina is delayed so the first prompt wins, then a Rust daemon handles input
+# highlighting without the old zsh-syntax-highlighting overhead.
+zinit ice wait lucid \
+  as"program" \
+  from"gh-r" \
+  pick"zsh-patina-*/zsh-patina" \
+  atload'eval "$(zsh-patina activate)"'
+zinit light michel-kraemer/zsh-patina
+
+# -- Prompt and generated init scripts ----------------------------------------
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+
+zsh_init_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/init"
+[[ -d "$zsh_init_cache" ]] || command mkdir -p "$zsh_init_cache" 2>/dev/null
+[[ -d "$zsh_init_cache" && -w "$zsh_init_cache" ]] || zsh_init_cache=
+
+if (( $+commands[starship] )); then
+  if [[ -n "$zsh_init_cache" ]]; then
+    starship_bin="${commands[starship]}"
+    starship_cache="$zsh_init_cache/starship.zsh"
+
+    if [[ ! -s "$starship_cache" || "$starship_bin" -nt "$starship_cache" ]]; then
+      starship init zsh 2>/dev/null | command grep -v '^PROMPT2=' >| "$starship_cache"
+      print -r -- "PROMPT2='\$($starship_bin prompt --continuation)'" >> "$starship_cache"
+    fi
+
+    source "$starship_cache"
+  else
+    eval "$(starship init zsh)"
+  fi
+fi
+
+if (( $+commands[zoxide] )); then
+  if [[ -n "$zsh_init_cache" ]]; then
+    zoxide_bin="${commands[zoxide]}"
+    zoxide_cache="$zsh_init_cache/zoxide.zsh"
+
+    if [[ ! -s "$zoxide_cache" || "$zoxide_bin" -nt "$zoxide_cache" ]]; then
+      zoxide init --cmd cd zsh >| "$zoxide_cache"
+    fi
+
+    source "$zoxide_cache"
+  else
+    eval "$(zoxide init --cmd cd zsh)"
+  fi
+fi
+
+if [[ -o zle && -t 0 ]] && (( $+commands[fzf] )); then
+  if [[ -n "$zsh_init_cache" ]]; then
+    fzf_bin="${commands[fzf]}"
+    fzf_cache="$zsh_init_cache/fzf.zsh"
+
+    if [[ ! -s "$fzf_cache" || "$fzf_bin" -nt "$fzf_cache" ]]; then
+      fzf --zsh >| "$fzf_cache"
+    fi
+
+    source "$fzf_cache"
+  else
+    source <(fzf --zsh)
+  fi
+fi
+unset zsh_init_cache starship_bin starship_cache zoxide_bin zoxide_cache fzf_bin fzf_cache
+
+# -- Interactive extras --------------------------------------------------------
+[[ -o interactive ]] && stty -ixon 2>/dev/null
+
+KEYTIMEOUT=300
+
+[[ -r "$HOME/.zsh/fzf-git.sh" ]] && source "$HOME/.zsh/fzf-git.sh"
+
+alias fk='eval "$(TF_ALIAS=fk PYTHONIOENCODING=utf-8 thefuck "$(fc -ln -1)")"'
+
+# -- Diagnostics report --------------------------------------------------------
 if [[ -n "$ZSH_DEBUGRC" ]]; then
   zprof
 fi
