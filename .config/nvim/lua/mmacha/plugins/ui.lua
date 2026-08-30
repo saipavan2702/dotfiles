@@ -19,7 +19,7 @@ return {
         event = "VeryLazy",
         opts = {
             input = { border = "rounded" },
-            select = { backend = { "telescope", "builtin" } },
+            select = { backend = "builtin" },
         },
     },
 }

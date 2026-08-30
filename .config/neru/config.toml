@@ -1,0 +1,26 @@
+# Neru configuration
+#
+# Raycast maps the physical Caps Lock key to Hyper: Cmd + Ctrl + Option + Shift.
+# With Raycast's Hyper Key enabled, Caps Lock + X opens Neru hints mode.
+
+[hotkeys]
+# Replace Neru's default hints launcher with Caps Lock + X (Hyper + X).
+"Cmd+Shift+Space" = "__disabled__"
+"Cmd+Ctrl+Alt+Shift+X" = "hints"
+
+# Replace Neru's default scroll launcher with Caps Lock + S (Hyper + S).
+"Cmd+Shift+S" = "__disabled__"
+"Cmd+Ctrl+Alt+Shift+S" = "scroll"
+
+# Reload this file with Caps Lock + R.
+"Cmd+Ctrl+Alt+Shift+R" = "config reload"
+
+[grid]
+enabled = false
+
+[recursive_grid]
+enabled = false
+
+[scroll]
+# Reverse Neru's synthetic scroll direction.
+invert_scroll = true

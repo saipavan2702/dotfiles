@@ -1,13 +1,11 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	event = "VeryLazy",
-	branch = "master", -- using master to fix issues with deprecated to definition warnings
-	-- '0.1.x' for stable ver.
+	version = "*",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
-		"andrew-george/telescope-themes",
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -15,8 +13,6 @@ return {
 		local builtin = require("telescope.builtin")
 
 		pcall(telescope.load_extension, "fzf")
-		pcall(telescope.load_extension, "themes")
-		pcall(telescope.load_extension, "todo-comments")
 
 		telescope.setup({
 			defaults = {
@@ -28,28 +24,11 @@ return {
 					},
 				},
 			},
-			extensions = {
-				themes = {
-					enable_previewer = true,
-					enable_live_preview = true,
-					persist = {
-						enabled = true,
-						path = vim.fn.stdpath("config") .. "/lua/current-theme.lua",
-					},
-				},
-			},
 		})
 
 		vim.keymap.set("n", "<leader>pWs", function()
 			local word = vim.fn.expand("<cWORD>")
 			builtin.grep_string({ search = word })
-		end, { desc = "Find Connected Words under cursor" })
-
-		vim.keymap.set(
-			"n",
-			"<leader>ths",
-			"<cmd>Telescope themes<CR>",
-			{ noremap = true, silent = true, desc = "Theme Switcher" }
-		)
+		end, { desc = "Find connected words under cursor" })
 	end,
 }

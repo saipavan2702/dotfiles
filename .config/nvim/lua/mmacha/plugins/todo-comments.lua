@@ -59,8 +59,12 @@ return {
 			todo_comments.jump_prev()
 		end, { desc = "Previous todo comment" })
 
-		vim.keymap.set("n", "<leader>pt", "<cmd>TodoTelescope<CR>", { desc = "Find todo comments" })
-		vim.keymap.set("n", "<leader>pT", "<cmd>TodoTelescope keywords=TODO,FIXME,FORGETNOT<CR>", {
+		vim.keymap.set("n", "<leader>pt", function()
+			require("snacks").picker.todo_comments()
+		end, { desc = "Find todo comments" })
+		vim.keymap.set("n", "<leader>pT", function()
+			require("snacks").picker.todo_comments({ keywords = { "TODO", "FIXME", "FORGETNOT" } })
+		end, {
 			desc = "Find main todo comments",
 		})
 	end,

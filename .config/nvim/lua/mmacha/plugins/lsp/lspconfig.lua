@@ -139,9 +139,9 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
 	config = function()
-		local function telescope(name, opts)
+		local function picker(name, opts)
 			return function()
-				require("telescope.builtin")[name](opts or {})
+				require("snacks").picker[name](opts or {})
 			end
 		end
 
@@ -152,14 +152,14 @@ return {
 					vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
 				end
 
-				map("n", "gR", telescope("lsp_references"), "Show LSP references")
+				map("n", "gR", picker("lsp_references"), "Show LSP references")
 				map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-				map("n", "gd", telescope("lsp_definitions"), "Show LSP definitions")
-				map("n", "gi", telescope("lsp_implementations"), "Show LSP implementations")
-				map("n", "gt", telescope("lsp_type_definitions"), "Show LSP type definitions")
+				map("n", "gd", picker("lsp_definitions"), "Show LSP definitions")
+				map("n", "gi", picker("lsp_implementations"), "Show LSP implementations")
+				map("n", "gt", picker("lsp_type_definitions"), "Show LSP type definitions")
 				map({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, "Code actions")
 				map("n", "<leader>rn", vim.lsp.buf.rename, "Smart rename")
-				map("n", "<leader>D", telescope("diagnostics", { bufnr = ev.buf }), "Show buffer diagnostics")
+				map("n", "<leader>D", picker("diagnostics", { bufnr = ev.buf }), "Show buffer diagnostics")
 				map("n", "<leader>ld", vim.diagnostic.open_float, "Show line diagnostics")
 				map("n", "K", vim.lsp.buf.hover, "Show documentation")
 				map("n", "<leader>rs", "<cmd>LspRestart<CR>", "Restart LSP")
