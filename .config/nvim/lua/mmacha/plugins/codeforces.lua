@@ -148,7 +148,7 @@ return {
 				},
 				timeout = 10000,
 				compiler = {
-					cpp = { "g++", "-std=c++20", "-O2", "-Wall", "-Wextra", "-I" .. include_path, "@.cpp", "-o", "@" },
+					cpp = { "cp-g++", "-std=c++20", "-O2", "-Wall", "-Wextra", "-I" .. include_path, "@.cpp", "-o", "@" },
 					py = {},
 				},
 				run = {
