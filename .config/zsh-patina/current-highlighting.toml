@@ -1,6 +1,6 @@
 # zsh-syntax-highlighting default-style compatibility for zsh-patina.
 # Source:
-# /Users/mmacha/.zinit/plugins/zsh-users---zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh
+# $HOME/.zinit/plugins/zsh-users---zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh
 
 # unknown-token='fg=red,bold'
 "dynamic.callable.missing.shell" = { foreground = "red", bold = true }

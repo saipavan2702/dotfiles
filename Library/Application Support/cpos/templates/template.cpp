@@ -17,7 +17,7 @@ ____ __ __ __ __ __ ___                             ___ __ __ __ __ __ ____
                                     \/
 */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 #define f first

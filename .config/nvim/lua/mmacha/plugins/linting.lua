@@ -32,17 +32,49 @@ return {
 			}
 		end
 
-		local function has_config(names)
-			return #vim.fs.find(names, {
+		local function find_config(names)
+			local path = vim.api.nvim_buf_get_name(0)
+			local start_path = path ~= "" and vim.fs.dirname(path) or vim.uv.cwd()
+
+			return vim.fs.find(names, {
 				upward = true,
-				path = vim.api.nvim_buf_get_name(0),
+				path = start_path,
 				type = "file",
-			}) > 0
+			})[1]
+		end
+
+		local function has_package_eslint_config()
+			local package_json = find_config({ "package.json" })
+			if not package_json then
+				return false
+			end
+
+			local ok, contents = pcall(vim.fn.readfile, package_json)
+			if not ok then
+				return false
+			end
+
+			local decoded_ok, package = pcall(vim.json.decode, table.concat(contents, "\n"))
+			return decoded_ok and type(package) == "table" and package.eslintConfig ~= nil
 		end
 
 		local function linter_is_ready(name)
+			local linter = lint.linters[name]
+			local cmd = type(linter) == "table" and linter.cmd or name
+			if type(cmd) == "function" then
+				local ok, resolved_cmd = pcall(cmd)
+				if not ok then
+					return false
+				end
+				cmd = resolved_cmd
+			end
+
+			if type(cmd) == "string" and vim.fn.executable(cmd) == 0 then
+				return false
+			end
+
 			if name == "eslint_d" then
-				return has_config({
+				return find_config({
 					"eslint.config.js",
 					"eslint.config.mjs",
 					"eslint.config.cjs",
@@ -50,17 +82,16 @@ return {
 					".eslintrc.js",
 					".eslintrc.cjs",
 					".eslintrc.json",
-					"package.json",
-				})
+					".eslintrc.yml",
+					".eslintrc.yaml",
+				}) ~= nil or has_package_eslint_config()
 			end
 
 			if name == "sqlfluff" then
-				return has_config({ ".sqlfluff", "pyproject.toml", "setup.cfg", "tox.ini" })
+				return find_config({ ".sqlfluff", "pyproject.toml", "setup.cfg", "tox.ini" }) ~= nil
 			end
 
-			local linter = lint.linters[name]
-			local cmd = type(linter) == "table" and linter.cmd or name
-			return type(cmd) ~= "string" or vim.fn.executable(cmd) == 1
+			return true
 		end
 
 		local function linters_for_buffer()

@@ -14,7 +14,7 @@ local tools = {
 
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		lazy = false,
 		config = function()
 			require("mason").setup({
@@ -30,9 +30,14 @@ return {
 	},
 
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason-lspconfig.nvim",
+		event = { "BufReadPre", "BufNewFile" },
 		cmd = { "LspInstall", "LspUninstall" },
-		dependencies = { "williamboman/mason.nvim" },
+		dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
+		opts = {
+			ensure_installed = require("mmacha.lsp.servers"),
+			automatic_enable = false,
+		},
 	},
 
 	{
@@ -44,7 +49,7 @@ return {
 			"MasonToolsUpdate",
 			"MasonToolsUpdateSync",
 		},
-		dependencies = { "williamboman/mason.nvim" },
+		dependencies = { "mason-org/mason.nvim" },
 		opts = {
 			ensure_installed = tools,
 			run_on_start = false,

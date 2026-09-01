@@ -1,14 +1,20 @@
 [
   {
     "label": "cpp: build and run current file",
-    "command": "mkdir -p /tmp/zed-cpp && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$ZED_FILE\" -o \"/tmp/zed-cpp/$ZED_FILENAME.out\" && \"/tmp/zed-cpp/$ZED_FILENAME.out\"",
+    "command": "mkdir -p /tmp/zed-cpp && \"$HOME/.local/bin/cp-g++\" -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$ZED_FILE\" -o \"/tmp/zed-cpp/$ZED_STEM.out\" && \"/tmp/zed-cpp/$ZED_STEM.out\"",
     "cwd": "$ZED_DIRNAME",
+    "save": "current",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
     "reveal": "always"
   },
   {
     "label": "cpp: run current file with input.txt",
-    "command": "mkdir -p /tmp/zed-cpp && /Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$ZED_FILE\" -o \"/tmp/zed-cpp/$ZED_FILENAME.out\" && \"/tmp/zed-cpp/$ZED_FILENAME.out\" < \"$ZED_DIRNAME/input.txt\" | tee \"$ZED_DIRNAME/output.txt\"",
+    "command": "set -o pipefail; mkdir -p /tmp/zed-cpp && \"$HOME/.local/bin/cp-g++\" -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$ZED_FILE\" -o \"/tmp/zed-cpp/$ZED_STEM.out\" && \"/tmp/zed-cpp/$ZED_STEM.out\" < \"$ZED_DIRNAME/input.txt\" | tee \"$ZED_DIRNAME/output.txt\"",
     "cwd": "$ZED_DIRNAME",
+    "save": "current",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
     "reveal": "always"
   }
 ]

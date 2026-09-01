@@ -1,23 +1,4 @@
-local enabled_servers = {
-	"lua_ls",
-	"html",
-	"cssls",
-	"jsonls",
-	"yamlls",
-	"marksman",
-	"bashls",
-	"emmet_ls",
-	"pyright",
-	"ruff",
-	"ts_ls",
-	"rust_analyzer",
-	"clangd",
-	"jdtls",
-	"sqlls",
-	"gopls",
-	"astro",
-	"tailwindcss",
-}
+local enabled_servers = require("mmacha.lsp.servers")
 
 local server_configs = {
 	lua_ls = {
@@ -92,7 +73,7 @@ local server_configs = {
 		init_options = {
 			fallbackFlags = {
 				"-std=c++20",
-				"-I/Users/mmacha/dotfiles/.config/nvim/clangd/include",
+				"-I" .. vim.fs.joinpath(vim.fn.stdpath("config"), "clangd", "include"),
 			},
 		},
 	},
@@ -162,9 +143,13 @@ return {
 				map("n", "<leader>D", picker("diagnostics", { bufnr = ev.buf }), "Show buffer diagnostics")
 				map("n", "<leader>ld", vim.diagnostic.open_float, "Show line diagnostics")
 				map("n", "K", vim.lsp.buf.hover, "Show documentation")
-				map("n", "<leader>rs", "<cmd>LspRestart<CR>", "Restart LSP")
-				map("n", "[d", vim.diagnostic.goto_prev, "Go to previous diagnostic")
-				map("n", "]d", vim.diagnostic.goto_next, "Go to next diagnostic")
+				map("n", "<leader>rs", "<cmd>lsp restart<CR>", "Restart LSP")
+				map("n", "[d", function()
+					vim.diagnostic.jump({ count = -1, float = true })
+				end, "Go to previous diagnostic")
+				map("n", "]d", function()
+					vim.diagnostic.jump({ count = 1, float = true })
+				end, "Go to next diagnostic")
 				map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
 			end,
 		})

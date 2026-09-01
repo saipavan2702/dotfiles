@@ -2,7 +2,7 @@
 [[ -r "$HOME/.zsh/custom.zsh" ]] && source "$HOME/.zsh/custom.zsh"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/mmacha/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
 

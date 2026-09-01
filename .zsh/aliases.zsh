@@ -1,17 +1,31 @@
 # Aliases and shell helpers
 
 # General
-alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ServerAliveInterval=30'
 alias ff='fastfetch'
 alias zi='zoxide query --interactive'
 alias -g G='| grep'
+
+# Explicit escape hatch for disposable hosts only. Normal `ssh` keeps host-key
+# verification enabled so a spoofed server cannot silently impersonate a host.
+ssh-insecure-hostkey() {
+  command ssh \
+    -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile=/dev/null \
+    -o ServerAliveInterval=30 \
+    "$@"
+}
 
 ztprof() {
   time ZSH_DEBUGRC=1 zsh -i -c exit
 }
 
 mkcd() {
-  mkdir -p "$1" && cd "$1"
+  if (( $# != 1 )); then
+    print -u2 'usage: mkcd <directory>'
+    return 2
+  fi
+
+  mkdir -p -- "$1" && builtin cd -- "$1"
 }
 
 # Maven
@@ -37,16 +51,23 @@ git() {
 quick_commit() {
   local commit_message="$*"
 
-  git add .
-  git commit --no-verify -am "$commit_message"
+  if [[ -z "$commit_message" ]]; then
+    print -u2 'usage: quick_commit <message>'
+    return 2
+  fi
+
+  git add --all -- . && git commit -m "$commit_message"
 }
 
 quick_pull() {
   local branch_name
 
-  branch_name=$(git branch --show-current)
-  git fetch origin
-  git pull origin "$branch_name"
+  branch_name=$(git symbolic-ref --quiet --short HEAD) || {
+    print -u2 'quick_pull: detached HEAD; check out a branch first'
+    return 1
+  }
+
+  git pull --ff-only origin "$branch_name"
 }
 
 alias gqc='quick_commit'

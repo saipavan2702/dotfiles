@@ -1,8 +1,8 @@
-# CPOS stores CSES session cookies in this file on macOS.
-# Keep cses_session blank in git; set it locally from CPOS if you use CSES sync.
+# CPOS settings. This file is tracked and linked into the live configuration.
+# Keep cses_session empty before committing if you do not intend to publish it.
 default_language = "cpp"
 theme = "purple"
-workspace_dir = "/Users/mmacha/cp-sublime"
+workspace_dir = "~/cp-sublime"
 editor = "cursor --wait {file}"
 cses_session = ""
 
@@ -26,7 +26,7 @@ run = "./{output}"
 extension = "pas"
 
 [compile_commands.cpp]
-compile = "/Users/mmacha/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL -o {output} {source}"
+compile = "$HOME/.local/bin/cp-g++ -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL -o {output} {source}"
 run = "./{output}"
 extension = "cpp"
 
@@ -69,6 +69,3 @@ extension = "rb"
 compile = "mcs -out:{output}.exe {source}"
 run = "mono {output}.exe"
 extension = "cs"
-
-[template_files]
-cpp = "/Users/mmacha/dotfiles/Library/Application Support/cpos/templates/luv.cpp"

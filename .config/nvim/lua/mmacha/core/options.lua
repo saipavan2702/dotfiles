@@ -35,7 +35,7 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 local undodir = vim.fn.expand("~/.vim/undodir")
 if vim.fn.isdirectory(undodir) == 0 then
-    vim.fn.mkdir(undodir, "p")
+	vim.fn.mkdir(undodir, "p")
 end
 vim.opt.undodir = undodir
 vim.opt.undofile = true
@@ -51,39 +51,40 @@ vim.opt.showtabline = 1
 vim.opt.pumheight = 12
 
 local function tabpage_title(tab)
-    local ok, title = pcall(vim.api.nvim_tabpage_get_var, tab, "tab_title")
-    if ok and type(title) == "string" and title ~= "" then
-        return title
-    end
+	local ok, title = pcall(vim.api.nvim_tabpage_get_var, tab, "tab_title")
+	if ok and type(title) == "string" and title ~= "" then
+		return title
+	end
 
-    local win = vim.api.nvim_tabpage_get_win(tab)
-    local buf = vim.api.nvim_win_get_buf(win)
-    local name = vim.api.nvim_buf_get_name(buf)
+	local win = vim.api.nvim_tabpage_get_win(tab)
+	local buf = vim.api.nvim_win_get_buf(win)
+	local name = vim.api.nvim_buf_get_name(buf)
 
-    if name == "" then
-        return "[No Name]"
-    end
+	if name == "" then
+		return "[No Name]"
+	end
 
-    local tail = vim.fn.fnamemodify(name, ":t")
-    if tail ~= "" then
-        return tail
-    end
+	local tail = vim.fn.fnamemodify(name, ":t")
+	if tail ~= "" then
+		return tail
+	end
 
-    return vim.fn.fnamemodify(name, ":h:t")
+	return vim.fn.fnamemodify(name, ":h:t")
 end
 
 function _G.mmacha_tabline()
-    local items = {}
+	local items = {}
 
-    for index, tab in ipairs(vim.api.nvim_list_tabpages()) do
-        local is_current = tab == vim.api.nvim_get_current_tabpage()
-        items[#items + 1] = "%" .. index .. "T"
-        items[#items + 1] = is_current and "%#TabLineSel#" or "%#TabLine#"
-        items[#items + 1] = " " .. index .. ":" .. tabpage_title(tab) .. " "
-    end
+	for index, tab in ipairs(vim.api.nvim_list_tabpages()) do
+		local is_current = tab == vim.api.nvim_get_current_tabpage()
+		items[#items + 1] = "%" .. index .. "T"
+		items[#items + 1] = is_current and "%#TabLineSel#" or "%#TabLine#"
+		local title = tabpage_title(tab):gsub("%%", "%%%%")
+		items[#items + 1] = " " .. index .. ":" .. title .. " "
+	end
 
-    items[#items + 1] = "%#TabLineFill#%T"
-    return table.concat(items)
+	items[#items + 1] = "%#TabLineFill#%T"
+	return table.concat(items)
 end
 
 vim.opt.tabline = "%!v:lua.mmacha_tabline()"
@@ -103,25 +104,28 @@ vim.opt.guicursor = ""
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = ""
-vim.opt.clipboard:append("unnamedplus")
 vim.opt.mouse = "a"
 
+local core_options_group = vim.api.nvim_create_augroup("UserCoreOptions", { clear = true })
+
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "gitcommit", "markdown", "text" },
-    callback = function()
-        vim.opt_local.wrap = true
-        vim.opt_local.linebreak = true
-        vim.opt_local.spell = true
-        vim.opt_local.textwidth = 80
-    end,
+	group = core_options_group,
+	pattern = { "gitcommit", "markdown", "text" },
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.spell = true
+		vim.opt_local.textwidth = 80
+	end,
 })
 
 vim.api.nvim_create_autocmd("BufReadPost", {
-    callback = function()
-        local mark = vim.api.nvim_buf_get_mark(0, '"')
-        local line_count = vim.api.nvim_buf_line_count(0)
-        if mark[1] > 0 and mark[1] <= line_count then
-            pcall(vim.api.nvim_win_set_cursor, 0, mark)
-        end
-    end,
+	group = core_options_group,
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		local line_count = vim.api.nvim_buf_line_count(0)
+		if mark[1] > 0 and mark[1] <= line_count then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		end
+	end,
 })

@@ -1,5 +1,5 @@
 [highlighting]
-theme = "file:/Users/mmacha/.config/zsh-patina/current-highlighting.toml"
+theme = "file:$XDG_CONFIG_HOME/zsh-patina/current-highlighting.toml"
 dynamic = true
 max_line_length = 20000
 timeout_ms = 500

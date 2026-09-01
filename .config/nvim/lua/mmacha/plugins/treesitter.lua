@@ -40,9 +40,11 @@ local function start_treesitter(args)
 		return
 	end
 
-	local ok = pcall(vim.treesitter.start, args.buf, language)
-	if not ok then
-		return
+	if not vim.treesitter.highlighter.active[args.buf] then
+		local ok = pcall(vim.treesitter.start, args.buf, language)
+		if not ok then
+			return
+		end
 	end
 
 	local has_indents, indent_query = pcall(vim.treesitter.query.get, language, "indents")
@@ -63,6 +65,11 @@ return {
 			vim.treesitter.language.register("bash", "zsh")
 
 			vim.api.nvim_create_user_command("TSInstallConfigured", function()
+				if vim.fn.executable("tree-sitter") == 0 then
+					vim.notify("tree-sitter CLI is required; run brew bundle first", vim.log.levels.WARN)
+					return
+				end
+
 				treesitter.install(parsers, { summary = true })
 			end, { desc = "Install configured Treesitter parsers" })
 

@@ -1,6 +1,6 @@
 {
-    "shell_cmd": "cd $file_path && g++-16 -O2 -std=c++17 $file_name -o ${file_base_name} && ${file_path}/${file_base_name}<input.txt>output.txt",
-    "file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
-    "working_dir": "${file_path}",
-    "selector": "source.c, source.c++",
+    "shell_cmd": "set -o pipefail; mkdir -p /tmp/sublime-cpp && \"\\$HOME/.local/bin/cp-g++\" -std=gnu++20 -O2 -pipe -Wall -Wextra -Wshadow -DLOCAL \"$file\" -o \"/tmp/sublime-cpp/$file_base_name.out\" && \"/tmp/sublime-cpp/$file_base_name.out\" < \"$file_path/input.txt\" | tee \"$file_path/output.txt\"",
+    "file_regex": "^(.+?):([0-9]+):([0-9]+): (.*)$",
+    "working_dir": "$file_path",
+    "selector": "source.c++",
 }

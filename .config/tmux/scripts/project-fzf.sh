@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+dotfiles_dir="$(CDPATH= cd -- "$script_dir/../../.." && pwd)"
 current_path="$(tmux display-message -p '#{pane_current_path}')"
 
 project_candidates() {
@@ -10,7 +12,7 @@ project_candidates() {
     zoxide_dirs="$(zoxide query -ls 2>/dev/null | sed -E 's/^[[:space:]]*[0-9.]+[[:space:]]+//' || true)"
   fi
 
-  printf '%s\n' "$current_path" "$HOME/dotfiles" "$HOME/.config"
+  printf '%s\n' "$current_path" "$dotfiles_dir" "$HOME/.config"
 
   if [[ -n "$zoxide_dirs" ]]; then
     printf '%s\n' "$zoxide_dirs"
