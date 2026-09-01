@@ -29,8 +29,6 @@ typeset +x FPATH fpath
 HYPHEN_INSENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 DISABLE_MAGIC_FUNCTIONS="true"
-DISABLE_COMPFIX="true"
-ZSH_DISABLE_COMPFIX="true"
 
 setopt AUTO_CD
 setopt HIST_IGNORE_DUPS
@@ -73,23 +71,63 @@ export NVM_LAZY_LOAD=true
 # -- Toolchains ----------------------------------------------------------------
 # export LANG=en_US.UTF-8
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
-[[ -d "$JAVA_HOME" ]] || export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.9)
+if [[ -z ${JAVA_HOME:-} || ! -d "$JAVA_HOME" ]]; then
+  java_home_candidate=""
 
-export M3_HOME="/Users/mmacha/Downloads/apache-maven-3.9.3"
+  if [[ -x /usr/libexec/java_home ]]; then
+    java_home_candidate="$(/usr/libexec/java_home -v 17 2>/dev/null)"
+  elif (( $+commands[java] )); then
+    java_home_candidate="${commands[java]:A:h:h}"
+  fi
+
+  [[ -d "$java_home_candidate" ]] && export JAVA_HOME="$java_home_candidate"
+  unset java_home_candidate
+fi
+
+# Prefer package-manager installs before inherited variables or PATH entries.
+# This lets an SDKMAN/Homebrew upgrade supersede an older parent-shell value.
+maven_home_candidate=""
+for candidate in \
+  /opt/homebrew/opt/maven \
+  /usr/local/opt/maven \
+  "$HOME/.sdkman/candidates/maven/current" \
+  "${M3_HOME:-}" \
+  "${MAVEN_HOME:-}"; do
+  if [[ -n "$candidate" && -x "$candidate/bin/mvn" ]]; then
+    maven_home_candidate="$candidate"
+    break
+  fi
+done
+
+if [[ -z "$maven_home_candidate" ]] && (( $+commands[mvn] )); then
+  maven_home_candidate="${commands[mvn]:A:h:h}"
+fi
+
+if [[ -x "$maven_home_candidate/bin/mvn" ]]; then
+  export M3_HOME="$maven_home_candidate"
+  export MAVEN_HOME="$maven_home_candidate"
+else
+  unset M3_HOME MAVEN_HOME
+fi
+unset candidate maven_home_candidate
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
 
-path=(
-  /opt/homebrew/lib/ruby/gems/3.4.0/bin
-  /opt/homebrew/opt/ruby/bin
-  /opt/homebrew/bin
-  "$JAVA_HOME/bin"
-  "$HOME/Library/Python/3.9/bin"
-  "$HOME/.local/bin"
-  $path
-  "$M3_HOME/bin"
-)
+# Drop legacy entries inherited from an older parent shell before rebuilding
+# PATH, otherwise an upgraded tool can still resolve to the retired version.
+path=(${path:#/opt/homebrew/lib/ruby/gems/3.4.0/bin})
+path=(${path:#$HOME/Library/Python/3.9/bin})
+path=(${path:#$HOME/Downloads/apache-maven-*/bin})
+
+toolchain_paths=()
+[[ -d /opt/homebrew/opt/ruby/bin ]] && toolchain_paths+=(/opt/homebrew/opt/ruby/bin)
+[[ -d /opt/homebrew/bin ]] && toolchain_paths+=(/opt/homebrew/bin)
+[[ -n ${JAVA_HOME:-} && -d "$JAVA_HOME/bin" ]] && toolchain_paths+=("$JAVA_HOME/bin")
+toolchain_paths+=("$HOME/.local/bin")
+
+path=($toolchain_paths $path)
+[[ -n ${M3_HOME:-} && -d "$M3_HOME/bin" ]] && path+=("$M3_HOME/bin")
 typeset -U path PATH
+unset toolchain_paths
 
 # -- Aliases and shell helpers -------------------------------------------------
 # Load before zsh-patina so aliases/functions are highlighted as known callables.

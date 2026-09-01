@@ -172,7 +172,7 @@ else
   # Redefine this function to change the options
   _fzf_git_fzf() {
     fzf --height 50% --tmux 90%,70% \
-      --layout reverse --multi --min-height 20+ --border \
+      --layout reverse --multi --min-height 20+ \
       --no-separator --header-border horizontal \
       --border-label-pos 2 \
       --color 'label:blue' \
@@ -222,10 +222,12 @@ EOF
 _fzf_git_tree_files() {
   _fzf_git_check || return
 
-  local treeish
+  local treeish cdup prefix
+  cdup="$(git rev-parse --show-cdup)"
+  prefix="$(git rev-parse --show-prefix)"
   for treeish in "$@"; do
-    git diff-tree --no-commit-id --name-only "$treeish" -r
-  done | sort -u |
+    git diff-tree --root --no-commit-id --name-only --line-prefix="$cdup" "$treeish" -r
+  done | sort -u | sed "s|^$cdup$prefix||" |
     _fzf_git_fzf -m \
       --border-label "📂 Files in $* " \
       --header 'CTRL-O (open in browser) ╱ ALT-E (open in editor)' \

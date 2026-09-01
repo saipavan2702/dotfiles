@@ -103,7 +103,7 @@ cmap Tabe tabe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -129,7 +129,7 @@ let NERDTreeShowHidden=1
 let NERDTreeRespectWildIgnore=1
 let NERDTreeIgnore = ['\.DS_Store$', '\.min\.(js|css)$', '^\.Trash','^\.cache','^\.cisco','^\.vnc','^\.vpn','^\.ossh','^\.oci','^\.vscode']
 
-if executable('rg')
+if executable('fd')
   let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --exclude .git'
 endif
 
@@ -138,4 +138,3 @@ nnoremap <C-F> :Files<cr>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>s :BLines<cr>
-
