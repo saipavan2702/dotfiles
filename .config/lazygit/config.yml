@@ -1,6 +1,5 @@
 gui:
   nerdFontsVersion: "3"
-  showIcons: true
   showFileIcons: true
   theme:
     activeBorderColor:

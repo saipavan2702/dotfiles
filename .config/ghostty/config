@@ -104,14 +104,14 @@ font-codepoint-map = U+E000-U+E00A,U+E0A0-U+E0A3,U+E0CA,U+E0CC-U+E0D7,U+E200-U+E
 #adjust-cell-width = 1 
 
 # clipboard
-clipboard-read = allow
+clipboard-read = ask
 clipboard-write = allow
 copy-on-select = clipboard
 clipboard-trim-trailing-spaces = true
 
 # mouse
 mouse-scroll-multiplier = 3
-scrollback-limit = 512000000
+scrollback-limit = 50000000
 mouse-hide-while-typing = true
 cursor-click-to-move = true
 

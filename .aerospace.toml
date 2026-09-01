@@ -52,6 +52,24 @@ persistent-workspaces = ["1", "2", "3", "B", "D", "G", "F", "W", "S", "T", "Z"]
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 on-mode-changed = []
 
+# Window rules use the command-based matcher introduced in AeroSpace 0.21.
+# The older `if.app-id` form is still accepted, but is soft-deprecated.
+on-window-detected = [
+    { if = 'test %{app-bundle-id} = com.cisco.secureclient.gui', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.apple.finder', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.oracle.idm.mobileauthenticator', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.mitchellh.ghostty', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = us.zoom.xos', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.realvnc.vncviewer', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.ethanbills.DockDoor', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.dmitrynikolaev.numi', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = md.obsidian', run = ['move-node-to-workspace O'] },
+    { if = 'test %{app-bundle-id} = com.brave.Browser', run = ['move-node-to-workspace B'] },
+    { if = 'test %{app-bundle-id} = com.hnc.Discord', run = ['move-node-to-workspace D'] },
+    { if = 'test %{app-bundle-id} = dev.chang.FinderTwo', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = iordv.Droppy', run = ['layout floating'] },
+]
+
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
@@ -181,56 +199,4 @@ on-mode-changed = []
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
-
-[[on-window-detected]]
-if.app-id='com.cisco.secureclient.gui'
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id='com.apple.finder'
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id='com.oracle.idm.mobileauthenticator'
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="com.mitchellh.ghostty"
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="us.zoom.xos"
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="com.realvnc.vncviewer"
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="com.ethanbills.DockDoor"
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="com.dmitrynikolaev.numi"
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="md.obsidian"
-run=["move-node-to-workspace O"]
-
-[[on-window-detected]]
-if.app-id="com.brave.Browser"
-run=["move-node-to-workspace B"]
-
-[[on-window-detected]]
-if.app-id="com.hnc.Discord"
-run=["move-node-to-workspace D"]
-
-[[on-window-detected]]
-if.app-id="dev.chang.FinderTwo"
-run=["layout floating"]
-
-[[on-window-detected]]
-if.app-id="iordv.Droppy"
-run=["layout floating"]
 
