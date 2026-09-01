@@ -1,2 +1,7 @@
+--no-folding
+--ignore=^references$
+--ignore=^scripts$
 --ignore=\\.stowrc
 --ignore=\\.gitignore
+--ignore=^\\.github$
+--ignore=^README\\.md$

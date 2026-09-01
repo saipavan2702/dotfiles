@@ -1,35 +1,68 @@
-## Steps to install
+# macOS dotfiles
 
-Clone the repo in home directory, and run the below command
-```bash
-stow .
+Personal configurations for Zsh, Ghostty, tmux, Neovim, Vim, AeroSpace,
+Starship, Zed, VS Code, Cursor, CPOS, and related command-line tools.
+
+The repository is designed to live at `~/dotfiles` and uses GNU Stow to create
+home-directory links.
+
+## Setup
+
+Install Git and GNU Stow, then clone the repository:
+
+```sh
+git clone git@github.com:saipavan2702/dotfiles.git "$HOME/dotfiles"
+cd "$HOME/dotfiles"
 ```
-> Mac tips
-> `defaults write com.apple.screencaptureui "thumbnailExpiration" -float 20 && killall SystemUIServer`
 
-### Reference links
-- [ghostty-config-ref-1](https://github.com/ghostty-org/ghostty/discussions/3527)
-- [ghostty-small-icons-issue](https://github.com/ghostty-org/ghostty/discussions/3501)
-- [speeding-up-shell](https://scottspence.com/posts/speeding-up-my-zsh-shell)
+Bootstrap the external shell, Vim, and tmux plugins:
 
-### Competitive programming
+```sh
+test -d "$HOME/.zinit/bin/zinit.git" || \
+  git clone https://github.com/zdharma-continuum/zinit.git \
+  "$HOME/.zinit/bin/zinit.git"
 
-GCC is routed through `~/.local/bin/cp-g++` in the CP editor flow. That wrapper
-auto-selects the newest Homebrew compiler matching `/opt/homebrew/bin/g++-[0-9]*`
-or `/usr/local/bin/g++-[0-9]*`.
+test -d "$HOME/.oh-my-zsh" || \
+  git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 
-These places should point to `~/.local/bin/cp-g++`:
+test -f "$HOME/.vim/autoload/plug.vim" || \
+  curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-- `Library/Application Support/cpos/config.toml`
-- `Library/Application Support/Cursor/User/settings.json`
-- `Library/Application Support/Code/User/settings.json`
-- `.config/zed/tasks.json`
-- `~/Library/Application Support/cpos/config.toml`
+mkdir -p "$HOME/.config/tmux/plugins"
+test -d "$HOME/.config/tmux/plugins/tmux-fzf-url" || \
+  git clone https://github.com/wfxr/tmux-fzf-url.git \
+  "$HOME/.config/tmux/plugins/tmux-fzf-url"
+```
 
-If Homebrew changes the GCC naming scheme someday, update `.local/bin/cp-g++`.
-Zed/clangd and Neovim/clangd use `/opt/homebrew/bin/g++-*` query-driver
-wildcards for header discovery, not for actually running builds.
+Preview the links, then apply them:
 
-The active CPOS C++ template is:
+```sh
+stow --simulate --verbose=1 --target="$HOME" .
+stow --restow --target="$HOME" .
+```
 
-- `Library/Application Support/cpos/templates/luv.cpp`
+`references`, `scripts`, this README, and GitHub metadata stay inside the
+repository. The Starship backup is linked to
+`~/.config/starship/starship.toml.bak1`, and the BetterTouchTool preset is linked
+to `~/BetterTouchTool/menubar_appswitcher.bttpreset`. Import the preset manually
+inside BetterTouchTool when needed.
+
+## Validate
+
+Run the read-only health check after setup or configuration changes:
+
+```sh
+cd "$HOME/dotfiles"
+./scripts/check.sh
+```
+
+The script reports missing tools and validates the supported shell, editor,
+terminal, Stow, CPOS, and application configurations. Checks that require an
+application to be running may be skipped.
+
+## CPOS
+
+The active C++ template is
+`~/Library/Application Support/cpos/templates/template.cpp`. Builds use the
+shared `~/.local/bin/cp-g++` wrapper to select the available Homebrew GCC.
