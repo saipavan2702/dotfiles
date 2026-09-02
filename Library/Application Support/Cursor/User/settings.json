@@ -72,8 +72,6 @@
     "cpos.fixedDir": "~/cp-sublime",
     "cpos.defaultLanguage": "cpp",
     "cpos.runTimeoutMs": 5000,
-    "security.workspace.trust.enabled": true,
-    "security.workspace.trust.untrustedFiles": "newWindow",
     "window.restoreWindows": "none",
     "workbench.startupEditor": "none",
     "workbench.colorTheme": "Atom One Dark"
