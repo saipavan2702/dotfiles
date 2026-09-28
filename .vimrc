@@ -17,7 +17,7 @@ set smarttab
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
-" Linebreak on 500 characters
+" Keep screen wrapping at word boundaries; format text to a maximum of 500 columns.
 set lbr
 set tw=500
 
@@ -91,11 +91,11 @@ set scrolloff=8
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM key-bindings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-cmap W w
-cmap WQ wq
-cmap wQ wq
-cmap Q q
-cmap Tabe tabe
+cnoreabbrev <expr> W getcmdtype() ==# ':' && getcmdline() ==# 'W' ? 'w' : 'W'
+cnoreabbrev <expr> WQ getcmdtype() ==# ':' && getcmdline() ==# 'WQ' ? 'wq' : 'WQ'
+cnoreabbrev <expr> wQ getcmdtype() ==# ':' && getcmdline() ==# 'wQ' ? 'wq' : 'wQ'
+cnoreabbrev <expr> Q getcmdtype() ==# ':' && getcmdline() ==# 'Q' ? 'q' : 'Q'
+cnoreabbrev <expr> Tabe getcmdtype() ==# ':' && getcmdline() ==# 'Tabe' ? 'tabe' : 'Tabe'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -124,17 +124,17 @@ colorscheme tokyonight
 let g:lightline = { 'colorscheme': 'tokyonight' }
 set laststatus=2
 
-nnoremap <C-t> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeRespectWildIgnore=1
-let NERDTreeIgnore = ['\.DS_Store$', '\.min\.(js|css)$', '^\.Trash','^\.cache','^\.cisco','^\.vnc','^\.vpn','^\.ossh','^\.oci','^\.vscode']
+let NERDTreeIgnore = ['\.DS_Store$', '\.min\.\(js\|css\)$', '^\.Trash','^\.cache','^\.cisco','^\.vnc','^\.vpn','^\.ossh','^\.oci','^\.vscode']
 
 if executable('fd')
   let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --exclude .git'
 endif
 
 let mapleader = " "
-nnoremap <C-F> :Files<cr>
+nnoremap <Leader>e :NERDTreeToggle<CR>
+nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>b :Buffers<cr>
 nnoremap <Leader>r :Rg<CR>
 nnoremap <Leader>s :BLines<cr>

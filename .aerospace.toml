@@ -68,6 +68,7 @@ on-window-detected = [
     { if = 'test %{app-bundle-id} = com.hnc.Discord', run = ['move-node-to-workspace D'] },
     { if = 'test %{app-bundle-id} = dev.chang.FinderTwo', run = ['layout floating'] },
     { if = 'test %{app-bundle-id} = iordv.Droppy', run = ['layout floating'] },
+    { if = 'test %{app-bundle-id} = com.openclip.OpenClip', run = ['layout floating'] },
 ]
 
 # Possible values: (qwerty|dvorak|colemak)

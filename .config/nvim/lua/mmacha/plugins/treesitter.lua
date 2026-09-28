@@ -40,11 +40,12 @@ local function start_treesitter(args)
 		return
 	end
 
-	if not vim.treesitter.highlighter.active[args.buf] then
-		local ok = pcall(vim.treesitter.start, args.buf, language)
-		if not ok then
-			return
-		end
+	-- `vim.treesitter.highlighter.active` is an internal implementation detail
+	-- and changed across Neovim releases. `vim.treesitter.start` is idempotent
+	-- for an attached buffer, so avoid depending on that private table.
+	local ok = pcall(vim.treesitter.start, args.buf, language)
+	if not ok then
+		return
 	end
 
 	local has_indents, indent_query = pcall(vim.treesitter.query.get, language, "indents")
