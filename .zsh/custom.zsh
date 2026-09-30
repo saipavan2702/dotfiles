@@ -36,15 +36,26 @@ setopt SHARE_HISTORY
 
 zstyle ':omz:update' mode disabled
 
-source "$HOME/.zinit/bin/zinit.git/zinit.zsh"
-autoload -Uz _zinit
+if [[ -r "$HOME/.zinit/bin/zinit.git/zinit.zsh" ]]; then
+  source "$HOME/.zinit/bin/zinit.git/zinit.zsh"
+  autoload -Uz _zinit
+fi
 
 zsh_cache_dir_was_set=${+ZSH_CACHE_DIR}
 zsh_cache_dir_save="${ZSH_CACHE_DIR-}"
 export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/oh-my-zsh"
 
 plugins=(git)
-source "$ZSH/oh-my-zsh.sh"
+if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
+else
+  # Keep a usable shell on a fresh install before optional frameworks exist.
+  autoload -Uz compinit
+  compinit -d "$ZSH_COMPDUMP"
+  HISTFILE="$HOME/.zsh_history"
+  HISTSIZE=50000
+  SAVEHIST=50000
+fi
 
 if (( zsh_cache_dir_was_set )); then
   export ZSH_CACHE_DIR="$zsh_cache_dir_save"
@@ -53,7 +64,7 @@ else
 fi
 unset zsh_cache_dir_was_set zsh_cache_dir_save
 
-(( ${+_comps} )) && _comps[zinit]=_zinit
+(( ${+functions[zinit]} && ${+_comps} )) && _comps[zinit]=_zinit
 
 # fzf-tab reads completion colors; keep this static to avoid startup commands.
 export LSCOLORS="${LSCOLORS:-Gxfxcxdxbxegedabagacad}"
@@ -66,10 +77,23 @@ ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 ZSH_AUTOSUGGEST_STRATEGY=(history)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-export NVM_LAZY_LOAD=true
-
 # -- Toolchains ----------------------------------------------------------------
 # export LANG=en_US.UTF-8
+# Load NVM only when requested; ordinary shells keep Homebrew Node startup fast.
+for nvm_init in "${NVM_DIR:-$HOME/.nvm}/nvm.sh" /opt/homebrew/opt/nvm/nvm.sh /usr/local/opt/nvm/nvm.sh; do
+  if [[ -r "$nvm_init" ]]; then
+    typeset -g _dotfiles_nvm_init="$nvm_init"
+    nvm() {
+      unfunction nvm
+      export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+      source "$_dotfiles_nvm_init" --no-use
+      unset _dotfiles_nvm_init
+      nvm "$@"
+    }
+    break
+  fi
+done
+unset nvm_init
 
 if [[ -z ${JAVA_HOME:-} || ! -d "$JAVA_HOME" ]]; then
   java_home_candidate=""
@@ -110,7 +134,7 @@ else
   unset M3_HOME MAVEN_HOME
 fi
 unset candidate maven_home_candidate
-export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
+export MAVEN_OPTS="${MAVEN_OPTS:---add-opens java.base/java.lang=ALL-UNNAMED}"
 
 # Drop legacy entries inherited from an older parent shell before rebuilding
 # PATH, otherwise an upgraded tool can still resolve to the retired version.
@@ -128,6 +152,8 @@ path=($toolchain_paths $path)
 [[ -n ${M3_HOME:-} && -d "$M3_HOME/bin" ]] && path+=("$M3_HOME/bin")
 typeset -U path PATH
 unset toolchain_paths
+(( $+commands[nvim] )) && export EDITOR="${EDITOR:-nvim}"
+export VISUAL="${VISUAL:-${EDITOR:-vi}}"
 
 # -- Aliases and shell helpers -------------------------------------------------
 # Load before zsh-patina so aliases/functions are highlighted as known callables.
@@ -206,19 +232,21 @@ export FZF_DEFAULT_OPTS="
 #ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red, bold'
 
 # -- Zinit plugins -------------------------------------------------------------
-zinit light Aloxaf/fzf-tab
+if (( ${+functions[zinit]} )); then
+  zinit light Aloxaf/fzf-tab
 
-zinit ice wait lucid atload'_zsh_autosuggest_start'
-zinit light zsh-users/zsh-autosuggestions
+  zinit ice wait lucid atload'_zsh_autosuggest_start'
+  zinit light zsh-users/zsh-autosuggestions
 
-# Patina is delayed so the first prompt wins, then a Rust daemon handles input
-# highlighting without the old zsh-syntax-highlighting overhead.
-zinit ice wait lucid \
-  as"program" \
-  from"gh-r" \
-  pick"zsh-patina-*/zsh-patina" \
-  atload'eval "$(zsh-patina activate)"'
-zinit light michel-kraemer/zsh-patina
+  # Patina is delayed so the first prompt wins, then a Rust daemon handles input
+  # highlighting without the old zsh-syntax-highlighting overhead.
+  zinit ice wait lucid \
+    as"program" \
+    from"gh-r" \
+    pick"zsh-patina-*/zsh-patina" \
+    atload'eval "$(zsh-patina activate)"'
+  zinit light michel-kraemer/zsh-patina
+fi
 
 # -- Prompt and generated init scripts ----------------------------------------
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
@@ -227,61 +255,77 @@ zsh_init_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/init"
 [[ -d "$zsh_init_cache" ]] || command mkdir -p "$zsh_init_cache" 2>/dev/null
 [[ -d "$zsh_init_cache" && -w "$zsh_init_cache" ]] || zsh_init_cache=
 
-if (( $+commands[starship] )); then
-  if [[ -n "$zsh_init_cache" ]]; then
-    starship_bin="${commands[starship]}"
-    starship_cache="$zsh_init_cache/starship.zsh"
-
-    if [[ ! -s "$starship_cache" || "$starship_bin" -nt "$starship_cache" ]]; then
-      starship init zsh 2>/dev/null | command grep -v '^PROMPT2=' >| "$starship_cache"
-      print -r -- "PROMPT2='\$($starship_bin prompt --continuation)'" >> "$starship_cache"
-    fi
-
-    source "$starship_cache"
+# Generate into a private temporary file and rename only after success. Shells
+# opening concurrently must never source each other's partially written cache.
+_dotfiles_generate_init() {
+  emulate -L zsh
+  setopt pipefail
+  local bin="$1" tool="$2"
+  shift 2
+  if [[ "$tool" == starship ]]; then
+    "$bin" "$@" | command sed '/^PROMPT2=/d' || return
+    print -r -- "PROMPT2='\$(${(q)bin} prompt --continuation)'"
   else
-    eval "$(starship init zsh)"
+    "$bin" "$@"
   fi
-fi
+}
 
-if (( $+commands[zoxide] )); then
-  if [[ -n "$zsh_init_cache" ]]; then
-    zoxide_bin="${commands[zoxide]}"
-    zoxide_cache="$zsh_init_cache/zoxide.zsh"
+_dotfiles_cached_init() {
+  emulate -L zsh
+  local tool="$1"
+  shift
+  (( $+commands[$tool] )) || return 0
+  local bin="${commands[$tool]}"
+  local resolved="${bin:A}"
+  local cache="$zsh_init_cache/$tool-v2.zsh"
+  local stamp="# binary: $resolved; zsh: $ZSH_VERSION; args: $*"
+  local first_line temporary
 
-    if [[ ! -s "$zoxide_cache" || "$zoxide_bin" -nt "$zoxide_cache" ]]; then
-      zoxide init --cmd cd zsh >| "$zoxide_cache"
+  if [[ -z "$zsh_init_cache" ]]; then
+    return 1
+  fi
+
+  [[ -r "$cache" ]] && IFS= read -r first_line < "$cache"
+  if [[ ! -s "$cache" || "$first_line" != "$stamp" || "$resolved" -nt "$cache" ]]; then
+    temporary="$(command mktemp "$cache.XXXXXXXX")" || return 1
+    if { print -r -- "$stamp"; _dotfiles_generate_init "$bin" "$tool" "$@"; } > "$temporary"; then
+      command mv -f -- "$temporary" "$cache" || return 1
+    else
+      command rm -f -- "$temporary"
+      return 1
     fi
-
-    source "$zoxide_cache"
-  else
-    eval "$(zoxide init --cmd cd zsh)"
   fi
-fi
+  REPLY="$cache"
+  [[ -r "$cache" ]]
+}
 
-if [[ -o zle && -t 0 ]] && (( $+commands[fzf] )); then
-  if [[ -n "$zsh_init_cache" ]]; then
-    fzf_bin="${commands[fzf]}"
-    fzf_cache="$zsh_init_cache/fzf.zsh"
-
-    if [[ ! -s "$fzf_cache" || "$fzf_bin" -nt "$fzf_cache" ]]; then
-      fzf --zsh >| "$fzf_cache"
-    fi
-
-    source "$fzf_cache"
+# Source at top level: Starship's shell options must outlive the helper's
+# `emulate -L` scope, and fzf/zoxide must not inherit helper-local variables.
+for init_tool in starship zoxide fzf; do
+  (( $+commands[$init_tool] )) || continue
+  case "$init_tool" in
+    starship) init_args=(init zsh) ;;
+    zoxide) init_args=(init --cmd cd zsh) ;;
+    fzf)
+      [[ -o zle && -t 0 ]] || continue
+      init_args=(--zsh)
+      ;;
+  esac
+  if _dotfiles_cached_init "$init_tool" "${init_args[@]}"; then
+    source "$REPLY"
   else
-    source <(fzf --zsh)
+    source <(_dotfiles_generate_init "${commands[$init_tool]}" "$init_tool" "${init_args[@]}")
   fi
-fi
-unset zsh_init_cache starship_bin starship_cache zoxide_bin zoxide_cache fzf_bin fzf_cache
+done
+unfunction _dotfiles_cached_init _dotfiles_generate_init
+unset zsh_init_cache init_tool init_args REPLY
 
 # -- Interactive extras --------------------------------------------------------
 [[ -o interactive ]] && stty -ixon 2>/dev/null
 
-KEYTIMEOUT=300
+KEYTIMEOUT=20  # hundredths of a second; keep Escape responsive
 
 [[ -r "$HOME/.zsh/fzf-git.sh" ]] && source "$HOME/.zsh/fzf-git.sh"
-
-alias fk='eval "$(TF_ALIAS=fk PYTHONIOENCODING=utf-8 thefuck "$(fc -ln -1)")"'
 
 # -- Diagnostics report --------------------------------------------------------
 if [[ -n "$ZSH_DEBUGRC" ]]; then

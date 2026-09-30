@@ -38,7 +38,12 @@ syntax enable
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set wildmenu
 set wildmode=longest:full,full
-set wildoptions+=tagfile,pum,fuzzy
+set wildoptions+=tagfile,pum
+" Older system Vims may not implement fuzzy command completion.
+try
+    set wildoptions+=fuzzy
+catch /^Vim\%((\a\+)\)\=:E474/
+endtry
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 set ruler
 set noshowmode
@@ -101,6 +106,7 @@ cnoreabbrev <expr> Tabe getcmdtype() ==# ':' && getcmdline() ==# 'Tabe' ? 'tabe'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if !empty(globpath(&runtimepath, 'autoload/plug.vim'))
 call plug#begin('~/.vim/plugged')
 
 Plug 'preservim/nerdtree'
@@ -111,6 +117,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'ghifarit53/tokyonight-vim'
 
 call plug#end()
+endif
 
 set termguicolors
 if !has('gui_running')
@@ -120,7 +127,11 @@ endif
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 
-colorscheme tokyonight
+if !empty(globpath(&runtimepath, 'colors/tokyonight.vim'))
+    colorscheme tokyonight
+else
+    colorscheme default
+endif
 let g:lightline = { 'colorscheme': 'tokyonight' }
 set laststatus=2
 

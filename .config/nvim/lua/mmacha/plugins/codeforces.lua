@@ -137,10 +137,10 @@ return {
 		config = function()
 			local codeforces = require("codeforces-nvim")
 
-				codeforces.setup({
-					cf_path = cf_path,
-					extractor_path = extractor_path,
-					use_native_display = true,
+			codeforces.setup({
+				cf_path = cf_path,
+				extractor_path = extractor_path,
+				use_native_display = true,
 				extension = "cpp",
 				lines = {
 					cpp = 7,
@@ -148,7 +148,17 @@ return {
 				},
 				timeout = 10000,
 				compiler = {
-					cpp = { "cp-g++", "-std=c++20", "-O2", "-Wall", "-Wextra", "-I" .. include_path, "@.cpp", "-o", "@" },
+					cpp = {
+						"cp-g++",
+						"-std=c++20",
+						"-O2",
+						"-Wall",
+						"-Wextra",
+						"-I" .. include_path,
+						"@.cpp",
+						"-o",
+						"@",
+					},
 					py = {},
 				},
 				run = {

@@ -18,7 +18,8 @@ return {
 		"stevearc/dressing.nvim",
 		event = "VeryLazy",
 		opts = {
-			input = { border = "rounded" },
+			-- Snacks owns vim.ui.input; do not override it again on VeryLazy.
+			input = { enabled = false },
 			select = { backend = "builtin" },
 		},
 	},
