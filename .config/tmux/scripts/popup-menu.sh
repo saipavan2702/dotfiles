@@ -2,7 +2,7 @@
 set -euo pipefail
 
 current_path="$(tmux display-message -p '#{pane_current_path}')"
-script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+script_dir="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 prompt_for() {
   printf '%s' "$1" >&2

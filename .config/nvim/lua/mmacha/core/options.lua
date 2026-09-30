@@ -33,11 +33,12 @@ vim.opt.wrap = false
 -- backup and undo
 vim.opt.swapfile = false
 vim.opt.backup = false
-local undodir = vim.fn.expand("~/.vim/undodir")
+local undodir = vim.fn.stdpath("state") .. "/undo"
 if vim.fn.isdirectory(undodir) == 0 then
 	vim.fn.mkdir(undodir, "p")
 end
-vim.opt.undodir = undodir
+-- Read existing undo history during the transition; new files go to state/undo.
+vim.opt.undodir = { undodir, vim.fn.expand("~/.vim/undodir") }
 vim.opt.undofile = true
 
 -- search

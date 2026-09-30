@@ -10,9 +10,8 @@ return {
 		local harpoon = require("harpoon")
 
 		harpoon:setup({
-			global_settings = {
+			settings = {
 				save_on_toggle = true,
-				save_on_change = true,
 			},
 		})
 
@@ -32,9 +31,10 @@ return {
 		vim.keymap.set("n", "<C-n>", function()
 			harpoon:list():select(3)
 		end)
-		vim.keymap.set("n", "<C-s>", function()
+		-- Ctrl-S belongs to tmux. Leader+4 works inside and outside tmux.
+		vim.keymap.set("n", "<leader>4", function()
 			harpoon:list():select(4)
-		end)
+		end, { desc = "Harpoon file 4" })
 
 		vim.keymap.set("n", "<C-S-P>", function()
 			harpoon:list():prev()
@@ -42,6 +42,5 @@ return {
 		vim.keymap.set("n", "<C-S-N>", function()
 			harpoon:list():next()
 		end)
-
 	end,
 }

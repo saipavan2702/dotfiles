@@ -8,6 +8,7 @@ local tools = {
 	"shfmt",
 	"clang-format",
 	"markdownlint-cli2",
+	"markdown-toc",
 	"yamllint",
 	"sqlfluff",
 }

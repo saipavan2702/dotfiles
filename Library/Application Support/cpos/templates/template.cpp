@@ -71,21 +71,21 @@ void sieve() {
 
 /*--------------------No.of digits------------------*/
 int cntdigit(int n) {
-    if(n==0)
-    return 1;
-
-    return floor(log10(n)+1);
+    int digits = 0;
+    do {
+        ++digits;
+        n /= 10;
+    } while (n != 0);
+    return digits;
 }
 
 /*------------------isprime--------------*/
 int isprime(int n) {
-    bool h=0;
-    for (int i=2;i*i<=n;i++) {
-        if (n%i==0) {
-            h=1;
-        }
+    if (n < 2) return false;
+    for (int i = 2; i <= n / i; ++i) {
+        if (n % i == 0) return false;
     }
-    return h==0;
+    return true;
 }
 
 /*-----------------------ispalindrome---------------------------*/

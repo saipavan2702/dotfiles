@@ -42,7 +42,7 @@ case "$action" in
     ;;
 esac
 
-script_path="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
+script_path="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
 
 tmux list-windows -F '#{window_index}	#{window_name}	#{window_panes} panes	#{?window_active,active,}' |
   fzf --reverse --delimiter='\t' --with-nth=1,2,3,4 \

@@ -17,3 +17,4 @@ if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]; then
     sdk "$@"
   }
 fi
+alias oci-curl='bash "$HOME/.oci/oci-curl.sh"'

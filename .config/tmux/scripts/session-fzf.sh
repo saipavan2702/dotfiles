@@ -66,7 +66,7 @@ case "$action" in
     ;;
 esac
 
-script_path="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
+script_path="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"
 
 tmux list-sessions -F '#{session_id}	#{session_name}	#{session_windows} windows	#{?session_attached,current,}' |
   fzf --reverse --delimiter='\t' --with-nth=2,3,4 \

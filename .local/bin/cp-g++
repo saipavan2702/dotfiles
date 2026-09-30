@@ -5,10 +5,7 @@ shopt -s nullglob
 candidates=(/opt/homebrew/bin/g++-[0-9]* /usr/local/bin/g++-[0-9]*)
 
 if ((${#candidates[@]} == 0)); then
-    if command -v g++ >/dev/null 2>&1; then
-        exec g++ "$@"
-    fi
-    echo "cp-g++: no Homebrew g++-[version] compiler found" >&2
+    echo "cp-g++: GNU C++ compiler missing; run brew install gcc" >&2
     exit 127
 fi
 
