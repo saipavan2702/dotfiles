@@ -7,6 +7,10 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "cursor_shape": "bar",
+  "cursor_animation": {
+    "enabled": true
+  },
   "$schema": "zed://schemas/settings",
   "vim_mode": true,
   "relative_line_numbers": "enabled",
