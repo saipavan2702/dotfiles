@@ -1,3 +1,7 @@
+# Git object pickers from https://github.com/junegunn/fzf-git.sh
+# Ctrl-G then ? lists shortcuts. Personal fzf settings live in fzf.zsh.
+# Keep this file compatible with Bash and Zsh.
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2024 Junegunn Choi
@@ -23,6 +27,9 @@
 # shellcheck disable=SC2039
 [[ $0 == - ]] && return
 
+# ============================================================================
+#                          Preview colours and tools
+# ============================================================================
 __fzf_git_color() {
   if [[ -n $NO_COLOR ]]; then
     echo never
@@ -56,6 +63,9 @@ __fzf_git_pager() {
   echo "${pager:-cat}"
 }
 
+# ============================================================================
+#                   Command-line listing and browser actions
+# ============================================================================
 if [[ $1 == --list ]]; then
   shift
   if [[ $# -eq 1 ]]; then
@@ -164,7 +174,10 @@ if [[ $1 == --list ]]; then
   fi
 fi
 
-if [[ $- =~ i ]] || [[ $1 = --run ]]; then # ----------------------------------
+# ============================================================================
+#                              Git object pickers
+# ============================================================================
+if [[ $- =~ i ]] || [[ $1 = --run ]]; then
 
 if [[ $__fzf_git_fzf ]]; then
   eval "$__fzf_git_fzf"
@@ -192,8 +205,24 @@ __fzf_git=${BASH_SOURCE[0]:-${(%):-%x}}
 __fzf_git=$(readlink -f "$__fzf_git" 2> /dev/null || /usr/bin/ruby --disable-gems -e 'puts File.expand_path(ARGV.first)' "$__fzf_git" 2> /dev/null)
 
 _fzf_git_files() {
-  _fzf_git_check || return
   local root query extract_file_name
+
+  # Outside a git repository, fall back to the file search of fzf.
+  # --force-tty-in is required when the caller has no tty on its standard
+  # input, which is the case for the tmux bindings.
+  if ! git rev-parse > /dev/null 2>&1; then
+    root=$PWD
+    if [[ -n $HOME ]] && [[ $root == "$HOME" || $root == "$HOME"/* ]]; then
+      root="~${root#"$HOME"}"
+    fi
+    _fzf_git_fzf -m --force-tty-in \
+      --border-label "📁 Files in $root " \
+      --header 'ALT-E (open in editor)' \
+      --bind "alt-e:execute:${EDITOR:-vim} {}" \
+      --preview "$(__fzf_git_cat) {}" "$@"
+    return
+  fi
+
   root=$(git rev-parse --show-toplevel)
   [[ -n "$(git rev-parse --show-prefix)" ]] && query='!../ '
 
@@ -382,15 +411,18 @@ CTRL-G CTRL-E for Each ref (git for-each-ref)
 EOF
 }
 
-fi # --------------------------------------------------------------------------
+fi
 
+# ============================================================================
+#                       Dispatch and shell key bindings
+# ============================================================================
 if [[ $1 = --run ]]; then
   shift
   type=$1
   shift
   eval "_fzf_git_$type" "$@"
 
-elif [[ $- =~ i ]]; then # ------------------------------------------------------
+elif [[ $- =~ i ]]; then
 if [[ -n "${BASH_VERSION:-}" ]]; then
   __fzf_git_init() {
     bind -m emacs-standard '"\er":  redraw-current-line'
@@ -440,4 +472,4 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
 fi
 __fzf_git_init files branches tags remotes hashes stashes lreflogs each_ref worktrees '?list_bindings'
 
-fi # --------------------------------------------------------------------------
+fi

@@ -1,20 +1,14 @@
-# Main interactive shell config.
-[[ -r "$HOME/.zsh/custom.zsh" ]] && source "$HOME/.zsh/custom.zsh"
+# Interactive shell entry point. Resolve symlinks before locating the modules.
+typeset -g DOTFILES_ZSH_DIR="${${(%):-%x}:A:h}/.zsh"
+[[ -n ${ZSH_DEBUGRC:-} ]] && zmodload zsh/zprof
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:$HOME/.lmstudio/bin"
-# End of LM Studio CLI section
+# Order matters: paths first, then completion, integrations and plugins.
+# Personal aliases load last so they can override framework defaults.
+for zsh_module in environment toolchains completion compatibility fzf integrations plugins aliases; do
+  source "$DOTFILES_ZSH_DIR/$zsh_module.zsh"
+done
+unset zsh_module
 
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]; then
-  # SDKMAN is available on first use without adding its framework and
-  # completion setup to every interactive shell.
-  sdk() {
-    unfunction sdk
-    source "$SDKMAN_DIR/bin/sdkman-init.sh"
-    sdk "$@"
-  }
-fi
-alias oci-curl='bash "$HOME/.oci/oci-curl.sh"'
+[[ -r "$DOTFILES_ZSH_DIR/fzf-git.sh" ]] && source "$DOTFILES_ZSH_DIR/fzf-git.sh"
+[[ -n ${ZSH_DEBUGRC:-} ]] && zprof
+true

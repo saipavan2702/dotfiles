@@ -1,5 +1,4 @@
 # Personal fzf settings. Loaded before shell integration and fzf-tab.
-# Legacy styling alternatives are kept at the bottom of custom.zsh.
 
 # ============================================================================
 #                        File and directory candidates
