@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "base_keymap": "VSCode",
   "status_bar": {
     "show_active_file": false,
     "pending_keystrokes_indicator": true,
@@ -122,7 +123,7 @@
   "theme": {
     "mode": "dark",
     "light": "Catppuccin Latte",
-    "dark": "Rosé Pine"
+    "dark": "Lumin"
   },
   "theme_overrides": {
     "Rosé Pine": {
