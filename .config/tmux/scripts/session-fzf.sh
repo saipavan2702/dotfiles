@@ -34,36 +34,36 @@ switch_or_create() {
 }
 
 case "$action" in
-  new)
-    name="$(sanitize_name "${2:-}")"
-    [[ -n "$name" ]] || name="$(sanitize_name "$(prompt_for 'new session: ')")"
-    [[ -n "$name" ]] || exit 0
-    tmux new-session -d -s "$name" -c "$(tmux display-message -p '#{pane_current_path}')" 2>/dev/null || true
-    tmux switch-client -t "$name"
-    exit 0
-    ;;
-  switch)
-    switch_or_create "${2:-}" "${3:-}"
-    exit 0
-    ;;
-  rename)
-    session="${2:-}"
-    [[ -n "$session" ]] || exit 0
-    current_name="$(tmux display-message -p -t "$session" '#S')"
-    name="$(sanitize_name "$(prompt_for "rename session $current_name to: ")")"
-    [[ -n "$name" ]] || exit 0
-    tmux rename-session -t "$session" "$name"
-    exit 0
-    ;;
-  kill)
-    session="${2:-}"
-    [[ -n "$session" ]] || exit 0
-    current_name="$(tmux display-message -p -t "$session" '#S')"
-    answer="$(prompt_for "kill session $current_name? [y/N] ")"
-    [[ "$answer" =~ ^[Yy]$ ]] || exit 0
-    tmux kill-session -t "$session"
-    exit 0
-    ;;
+new)
+  name="$(sanitize_name "${2:-}")"
+  [[ -n "$name" ]] || name="$(sanitize_name "$(prompt_for 'new session: ')")"
+  [[ -n "$name" ]] || exit 0
+  tmux new-session -d -s "$name" -c "$(tmux display-message -p '#{pane_current_path}')" 2>/dev/null || true
+  tmux switch-client -t "$name"
+  exit 0
+  ;;
+switch)
+  switch_or_create "${2:-}" "${3:-}"
+  exit 0
+  ;;
+rename)
+  session="${2:-}"
+  [[ -n "$session" ]] || exit 0
+  current_name="$(tmux display-message -p -t "$session" '#S')"
+  name="$(sanitize_name "$(prompt_for "rename session $current_name to: ")")"
+  [[ -n "$name" ]] || exit 0
+  tmux rename-session -t "$session" "$name"
+  exit 0
+  ;;
+kill)
+  session="${2:-}"
+  [[ -n "$session" ]] || exit 0
+  current_name="$(tmux display-message -p -t "$session" '#S')"
+  answer="$(prompt_for "kill session $current_name? [y/N] ")"
+  [[ "$answer" =~ ^[Yy]$ ]] || exit 0
+  tmux kill-session -t "$session"
+  exit 0
+  ;;
 esac
 
 script_path="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/$(basename -- "${BASH_SOURCE[0]}")"

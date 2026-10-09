@@ -60,7 +60,10 @@ selected="$(
 )" || exit 0
 
 [[ -n "$selected" ]] || exit 0
-[[ -d "$selected" ]] || { printf 'Directory no longer exists: %s\n' "$selected" >&2; exit 1; }
+[[ -d "$selected" ]] || {
+  printf 'Directory no longer exists: %s\n' "$selected" >&2
+  exit 1
+}
 selected="$(CDPATH='' cd -- "$selected" && pwd -P)"
 
 session_name="$(basename "$selected" | tr -cs '[:alnum:]_-' '_' | sed 's/^_//; s/_$//')"
@@ -79,6 +82,9 @@ if [[ -z "$session_id" ]]; then
   # A concurrent picker may create the session after the check above.
   session_id="$(tmux new-session -d -P -F '#{session_id}' -s "$session_name" -c "$selected")" || session_id="$(find_session)"
 fi
-[[ -n "$session_id" ]] || { printf 'Unable to create project session\n' >&2; exit 1; }
+[[ -n "$session_id" ]] || {
+  printf 'Unable to create project session\n' >&2
+  exit 1
+}
 tmux set-option -t "$session_id" @project_path "$selected"
 tmux switch-client -t "$session_id"

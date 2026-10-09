@@ -74,5 +74,6 @@
     "cpos.runTimeoutMs": 5000,
     "window.restoreWindows": "none",
     "workbench.startupEditor": "none",
-    "workbench.colorTheme": "Atom One Dark"
+    "workbench.colorTheme": "Atom One Dark",
+    "diffEditor.ignoreTrimWhitespace": false
 }

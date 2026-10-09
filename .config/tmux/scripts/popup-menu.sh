@@ -12,7 +12,7 @@ prompt_for() {
 
 while true; do
   choice="$(
-    printf '%s\n' \
+    printf '%b\n' \
       'Sessions	switch, create, rename, kill' \
       'Windows	switch, create, rename, kill' \
       'Projects	open directory as session' \
@@ -33,47 +33,47 @@ while true; do
   action="${choice%%$'\t'*}"
 
   case "$action" in
-    Sessions)
-      "$script_dir/session-fzf.sh" || true
-      ;;
-    Windows)
-      "$script_dir/window-fzf.sh" || true
-      ;;
-    Projects)
-      "$script_dir/project-fzf.sh" || true
-      ;;
-    Rename\ session)
-      current_session="$(tmux display-message -p '#S')"
-      name="$(prompt_for "rename session $current_session to: ")"
-      [[ -n "$name" ]] && tmux rename-session -t "$current_session" "${name//:/_}"
-      ;;
-    Rename\ window)
-      current_window="$(tmux display-message -p '#W')"
-      name="$(prompt_for "rename window $current_window to: ")"
-      [[ -n "$name" ]] && tmux rename-window "$name"
-      ;;
-    Kill\ session)
-      current_session="$(tmux display-message -p '#S')"
-      answer="$(prompt_for "kill session $current_session? [y/N] ")"
-      [[ "$answer" =~ ^[Yy]$ ]] && tmux kill-session -t "$current_session"
-      ;;
-    Shell)
-      cd "$current_path"
-      exec "$SHELL" -l
-      ;;
-    Lazygit)
-      cd "$current_path"
-      exec lazygit
-      ;;
-    Keys)
-      tmux list-keys | fzf --reverse --border=rounded --prompt='keys  ' --header='Esc returns to palette' || true
-      ;;
-    Reload)
-      tmux source-file "$HOME/.config/tmux/tmux.conf"
-      tmux display-message "tmux.conf reloaded"
-      ;;
-    Exit)
-      exit 0
-      ;;
+  Sessions)
+    "$script_dir/session-fzf.sh" || true
+    ;;
+  Windows)
+    "$script_dir/window-fzf.sh" || true
+    ;;
+  Projects)
+    "$script_dir/project-fzf.sh" || true
+    ;;
+  Rename\ session)
+    current_session="$(tmux display-message -p '#S')"
+    name="$(prompt_for "rename session $current_session to: ")"
+    [[ -n "$name" ]] && tmux rename-session -t "$current_session" "${name//:/_}"
+    ;;
+  Rename\ window)
+    current_window="$(tmux display-message -p '#W')"
+    name="$(prompt_for "rename window $current_window to: ")"
+    [[ -n "$name" ]] && tmux rename-window "$name"
+    ;;
+  Kill\ session)
+    current_session="$(tmux display-message -p '#S')"
+    answer="$(prompt_for "kill session $current_session? [y/N] ")"
+    [[ "$answer" =~ ^[Yy]$ ]] && tmux kill-session -t "$current_session"
+    ;;
+  Shell)
+    cd "$current_path"
+    exec "$SHELL" -l
+    ;;
+  Lazygit)
+    cd "$current_path"
+    exec lazygit
+    ;;
+  Keys)
+    tmux list-keys | fzf --reverse --border=rounded --prompt='keys  ' --header='Esc returns to palette' || true
+    ;;
+  Reload)
+    tmux source-file "$HOME/.config/tmux/tmux.conf"
+    tmux display-message "tmux.conf reloaded"
+    ;;
+  Exit)
+    exit 0
+    ;;
   esac
 done

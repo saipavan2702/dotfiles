@@ -25,13 +25,11 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
-
+syntax enable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -74,9 +72,9 @@ set scrolloff=8
 "set listchars=eol:.,tab:>-,trail:~,extends:>,precedes:<
 
 "if &term =~ xterm" || &term =~ screen" || &term =~ tmux"
- " let &t_SI = \e[1 q"  
-  "let &t_EI = \e[5 q"  
-  "let &t_SR = \e[3 q" 
+ " let &t_SI = \e[1 q"
+  "let &t_EI = \e[5 q"
+  "let &t_SR = \e[3 q"
 "endif
 
 "augroup myCmds
@@ -101,7 +99,6 @@ cnoreabbrev <expr> WQ getcmdtype() ==# ':' && getcmdline() ==# 'WQ' ? 'wq' : 'WQ
 cnoreabbrev <expr> wQ getcmdtype() ==# ':' && getcmdline() ==# 'wQ' ? 'wq' : 'wQ'
 cnoreabbrev <expr> Q getcmdtype() ==# ':' && getcmdline() ==# 'Q' ? 'q' : 'Q'
 cnoreabbrev <expr> Tabe getcmdtype() ==# ':' && getcmdline() ==# 'Tabe' ? 'tabe' : 'Tabe'
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM Plugins

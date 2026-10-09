@@ -24,7 +24,7 @@ return {
 
             -- dir_path = function()
             --     local cwd = vim.fn.getcwd()
-            --     local vault_name = "sethVault"  -- obsidian vault dir 
+            --     local vault_name = "sethVault"  -- obsidian vault dir
             --     local vault_images_path = "Archives/All-Vault-Images/"
 
             --     if cwd:match(vault_name) then

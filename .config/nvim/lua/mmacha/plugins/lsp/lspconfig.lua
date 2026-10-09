@@ -1,183 +1,183 @@
 local enabled_servers = require("mmacha.lsp.servers")
 
 local server_configs = {
-	lua_ls = {
-		settings = {
-			Lua = {
-				diagnostics = { globals = { "vim" } },
-				completion = { callSnippet = "Replace" },
-				workspace = {
-					library = {
-						[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-						[vim.fn.stdpath("config") .. "/lua"] = true,
-					},
-				},
-			},
-		},
-	},
+    lua_ls = {
+        settings = {
+            Lua = {
+                diagnostics = { globals = { "vim" } },
+                completion = { callSnippet = "Replace" },
+                workspace = {
+                    library = {
+                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                        [vim.fn.stdpath("config") .. "/lua"] = true,
+                    },
+                },
+            },
+        },
+    },
 
-	emmet_ls = {
-		filetypes = {
-			"html",
-			"typescriptreact",
-			"javascriptreact",
-			"css",
-			"sass",
-			"scss",
-			"less",
-			"svelte",
-		},
-	},
+    emmet_ls = {
+        filetypes = {
+            "html",
+            "typescriptreact",
+            "javascriptreact",
+            "css",
+            "sass",
+            "scss",
+            "less",
+            "svelte",
+        },
+    },
 
-	gopls = {
-		settings = {
-			gopls = {
-				analyses = { unusedparams = true },
-				staticcheck = true,
-				gofumpt = true,
-			},
-		},
-	},
+    gopls = {
+        settings = {
+            gopls = {
+                analyses = { unusedparams = true },
+                staticcheck = true,
+                gofumpt = true,
+            },
+        },
+    },
 
-	pyright = {
-		settings = {
-			python = {
-				analysis = {
-					autoSearchPaths = true,
-					diagnosticMode = "workspace",
-					typeCheckingMode = "basic",
-					useLibraryCodeForTypes = true,
-				},
-			},
-		},
-	},
+    pyright = {
+        settings = {
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    diagnosticMode = "workspace",
+                    typeCheckingMode = "basic",
+                    useLibraryCodeForTypes = true,
+                },
+            },
+        },
+    },
 
-	rust_analyzer = {
-		settings = {
-			["rust-analyzer"] = {
-				cargo = { allFeatures = true },
-				check = { command = "clippy" },
-			},
-		},
-	},
+    rust_analyzer = {
+        settings = {
+            ["rust-analyzer"] = {
+                cargo = { allFeatures = true },
+                check = { command = "clippy" },
+            },
+        },
+    },
 
-	clangd = {
-		cmd = {
-			"clangd",
-			"--background-index",
-			"--completion-style=detailed",
-			"--header-insertion=iwyu",
-			"--fallback-style=llvm",
-			"--query-driver=/opt/homebrew/bin/g++-*,/usr/local/bin/g++-*",
-		},
-		init_options = {
-			fallbackFlags = {
-				"-std=c++20",
-				"-I" .. vim.fs.joinpath(vim.fn.stdpath("config"), "clangd", "include"),
-			},
-		},
-	},
+    clangd = {
+        cmd = {
+            "clangd",
+            "--background-index",
+            "--completion-style=detailed",
+            "--header-insertion=iwyu",
+            "--fallback-style=llvm",
+            "--query-driver=/opt/homebrew/bin/g++-*,/usr/local/bin/g++-*",
+        },
+        init_options = {
+            fallbackFlags = {
+                "-std=c++20",
+                "-I" .. vim.fs.joinpath(vim.fn.stdpath("config"), "clangd", "include"),
+            },
+        },
+    },
 
-	tailwindcss = {
-		filetypes = {
-			"html",
-			"css",
-			"javascript",
-			"typescript",
-			"javascriptreact",
-			"typescriptreact",
-			"svelte",
-			"vue",
-			"astro",
-		},
-		init_options = {
-			userLanguages = { astro = "html" },
-		},
-	},
+    tailwindcss = {
+        filetypes = {
+            "html",
+            "css",
+            "javascript",
+            "typescript",
+            "javascriptreact",
+            "typescriptreact",
+            "svelte",
+            "vue",
+            "astro",
+        },
+        init_options = {
+            userLanguages = { astro = "html" },
+        },
+    },
 
-	ts_ls = {
-		single_file_support = true,
-		init_options = {
-			preferences = {
-				includeCompletionsForImportStatements = true,
-				includeCompletionsForModuleExports = true,
-			},
-		},
-	},
+    ts_ls = {
+        single_file_support = true,
+        init_options = {
+            preferences = {
+                includeCompletionsForImportStatements = true,
+                includeCompletionsForModuleExports = true,
+            },
+        },
+    },
 
-	yamlls = {
-		settings = {
-			yaml = { keyOrdering = false },
-		},
-	},
+    yamlls = {
+        settings = {
+            yaml = { keyOrdering = false },
+        },
+    },
 }
 
 return {
-	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		{ "antosha417/nvim-lsp-file-operations", config = true },
-	},
-	config = function()
-		local function picker(name, opts)
-			return function()
-				require("snacks").picker[name](opts or {})
-			end
-		end
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+        "hrsh7th/cmp-nvim-lsp",
+        { "antosha417/nvim-lsp-file-operations", config = true },
+    },
+    config = function()
+        local function picker(name, opts)
+            return function()
+                require("snacks").picker[name](opts or {})
+            end
+        end
 
-		vim.api.nvim_create_autocmd("LspAttach", {
-			group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
-			callback = function(ev)
-				local function map(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
-				end
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+            callback = function(ev)
+                local function map(mode, lhs, rhs, desc)
+                    vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
+                end
 
-				map("n", "gR", picker("lsp_references"), "Show LSP references")
-				map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
-				map("n", "gd", picker("lsp_definitions"), "Show LSP definitions")
-				map("n", "gi", picker("lsp_implementations"), "Show LSP implementations")
-				map("n", "gt", picker("lsp_type_definitions"), "Show LSP type definitions")
-				map({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, "Code actions")
-				map("n", "<leader>rn", vim.lsp.buf.rename, "Smart rename")
-				map("n", "<leader>D", picker("diagnostics", { bufnr = ev.buf }), "Show buffer diagnostics")
-				map("n", "<leader>ld", vim.diagnostic.open_float, "Show line diagnostics")
-				map("n", "K", vim.lsp.buf.hover, "Show documentation")
-				map("n", "<leader>rs", "<cmd>lsp restart<CR>", "Restart LSP")
-				map("n", "[d", function()
-					vim.diagnostic.jump({ count = -1, float = true })
-				end, "Go to previous diagnostic")
-				map("n", "]d", function()
-					vim.diagnostic.jump({ count = 1, float = true })
-				end, "Go to next diagnostic")
-				map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
-			end,
-		})
+                map("n", "gR", picker("lsp_references"), "Show LSP references")
+                map("n", "gD", vim.lsp.buf.declaration, "Go to declaration")
+                map("n", "gd", picker("lsp_definitions"), "Show LSP definitions")
+                map("n", "gi", picker("lsp_implementations"), "Show LSP implementations")
+                map("n", "gt", picker("lsp_type_definitions"), "Show LSP type definitions")
+                map({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, "Code actions")
+                map("n", "<leader>rn", vim.lsp.buf.rename, "Smart rename")
+                map("n", "<leader>D", picker("diagnostics", { bufnr = ev.buf }), "Show buffer diagnostics")
+                map("n", "<leader>ld", vim.diagnostic.open_float, "Show line diagnostics")
+                map("n", "K", vim.lsp.buf.hover, "Show documentation")
+                map("n", "<leader>rs", "<cmd>lsp restart<CR>", "Restart LSP")
+                map("n", "[d", function()
+                    vim.diagnostic.jump({ count = -1, float = true })
+                end, "Go to previous diagnostic")
+                map("n", "]d", function()
+                    vim.diagnostic.jump({ count = 1, float = true })
+                end, "Go to next diagnostic")
+                map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
+            end,
+        })
 
-		vim.diagnostic.config({
-			signs = {
-				text = {
-					[vim.diagnostic.severity.ERROR] = " ",
-					[vim.diagnostic.severity.WARN] = " ",
-					[vim.diagnostic.severity.HINT] = "󰠠 ",
-					[vim.diagnostic.severity.INFO] = " ",
-				},
-			},
-			underline = true,
-			update_in_insert = false,
-			virtual_text = {
-				spacing = 4,
-				source = "if_many",
-			},
-		})
+        vim.diagnostic.config({
+            signs = {
+                text = {
+                    [vim.diagnostic.severity.ERROR] = " ",
+                    [vim.diagnostic.severity.WARN] = " ",
+                    [vim.diagnostic.severity.HINT] = "󰠠 ",
+                    [vim.diagnostic.severity.INFO] = " ",
+                },
+            },
+            underline = true,
+            update_in_insert = false,
+            virtual_text = {
+                spacing = 4,
+                source = "if_many",
+            },
+        })
 
-		vim.lsp.config("*", {
-			capabilities = require("cmp_nvim_lsp").default_capabilities(),
-		})
+        vim.lsp.config("*", {
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        })
 
-		for _, server in ipairs(enabled_servers) do
-			vim.lsp.config(server, server_configs[server] or {})
-			vim.lsp.enable(server)
-		end
-	end,
+        for _, server in ipairs(enabled_servers) do
+            vim.lsp.config(server, server_configs[server] or {})
+            vim.lsp.enable(server)
+        end
+    end,
 }
