@@ -105,4 +105,3 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
         fragColor = mix(fragColor, vec4(finalColor, 1.0), intensity);
     }
 }
-

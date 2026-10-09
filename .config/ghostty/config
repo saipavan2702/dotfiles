@@ -84,7 +84,6 @@ custom-shader = shaders/cursor_smear.glsl
 # custom-shader = shaders/WIP.glsl
 # custom-shader = shaders/zoom_and_aberration.glsl
 
-
 # ============ TYPOGRAPHY ============
 # fonts
 theme = TokyoNight Night
@@ -101,7 +100,7 @@ font-codepoint-map = U+E000-U+E00A,U+E0A0-U+E0A3,U+E0CA,U+E0CC-U+E0D7,U+E200-U+E
 #font-thicken = true
 #font-thicken-strength = 0
 #adjust-cell-height = 10%
-#adjust-cell-width = 1 
+#adjust-cell-width = 1
 
 # clipboard
 clipboard-read = ask
@@ -124,12 +123,11 @@ window-step-resize = false
 window-padding-balance = true
 window-padding-color = extend
 window-padding-x = 0,0
-window-padding-y = 0,0 
+window-padding-y = 0,0
 window-decoration = true
 window-colorspace = "display-p3"
 window-theme = dark
 confirm-close-surface = false
-
 
 # behavior
 auto-update = off
@@ -150,7 +148,7 @@ keybind = cmd+s>r=reload_config
 #keybind = cmd+s>x=close_surface
 keybind = cmd+s>n=new_window
 
-# tabs 
+# tabs
 #keybind = cmd+s>c=new_tab
 keybind = cmd+s>shift+l=next_tab
 keybind = cmd+s>shift+h=previous_tab

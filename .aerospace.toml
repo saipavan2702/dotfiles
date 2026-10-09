@@ -86,9 +86,9 @@ on-window-detected = [
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
     inner.horizontal = 5
-    inner.vertical =   5 
+    inner.vertical =   5
     outer.left =       5
-    outer.bottom =     5 
+    outer.bottom =     5
     outer.top =        5
     outer.right =      5
 
@@ -200,4 +200,3 @@ on-window-detected = [
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
-
