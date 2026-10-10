@@ -78,6 +78,9 @@ return {
                     "eslint.config.js",
                     "eslint.config.mjs",
                     "eslint.config.cjs",
+                    "eslint.config.ts",
+                    "eslint.config.mts",
+                    "eslint.config.cts",
                     ".eslintrc",
                     ".eslintrc.js",
                     ".eslintrc.cjs",
@@ -111,6 +114,10 @@ return {
         end
 
         local function try_lint()
+            if vim.bo.buftype ~= "" or not vim.bo.modifiable or vim.bo.filetype == "bigfile" then
+                return
+            end
+
             local ok, err = pcall(lint.try_lint, linters_for_buffer())
             if not ok then
                 vim.notify("lint failed: " .. err, vim.log.levels.WARN)

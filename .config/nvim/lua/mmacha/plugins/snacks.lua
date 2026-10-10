@@ -90,6 +90,9 @@ return {
                 },
             },
             -- Snacks Modules
+            bigfile = {
+                enabled = true,
+            },
             input = {
                 enabled = true,
             },
@@ -100,6 +103,7 @@ return {
             -- HACK: read picker docs @ https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
             picker = {
                 enabled = true,
+                ui_select = true,
                 matcher = {
                     frecency = true,
                     cwd_bonus = false,
@@ -229,6 +233,30 @@ return {
         },
         config = function(_, opts)
             require("snacks").setup(opts)
+
+            -- FileType can receive a symlink path while the buffer name is resolved.
+            -- Let Snacks classify the actual buffer instead of missing big files.
+            vim.filetype.add({
+                pattern = {
+                    [".+"] = {
+                        function(path, buf)
+                            if not buf or vim.bo[buf].filetype == "bigfile" then
+                                return
+                            end
+                            local name = vim.api.nvim_buf_get_name(buf)
+                            if vim.fs.normalize(path) == vim.fs.normalize(name) then
+                                return
+                            end
+                            local resolved = vim.uv.fs_realpath(path)
+                            if resolved and resolved == vim.uv.fs_realpath(name) then
+                                local ft = vim.filetype.match({ buf = buf })
+                                return ft == "bigfile" and ft or nil
+                            end
+                        end,
+                        { priority = 1000 },
+                    },
+                },
+            })
 
             vim.api.nvim_create_user_command("FindFiles", function()
                 find_files()

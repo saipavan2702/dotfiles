@@ -16,6 +16,13 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "move up in buffer with cursor 
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- Move through wrapped prose by screen line; counts still address real lines.
+for _, key in ipairs({ "j", "k" }) do
+    vim.keymap.set({ "n", "x" }, key, function()
+        return vim.v.count == 0 and "g" .. key or key
+    end, { expr = true, silent = true, desc = "Move " .. (key == "j" and "down" or "up") .. " a screen line" })
+end
+
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
 
@@ -154,12 +161,23 @@ vim.keymap.set("n", "<leader>fp", function()
     print("File path copied to clipboard: " .. filePath)
 end, { desc = "Copy file path to clipboard" })
 
--- Toggle LSP diagnostics visibility
-local isLspDiagnosticsVisible = true
+-- Preserve diagnostic styling while toggling all diagnostic decorations.
 vim.keymap.set("n", "<leader>lx", function()
-    isLspDiagnosticsVisible = not isLspDiagnosticsVisible
-    vim.diagnostic.config({
-        virtual_text = isLspDiagnosticsVisible,
-        underline = isLspDiagnosticsVisible,
-    })
-end, { desc = "Toggle LSP diagnostics" })
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = "Toggle diagnostics" })
+
+vim.keymap.set("n", "<leader>tw", function()
+    vim.wo.wrap = not vim.wo.wrap
+    vim.wo.linebreak = vim.wo.wrap
+end, { desc = "Toggle word wrap" })
+
+vim.keymap.set("n", "<leader>ts", function()
+    vim.wo.spell = not vim.wo.spell
+end, { desc = "Toggle spelling" })
+
+-- Neovim 0.12 ships an undo-tree viewer. Keep the existing command and shortcut.
+vim.api.nvim_create_user_command("UndotreeToggle", function()
+    vim.cmd.packadd("nvim.undotree")
+    vim.cmd.Undotree()
+end, { desc = "Toggle native undo tree" })
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = "Toggle undo tree" })

@@ -11,16 +11,8 @@ return {
                 { "<leader>s", group = "split/replace" },
                 { "<leader>g", group = "git" },
                 { "<leader>l", group = "lsp" },
+                { "<leader>w", group = "workspace" },
             },
-        },
-    },
-    {
-        "stevearc/dressing.nvim",
-        event = "VeryLazy",
-        opts = {
-            -- Snacks owns vim.ui.input; do not override it again on VeryLazy.
-            input = { enabled = false },
-            select = { backend = "builtin" },
         },
     },
 }

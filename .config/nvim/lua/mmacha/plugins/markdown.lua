@@ -4,7 +4,7 @@ return {
         ft = { "markdown" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
-            "echasnovski/mini.nvim",
+            "nvim-tree/nvim-web-devicons",
         },
         opts = {
             file_types = { "markdown" },
@@ -15,14 +15,13 @@ return {
     },
     {
         "axieax/urlview.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim" },
         cmd = "UrlView",
         keys = {
             { "<leader>pu", "<cmd>UrlView<CR>", desc = "View URLs in current buffer" },
             { "<leader>pU", "<cmd>UrlView lazy<CR>", desc = "View plugin URLs from lazy.nvim" },
         },
         opts = {
-            default_picker = "telescope",
+            default_picker = "native",
         },
     },
 }

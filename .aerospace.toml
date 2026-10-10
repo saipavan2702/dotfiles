@@ -65,7 +65,7 @@ on-window-detected = [
     { if = 'test %{app-bundle-id} = com.dmitrynikolaev.numi', run = ['layout floating'] },
     { if = 'test %{app-bundle-id} = md.obsidian', run = ['move-node-to-workspace O'] },
     { if = 'test %{app-bundle-id} = com.brave.Browser', run = ['move-node-to-workspace B'] },
-    { if = 'test %{app-bundle-id} = com.hnc.Discord', run = ['move-node-to-workspace D'] },
+    { if = 'test %{app-bundle-id} = app.swiftcord', run = ['move-node-to-workspace D'] },
     { if = 'test %{app-bundle-id} = dev.chang.FinderTwo', run = ['layout floating'] },
     { if = 'test %{app-bundle-id} = iordv.Droppy', run = ['layout floating'] },
     { if = 'test %{app-bundle-id} = com.openclip.OpenClip', run = ['layout floating'] },

@@ -39,9 +39,10 @@ return {
                     end,
                 },
                 prettier = {
-                    args = {
-                        "--stdin-filepath",
-                        "$FILENAME",
+                    -- Keep Conform's filename/range arguments and honor project config.
+                    prepend_args = {
+                        "--config-precedence",
+                        "file-override",
                         "--tab-width",
                         "4",
                         "--use-tabs",

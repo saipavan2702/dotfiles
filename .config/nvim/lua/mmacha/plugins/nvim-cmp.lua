@@ -35,6 +35,9 @@ return {
         end
 
         cmp.setup({
+            enabled = function()
+                return vim.bo.buftype ~= "prompt" and vim.b.completion ~= false
+            end,
             completion = {
                 completeopt = "menu,menuone,noinsert",
             },

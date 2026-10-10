@@ -14,7 +14,7 @@ return {
                         return
                     end
 
-                    local opts = { buffer = vim.api.nvim_get_current_buf(), remap = false }
+                    local opts = { buf = vim.api.nvim_get_current_buf(), remap = false }
 
                     vim.keymap.set("n", "<leader>P", function()
                         vim.cmd.Git("push")
@@ -37,7 +37,7 @@ return {
                 local gs = package.loaded.gitsigns
 
                 local function map(mode, l, r, desc)
-                    vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })
+                    vim.keymap.set(mode, l, r, { buf = bufnr, desc = desc })
                 end
 
                 -- Navigation

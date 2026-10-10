@@ -1,6 +1,15 @@
 return {
     "nvim-telescope/telescope.nvim",
-    event = "VeryLazy",
+    cmd = "Telescope",
+    keys = {
+        {
+            "<leader>pWs",
+            function()
+                require("telescope.builtin").grep_string({ search = vim.fn.expand("<cWORD>") })
+            end,
+            desc = "Find connected words under cursor",
+        },
+    },
     version = "*",
     dependencies = {
         "nvim-lua/plenary.nvim",
@@ -10,9 +19,6 @@ return {
     config = function()
         local telescope = require("telescope")
         local actions = require("telescope.actions")
-        local builtin = require("telescope.builtin")
-
-        pcall(telescope.load_extension, "fzf")
 
         telescope.setup({
             defaults = {
@@ -25,10 +31,6 @@ return {
                 },
             },
         })
-
-        vim.keymap.set("n", "<leader>pWs", function()
-            local word = vim.fn.expand("<cWORD>")
-            builtin.grep_string({ search = word })
-        end, { desc = "Find connected words under cursor" })
+        pcall(telescope.load_extension, "fzf")
     end,
 }

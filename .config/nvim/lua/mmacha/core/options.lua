@@ -50,6 +50,7 @@ vim.opt.background = "dark"
 vim.opt.laststatus = 3
 vim.opt.showtabline = 1
 vim.opt.pumheight = 12
+vim.opt.winborder = "rounded"
 
 local function tabpage_title(tab)
     local ok, title = pcall(vim.api.nvim_tabpage_get_var, tab, "tab_title")
@@ -90,7 +91,7 @@ end
 
 vim.opt.tabline = "%!v:lua.mmacha_tabline()"
 
--- folding (for nvim-ufo)
+-- Keep folds open by default; folding can be enabled per buffer.
 vim.o.foldenable = true
 vim.o.foldmethod = "manual"
 vim.o.foldlevel = 99
@@ -99,15 +100,28 @@ vim.o.foldcolumn = "0"
 -- window splits
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+vim.opt.splitkeep = "screen"
+vim.opt.sessionoptions =
+    { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "winpos", "terminal", "localoptions" }
 
 -- misc
 vim.opt.guicursor = ""
 vim.opt.isfname:append("@-@")
-vim.opt.updatetime = 50
+vim.opt.updatetime = 250
 vim.opt.colorcolumn = ""
 vim.opt.mouse = "a"
 
 local core_options_group = vim.api.nvim_create_augroup("UserCoreOptions", { clear = true })
+
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "TermClose" }, {
+    group = core_options_group,
+    desc = "Refresh files changed by external tools",
+    callback = function()
+        if vim.bo.buftype == "" and vim.fn.getcmdwintype() == "" then
+            vim.cmd.checktime()
+        end
+    end,
+})
 
 vim.api.nvim_create_autocmd("FileType", {
     group = core_options_group,

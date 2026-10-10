@@ -1,15 +1,17 @@
 local enabled_servers = require("mmacha.lsp.servers")
 
 local server_configs = {
+    jdtls = require("mmacha.lsp.java"),
     lua_ls = {
         settings = {
             Lua = {
                 diagnostics = { globals = { "vim" } },
                 completion = { callSnippet = "Replace" },
                 workspace = {
+                    checkThirdParty = false,
                     library = {
-                        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                        [vim.fn.stdpath("config") .. "/lua"] = true,
+                        vim.env.VIMRUNTIME .. "/lua",
+                        vim.fn.stdpath("config") .. "/lua",
                     },
                 },
             },
@@ -41,6 +43,7 @@ local server_configs = {
 
     pyright = {
         settings = {
+            pyright = { disableOrganizeImports = true },
             python = {
                 analysis = {
                     autoSearchPaths = true,
@@ -129,8 +132,14 @@ return {
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
             callback = function(ev)
+                local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                if client and client.name == "ruff" then
+                    -- Pyright provides type-aware hover; Ruff owns import actions.
+                    client.server_capabilities.hoverProvider = false
+                end
+
                 local function map(mode, lhs, rhs, desc)
-                    vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
+                    vim.keymap.set(mode, lhs, rhs, { buf = ev.buf, silent = true, desc = desc })
                 end
 
                 map("n", "gR", picker("lsp_references"), "Show LSP references")
@@ -145,11 +154,16 @@ return {
                 map("n", "K", vim.lsp.buf.hover, "Show documentation")
                 map("n", "<leader>rs", "<cmd>lsp restart<CR>", "Restart LSP")
                 map("n", "[d", function()
-                    vim.diagnostic.jump({ count = -1, float = true })
+                    vim.diagnostic.jump({ count = -vim.v.count1 })
                 end, "Go to previous diagnostic")
                 map("n", "]d", function()
-                    vim.diagnostic.jump({ count = 1, float = true })
+                    vim.diagnostic.jump({ count = vim.v.count1 })
                 end, "Go to next diagnostic")
+                map("n", "<leader>lh", function()
+                    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }), {
+                        bufnr = ev.buf,
+                    })
+                end, "Toggle inlay hints")
                 map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
             end,
         })
@@ -164,7 +178,16 @@ return {
                 },
             },
             underline = true,
+            severity_sort = true,
             update_in_insert = false,
+            float = { source = "if_many" },
+            jump = {
+                on_jump = function(diagnostic, bufnr)
+                    if diagnostic then
+                        vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+                    end
+                end,
+            },
             virtual_text = {
                 spacing = 4,
                 source = "if_many",

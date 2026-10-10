@@ -1,4 +1,5 @@
 local parsers = {
+    "astro",
     "bash",
     "c",
     "cpp",
@@ -21,6 +22,7 @@ local parsers = {
     "prisma",
     "python",
     "query",
+    "regex",
     "ron",
     "rust",
     "sql",
@@ -29,10 +31,15 @@ local parsers = {
     "typescript",
     "vim",
     "vimdoc",
+    "vue",
     "yaml",
 }
 
 local function start_treesitter(args)
+    if vim.bo[args.buf].buftype ~= "" or vim.bo[args.buf].filetype == "bigfile" then
+        return
+    end
+
     local filetype = vim.bo[args.buf].filetype
     local language = vim.treesitter.language.get_lang(filetype)
 
