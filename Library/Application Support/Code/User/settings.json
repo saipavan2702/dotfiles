@@ -13,12 +13,13 @@
     "chat.titleBar.signIn.enabled": false,
     "workbench.browser.showInTitleBar": false,
     "editor.fontFamily": "JetBrains Mono, SF Mono, Menlo, Monaco, 'Courier New', monospace",
-    "workbench.colorTheme": "Monokai Vibrant",
     "chat.titleBar.openInAgentsWindow.enabled": false,
     "workbench.layoutControl.enabled": false,
     "cpos.saveLocation": "fixed",
     "cpos.fixedDir": "~/cp-sublime",
     "cpos.defaultLanguage": "cpp",
     "cpos.runTimeoutMs": 5000,
-    "terminal.integrated.fontSize": 11
+    "terminal.integrated.fontSize": 11,
+    "workbench.colorTheme": "Atom One Light",
+    "editor.minimap.enabled": false
 }

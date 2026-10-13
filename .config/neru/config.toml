@@ -1,11 +1,15 @@
 # Raycast maps the physical Caps Lock key to Hyper: Cmd + Ctrl + Option + Shift.
 
 [hotkeys]
-"Cmd+Shift+Space" = "__disabled__"
 "Cmd+Ctrl+Alt+Shift+X" = "hints --action left_click"
-"Cmd+Shift+S" = "__disabled__"
+"Cmd+Ctrl+Alt+Shift+G" = "recursive_grid --action left_click"
 "Cmd+Ctrl+Alt+Shift+S" = "scroll"
 "Cmd+Ctrl+Alt+Shift+R" = "config reload"
+"Cmd+Shift+Space" = "__disabled__"
+"Cmd+Shift+S" = "__disabled__"
+
+[hints]
+strategy = "axtree"
 
 [hints.ui]
 background_color = "#FFF08A"
@@ -17,6 +21,9 @@ border_color = "#706020"
 enabled = false
 
 [recursive_grid]
+enabled = true
+
+[bisect]
 enabled = false
 
 [scroll]
