@@ -20,6 +20,6 @@
     "cpos.defaultLanguage": "cpp",
     "cpos.runTimeoutMs": 5000,
     "terminal.integrated.fontSize": 11,
-    "workbench.colorTheme": "Atom One Light",
+    "workbench.colorTheme": "Monokai Vibrant",
     "editor.minimap.enabled": false
 }
