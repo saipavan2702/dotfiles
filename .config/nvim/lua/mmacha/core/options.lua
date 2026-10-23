@@ -51,6 +51,8 @@ vim.opt.laststatus = 3
 vim.opt.showtabline = 1
 vim.opt.pumheight = 12
 vim.opt.winborder = "rounded"
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 local function tabpage_title(tab)
     local ok, title = pcall(vim.api.nvim_tabpage_get_var, tab, "tab_title")

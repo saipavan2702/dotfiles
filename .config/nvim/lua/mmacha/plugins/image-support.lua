@@ -22,18 +22,6 @@ return {
             embed_image_as_base64 = false,
             max_base64_size = 10,
 
-            -- dir_path = function()
-            --     local cwd = vim.fn.getcwd()
-            --     local vault_name = "sethVault"  -- obsidian vault dir
-            --     local vault_images_path = "Archives/All-Vault-Images/"
-
-            --     if cwd:match(vault_name) then
-            --         return vault_images_path
-            --     else
-            --         return "assets"
-            --     end
-            -- end,
-
             drag_and_drop = {
                 enabled = true,
                 insert_mode = true,
@@ -41,7 +29,5 @@ return {
                 download_images = true,
             },
         },
-        -- add options here
-        -- or leave it empty to use the default settings
     },
 }

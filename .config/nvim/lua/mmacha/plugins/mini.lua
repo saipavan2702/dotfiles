@@ -36,25 +36,6 @@ return {
         },
     },
     {
-        "echasnovski/mini.trailspace",
-        event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            local trailspace = require("mini.trailspace")
-            trailspace.setup({ only_in_normal_buffers = true })
-
-            vim.keymap.set("n", "<leader>cw", function()
-                trailspace.trim()
-            end, { desc = "Erase Whitespace" })
-
-            vim.api.nvim_create_autocmd("CursorMoved", {
-                group = vim.api.nvim_create_augroup("UserMiniTrailspace", { clear = true }),
-                callback = function()
-                    trailspace.unhighlight()
-                end,
-            })
-        end,
-    },
-    {
         "echasnovski/mini.splitjoin",
         event = { "BufReadPre", "BufNewFile" },
         config = function()

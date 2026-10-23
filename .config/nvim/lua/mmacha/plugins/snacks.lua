@@ -17,19 +17,10 @@ local function picker()
     return require("snacks").picker
 end
 
-local function picker_opts(opts)
-    return vim.tbl_deep_extend("force", {
-        layout = { preset = "telescope" },
-    }, clean_opts(opts))
-end
+local file_defaults = { hidden = true, ignored = false, exclude = excluded }
 
 local function file_opts(opts)
-    return vim.tbl_deep_extend("force", {
-        hidden = true,
-        ignored = false,
-        exclude = excluded,
-        layout = { preset = "telescope" },
-    }, clean_opts(opts))
+    return vim.tbl_deep_extend("force", {}, file_defaults, clean_opts(opts))
 end
 
 local function find_files(opts)
@@ -41,7 +32,7 @@ local function live_grep(opts)
 end
 
 local function recent_files(opts)
-    picker().recent(picker_opts(opts))
+    picker().recent(clean_opts(opts))
 end
 
 local function dashboard_status()
@@ -117,46 +108,15 @@ return {
                     },
                 },
                 sources = {
-                    files = {
-                        hidden = true,
-                        ignored = false,
-                        exclude = excluded,
-                    },
-                    grep = {
-                        hidden = true,
-                        ignored = false,
-                        exclude = excluded,
-                    },
-                    explorer = {
-                        hidden = true,
-                        ignored = false,
-                        exclude = excluded,
-                    },
+                    files = vim.deepcopy(file_defaults),
+                    grep = vim.deepcopy(file_defaults),
+                    explorer = vim.deepcopy(file_defaults),
                 },
                 layout = {
                     preset = "telescope",
                     cycle = false,
                 },
             },
-            -- image = {
-            --     enabled = function()
-            --         return vim.bo.filetype == "markdown"
-            --     end,
-            --     doc = {
-            --         float = false, -- show image on cursor hover
-            --         inline = false, -- show image inline
-            --         max_width = 50,
-            --         max_height = 30,
-            --         wo = {
-            --             wrap = false,
-            --         },
-            --     },
-            --     convert = {
-            --         notify = true,
-            --         command = "magick"
-            --     },
-            --     img_dirs = { "img", "images", "assets", "static", "public", "media", "attachments","Archives/All-Vault-Images/", "~/Library", "~/Downloads" },
-            -- },
             dashboard = {
                 enabled = true,
                 sections = {
@@ -173,7 +133,7 @@ return {
                         elseif cmd == "oldfiles" then
                             recent_files(opts)
                         else
-                            picker()[cmd](picker_opts(opts))
+                            picker()[cmd](clean_opts(opts))
                         end
                     end,
                     keys = {
@@ -372,7 +332,7 @@ return {
             {
                 "<leader>pb",
                 function()
-                    picker().buffers(picker_opts())
+                    picker().buffers()
                 end,
                 desc = "Find Buffers",
             },
@@ -384,7 +344,7 @@ return {
             {
                 "<leader>pg",
                 function()
-                    picker().git_files(picker_opts())
+                    picker().git_files()
                 end,
                 desc = "Find Git Files",
             },
@@ -398,21 +358,21 @@ return {
             {
                 "<leader>pd",
                 function()
-                    picker().diagnostics(picker_opts())
+                    picker().diagnostics()
                 end,
                 desc = "Find Diagnostics",
             },
             {
                 "<leader>pl",
                 function()
-                    picker().lines(picker_opts())
+                    picker().lines()
                 end,
                 desc = "Find Lines in Buffer",
             },
             {
                 "<leader>pC",
                 function()
-                    picker().commands(picker_opts({ layout = { preset = "select" } }))
+                    picker().commands({ layout = { preset = "select" } })
                 end,
                 desc = "Find Commands",
             },
@@ -430,30 +390,37 @@ return {
                 mode = { "n", "x" },
             },
             {
+                "<leader>pWs",
+                function()
+                    picker().grep_word(file_opts({ search = vim.fn.expand("<cWORD>") }))
+                end,
+                desc = "Find connected words under cursor",
+            },
+            {
                 "<leader>pk",
                 function()
-                    picker().keymaps(picker_opts({ layout = { preset = "ivy" } }))
+                    picker().keymaps({ layout = { preset = "ivy" } })
                 end,
                 desc = "Search Keymaps",
             },
             {
                 "<leader>gbr",
                 function()
-                    picker().git_branches(picker_opts({ layout = { preset = "select" } }))
+                    picker().git_branches({ layout = { preset = "select" } })
                 end,
                 desc = "Pick and Switch Git Branches",
             },
             {
                 "<leader>th",
                 function()
-                    picker().colorschemes(picker_opts({ layout = { preset = "ivy" } }))
+                    picker().colorschemes({ layout = { preset = "ivy" } })
                 end,
                 desc = "Pick Color Schemes",
             },
             {
                 "<leader>vh",
                 function()
-                    picker().help(picker_opts())
+                    picker().help()
                 end,
                 desc = "Help Pages",
             },

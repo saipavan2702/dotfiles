@@ -89,6 +89,48 @@ return {
         end,
     },
     {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "main",
+        lazy = false,
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        config = function()
+            require("nvim-treesitter-textobjects").setup({
+                select = {
+                    lookahead = true,
+                    selection_modes = {
+                        ["@function.outer"] = "V",
+                        ["@class.outer"] = "V",
+                    },
+                },
+                move = { set_jumps = true },
+            })
+
+            for key, capture in pairs({
+                af = "@function.outer",
+                ["if"] = "@function.inner",
+                ac = "@class.outer",
+                ic = "@class.inner",
+                aa = "@parameter.outer",
+                ia = "@parameter.inner",
+            }) do
+                vim.keymap.set({ "x", "o" }, key, function()
+                    require("nvim-treesitter-textobjects.select").select_textobject(capture, "textobjects")
+                end, { desc = "Select " .. capture:sub(2) })
+            end
+
+            for key, method in pairs({
+                ["]f"] = "goto_next_start",
+                ["[f"] = "goto_previous_start",
+                ["]F"] = "goto_next_end",
+                ["[F"] = "goto_previous_end",
+            }) do
+                vim.keymap.set({ "n", "x", "o" }, key, function()
+                    require("nvim-treesitter-textobjects.move")[method]("@function.outer", "textobjects")
+                end, { desc = method:gsub("_", " ") .. " of function" })
+            end
+        end,
+    },
+    {
         "windwp/nvim-ts-autotag",
         ft = { "html", "xml", "javascript", "typescript", "javascriptreact", "typescriptreact", "svelte" },
         opts = {
@@ -96,10 +138,6 @@ return {
                 enable_close = true,
                 enable_rename = true,
                 enable_close_on_slash = false,
-            },
-            per_filetype = {
-                html = { enable_close = true },
-                typescriptreact = { enable_close = true },
             },
         },
     },

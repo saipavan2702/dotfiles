@@ -215,8 +215,8 @@ return {
                 transparent = transparent,
 
                 styles = {
-                    comments = { italic = false },
-                    keywords = { italic = false },
+                    comments = { italic = true },
+                    keywords = { italic = true },
                     sidebars = transparent and "transparent" or "dark",
                     floats = transparent and "transparent" or "dark",
                 },
@@ -352,7 +352,7 @@ return {
             flavour = "mocha",
             transparent_background = true,
             integrations = {
-                cmp = true,
+                blink_cmp = true,
                 gitsigns = true,
                 markdown = true,
                 mason = true,
@@ -360,7 +360,6 @@ return {
                 native_lsp = { enabled = true },
                 noice = true,
                 snacks = true,
-                telescope = true,
                 treesitter = true,
                 which_key = true,
             },

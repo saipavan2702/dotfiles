@@ -119,7 +119,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
         { "antosha417/nvim-lsp-file-operations", config = true },
     },
     config = function()
@@ -165,6 +165,17 @@ return {
                     })
                 end, "Toggle inlay hints")
                 map("i", "<C-h>", vim.lsp.buf.signature_help, "Signature help")
+                local function symbols(kinds)
+                    return function()
+                        require("snacks").picker.lsp_workspace_symbols({
+                            filter = { default = kinds, [vim.bo[ev.buf].filetype] = kinds },
+                        })
+                    end
+                end
+                map("n", "<leader>ls", symbols(true), "Search workspace symbols")
+                map("n", "<leader>lf", symbols({ "Function", "Method", "Constructor" }), "Search functions")
+                map("n", "<leader>lc", symbols({ "Class", "Interface", "Struct", "Trait" }), "Search classes")
+                map("n", "<leader>lv", symbols({ "Variable", "Constant", "Field", "Property" }), "Search variables")
             end,
         })
 
@@ -195,7 +206,7 @@ return {
         })
 
         vim.lsp.config("*", {
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+            capabilities = require("blink.cmp").get_lsp_capabilities(),
         })
 
         for _, server in ipairs(enabled_servers) do

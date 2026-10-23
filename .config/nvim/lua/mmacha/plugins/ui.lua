@@ -1,5 +1,23 @@
 return {
     {
+        "Amansingh-afk/milli.nvim",
+        enabled = false, -- Saved for later; no dashboard or screensaver integration.
+    },
+    {
+        "Bekaboo/dropbar.nvim",
+        lazy = false,
+        opts = {},
+        keys = {
+            {
+                "<leader>;",
+                function()
+                    require("dropbar.api").pick()
+                end,
+                desc = "Pick breadcrumb",
+            },
+        },
+    },
+    {
         "folke/which-key.nvim",
         event = "VeryLazy",
         opts = {

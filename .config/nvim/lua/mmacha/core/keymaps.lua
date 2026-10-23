@@ -175,6 +175,12 @@ vim.keymap.set("n", "<leader>ts", function()
     vim.wo.spell = not vim.wo.spell
 end, { desc = "Toggle spelling" })
 
+vim.keymap.set("n", "<leader>cw", function()
+    local view = vim.fn.winsaveview()
+    vim.cmd([[keeppatterns %s/\s\+$//e]])
+    vim.fn.winrestview(view)
+end, { desc = "Trim trailing whitespace" })
+
 -- Neovim 0.12 ships an undo-tree viewer. Keep the existing command and shortcut.
 vim.api.nvim_create_user_command("UndotreeToggle", function()
     vim.cmd.packadd("nvim.undotree")
