@@ -8,6 +8,7 @@ end
 
 return {
     "saghen/blink.cmp",
+    branch = "main",
     version = "1.*",
     event = "InsertEnter",
     dependencies = {
