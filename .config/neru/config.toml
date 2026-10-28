@@ -27,4 +27,4 @@ enabled = true
 enabled = false
 
 [scroll]
-invert_scroll = true
+invert_scroll = false
