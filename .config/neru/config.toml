@@ -1,4 +1,4 @@
-# Raycast maps the physical Caps Lock key to Hyper: Cmd + Ctrl + Option + Shift.
+# Raycast maps Caps Lock to Hyper key: Cmd + Ctrl + Option + Shift.
 
 [hotkeys]
 "Cmd+Ctrl+Alt+Shift+X" = "hints --action left_click"
