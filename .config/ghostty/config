@@ -136,6 +136,7 @@ auto-update-channel = stable
 shell-integration = detect
 shell-integration-features = cursor,sudo,title,ssh-env
 bell-features = no-attention
+quit-after-last-window-closed = true
 
 # macos
 macos-option-as-alt = true
