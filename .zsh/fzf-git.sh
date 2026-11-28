@@ -1,5 +1,5 @@
 # Git object pickers from https://github.com/junegunn/fzf-git.sh
-# Ctrl-G then ? lists shortcuts. Personal fzf settings live in fzf.zsh.
+# In Zsh, Ctrl-G opens the Git picker menu. Personal fzf settings live in fzf.zsh.
 # Keep this file compatible with Bash and Zsh.
 
 # The MIT License (MIT)
@@ -445,6 +445,7 @@ if [[ -n "${BASH_VERSION:-}" ]]; then
       bind -m vi-insert      '"\C-g'$c'":    "\C-z\C-g'$c'\C-z"'
     done
   }
+  __fzf_git_init files branches tags remotes hashes stashes lreflogs each_ref worktrees '?list_bindings'
 elif [[ -n "${ZSH_VERSION:-}" ]]; then
   __fzf_git_join() {
     local item
@@ -453,23 +454,56 @@ elif [[ -n "${ZSH_VERSION:-}" ]]; then
     done
   }
 
-  __fzf_git_init() {
-    setopt localoptions no_glob
-    local m o
-    for o in "$@"; do
-      if [[ ${o[1]} == "?" ]];then
-        eval "fzf-git-$o-widget() { zle -M '$(_fzf_git_list_bindings)' }"
-      else
-        eval "fzf-git-$o-widget() { local result=\$(_fzf_git_$o | __fzf_git_join); zle reset-prompt; LBUFFER+=\$result }"
-      fi
-      eval "zle -N fzf-git-$o-widget"
-      for m in emacs vicmd viins; do
-        eval "bindkey -M $m '^g^${o[1]}' fzf-git-$o-widget"
-        eval "bindkey -M $m '^g${o[1]}' fzf-git-$o-widget"
-      done
-    done
+  __fzf_git_menu() {
+    if ! command -v fzf >/dev/null; then
+      zle -M 'fzf is required for the Git picker menu'
+      return
+    fi
+
+    local choice result in_repo=0 header='Enter open | Esc or Ctrl-G close'
+    local -a choices=($'files\tFiles')
+    if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]; then
+      in_repo=1
+      choices+=(
+        $'branches\tBranches'
+        $'tags\tTags'
+        $'remotes\tRemotes'
+        $'hashes\tCommits'
+        $'stashes\tStashes'
+        $'lreflogs\tReflog'
+        $'worktrees\tWorktrees'
+        $'each_ref\tAll refs'
+      )
+    else
+      header="Outside a Git working tree | $header"
+    fi
+
+    choice=$(print -rl -- "${choices[@]}" | _fzf_git_fzf \
+      --no-multi --no-sort --no-preview --min-height 10 \
+      --delimiter=$'\t' --with-nth=2.. --accept-nth=1 \
+      --border-label ' Git pickers ' --prompt 'git> ' --header "$header" \
+      --bind 'ctrl-g:abort')
+
+    if [[ $choice == files && $in_repo == 0 ]] && (( ${+widgets[fzf-file-widget]} )); then
+      local FZF_CTRL_T_OPTS="${FZF_CTRL_T_OPTS:-} --bind ctrl-g:abort"
+      zle fzf-file-widget
+      return 0
+    fi
+
+    # Only dispatch menu entries. A cancelled menu or picker keeps the command.
+    case "$choice" in
+      files|branches|tags|remotes|hashes|stashes|lreflogs|worktrees|each_ref)
+        result=$("_fzf_git_$choice" --bind 'ctrl-g:abort' | __fzf_git_join)
+        LBUFFER+=$result
+        ;;
+    esac
+    zle reset-prompt
   }
+
+  zle -N __fzf_git_menu
+  bindkey -M emacs '^G' __fzf_git_menu
+  bindkey -M viins '^G' __fzf_git_menu
+  bindkey -M vicmd '^G' __fzf_git_menu
 fi
-__fzf_git_init files branches tags remotes hashes stashes lreflogs each_ref worktrees '?list_bindings'
 
 fi

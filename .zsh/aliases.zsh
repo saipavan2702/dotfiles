@@ -1,5 +1,25 @@
 # Aliases and shell helpers
 
+# Update the shell's separately managed components through one entry point.
+# Stop on failure, and let a new shell load the updated plugin binaries.
+zsh-update() {
+  if (( ! $+functions[zinit] )); then
+    print -u2 'zsh-update: Zinit is not loaded'
+    return 1
+  fi
+
+  print -r -- 'Updating Zinit and its plugins...'
+  zinit self-update || return
+  zinit update --all || return
+
+  if [[ -d "$HOME/.oh-my-zsh/.git" ]]; then
+    print -r -- 'Updating Oh My Zsh helpers...'
+    command git -C "$HOME/.oh-my-zsh" pull --ff-only || return
+  fi
+
+  print -r -- 'Shell updates complete. Open a new terminal tab to load them.'
+}
+
 # ============================================================================
 #                                   General
 # ============================================================================

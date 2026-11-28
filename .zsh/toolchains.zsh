@@ -20,7 +20,18 @@ if [[ -z ${JAVA_HOME:-} || ! -d "$JAVA_HOME" ]]; then
   java_home_candidate=""
 
   if [[ -x /usr/libexec/java_home ]]; then
-    java_home_candidate="$(/usr/libexec/java_home -v 17 2>/dev/null)"
+    # macOS discovers registered JDK bundles in these locations. Avoid
+    # launching java_home on machines with no registered Java runtime.
+    java_jdk_bundles=(
+      "$HOME"/Library/Java/JavaVirtualMachines/*(N-/)
+      /Library/Java/JavaVirtualMachines/*(N-/)
+      /System/Library/Java/JavaVirtualMachines/*(N-/)
+      /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK(N-/)
+    )
+    if (( ${#java_jdk_bundles} )); then
+      java_home_candidate="$(/usr/libexec/java_home -v 17 2>/dev/null)"
+    fi
+    unset java_jdk_bundles
   elif (( $+commands[java] )); then
     java_home_candidate="${commands[java]:A:h:h}"
   fi
